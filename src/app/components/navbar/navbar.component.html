@@ -1,13 +1,12 @@
 <mat-toolbar color="primary">
     <span>Tv Show Reminder Application</span>
     <span class="spacer-nav"></span>
-    <!--<div *ngIf="isLoggedIn; else elseBlock">-->
-        <a class="spacer-nav-actions" routerLink="/logIn">Log In</a>
-        <a class="spacer-nav-actions" routerLink="/registration">Sign In</a>
+    <div *ngIf="isLoggedIn; else elseBlock"> <!-- is the user is logged in -->
         <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
         <a class="spacer-nav-actions" routerLink="/profile">Profile</a>
-    <!--</div>-->
-    <!--<ng-template #elseBlock>Content to render when is not logged in
-        <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
-    </ng-template>-->
+    </div>
+    <ng-template #elseBlock> <!-- When not logged in -->
+        <a class="spacer-nav-actions" routerLink="/logIn">Log In</a>
+        <a class="spacer-nav-actions" routerLink="/registration">Sign In</a>
+    </ng-template>
 </mat-toolbar>
