@@ -32,6 +32,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { LogOutComponent } from './components/log-out/log-out.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     NavbarComponent,
     FooterComponent,
     LogInComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    LogOutComponent
   ],
   imports: [
     BrowserModule,
