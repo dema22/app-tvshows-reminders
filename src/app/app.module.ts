@@ -33,6 +33,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorDialogComponent } from './components/error-dialog/error-dialog.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { LogOutComponent } from './components/log-out/log-out.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { LogOutComponent } from './components/log-out/log-out.component';
     FooterComponent,
     LogInComponent,
     ErrorDialogComponent,
-    LogOutComponent
+    LogOutComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
