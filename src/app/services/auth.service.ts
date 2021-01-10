@@ -49,7 +49,7 @@ export class AuthService {
     localStorage.removeItem("expires_at");
   }
 
-  // We check if the current date hasnt passed the expiration date: if true es valid, else the token has expired.
+  // We check if the current date hasnt passed the expiration date: if true is valid, else the token has expired.
   public isLoggedIn() : boolean {
       let currentDateInSeconds : number = Math.trunc(Date.now() / 1000); // The number of seconds since the Unix Epoch, This value is floored to the nearest second, and does not include a milliseconds component.
       let expirationTimeInSeconds : number =  this.getExpirationTimeFromLocalStorage();
