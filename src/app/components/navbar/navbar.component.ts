@@ -12,9 +12,9 @@ export class NavbarComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    console.log("Entra NGONINIT");
     this.authService.isLoggedIn$.subscribe((value) => { 
-      console.log("DESDE NAVBAR CHECKEO EL LOG IN");
-      console.log(value);
+      console.log("The state of loggedIn from the navBar component " + value);
       this.isLoggedIn = value; 
     });
   }

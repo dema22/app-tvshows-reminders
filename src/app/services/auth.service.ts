@@ -31,31 +31,45 @@ export class AuthService {
     return this.http.post<AuthResponse>(baseUrl+ `/${userEndpoints.LOGIN}`, userCredentials).pipe(
       tap((authResult) => { 
         console.log(authResult);
-        const expirationTime = this.getExpirationTimeFromToken(authResult);
-        this.setSession(expirationTime, authResult);
+        const decodedToken = this.decodeToken(authResult);
+        const expirationTime = this.getExpirationTimeFromToken(decodedToken);
+        const idUserRole = this.getUserRoleIdFromToken(decodedToken);
+        this.setSession(expirationTime, authResult, idUserRole);
       })
     );
   }
 
-  // We decoded the token and return its expiration time in seconds.
-  private getExpirationTimeFromToken(authResult) : number {
+  private decodeToken(authResult) {
     const decodedToken = jwt_decode<Token>(authResult.token);
+    return decodedToken;
+  }
+
+  // We return the jwt expiration time in seconds.
+  private getExpirationTimeFromToken(decodedToken : Token) : number {
     const expirationTime : number = decodedToken.exp;
-    console.log(decodedToken);
     console.log("Exp in seconds : " + expirationTime);
     return expirationTime;
   }
 
+  // We return subject info from token : role of the user id.
+  private getUserRoleIdFromToken(decodedToken : Token ): string {
+    const idUserRole : string = decodedToken.sub.split(',')[2];
+    console.log("User role is : " + idUserRole);
+    return idUserRole;
+  }
+
   // We store the token and its expiration time in localStorage entries.
-  private setSession(expirationTime : number, authResult) : void {
+  private setSession(expirationTime : number, authResult, idUserRole: string) : void {
     localStorage.setItem('token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(expirationTime));
+    localStorage.setItem("role_id", idUserRole);
     this._isLoggedIn.next(true);
   }
 
   public logout() : void {
     localStorage.removeItem("token");
     localStorage.removeItem("expires_at");
+    localStorage.removeItem("role_id");
     this._isLoggedIn.next(false);
   }
 
@@ -83,5 +97,11 @@ export class AuthService {
       const expiration = localStorage.getItem("expires_at");
       const expiresAt = JSON.parse(expiration);
       return expiresAt;
+  }
+
+  public getUserRoleromLocalStorage() : number {
+    const role : string = localStorage.getItem("role_id");
+    const roleId : number = JSON.parse(role);
+    return roleId;
   }
 }
