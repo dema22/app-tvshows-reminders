@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Credentials } from 'src/app/interfaces/Credentials';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthStoreService } from 'src/app/services/auth-store.service';
 
 @Component({
   selector: 'app-log-in',
@@ -19,7 +19,7 @@ export class LogInComponent implements OnInit {
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective; // Directive to clear form and valitations.
 
   constructor(
-    private authService: AuthService,
+    private authStore: AuthStoreService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -28,6 +28,7 @@ export class LogInComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required],
     });
+    this.authStore.isLoggedIn();
   }
 
   // When we submit, we will mapped the information to our Credentials Type
@@ -51,7 +52,7 @@ export class LogInComponent implements OnInit {
 
   // We call the service so we can log in.
   userLogIn(userCredentials: Credentials): void {
-    this.authService.logIn(userCredentials).subscribe();
+    this.authStore.logIn(userCredentials);
   }
 
   // The form will get reset without validation trigger.

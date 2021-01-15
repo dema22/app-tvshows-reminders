@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
+import { AuthStoreService } from './auth-store.service';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -9,15 +10,15 @@ import { AuthService } from './auth.service';
 // The canActivate method returns a boolean indicating whether or not navigation to a route should be allowed. 
 export class AuthGuardService implements CanActivate {
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authStore: AuthStoreService, private router: Router) { }
 
   // If user is logged in and its id role is 1 (USER), we let them pass to the route.
   // If not , we are protecting this route, we make a logOut and redirect to logIn route.
   canActivate(): boolean {
-    if(this.authService.isLoggedIn() &&  this.authService.getUserRoleromLocalStorage() === 1)
+    if(this.authStore.isLoggedIn() &&  this.authStore.getUserRoleromLocalStorage() === 1)
       return true;
 
-    this.authService.logout();
+    this.authStore.logout();
     this.router.navigate(['logIn']);
     return false;
   }
