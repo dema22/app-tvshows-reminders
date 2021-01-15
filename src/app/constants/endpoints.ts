@@ -6,3 +6,8 @@ export const userEndpoints = {
     PROFILE: 'user/profile/me'
 } as const;
 
+export const tvShowEndpoints = {
+    LOAD_TVSHOWS : 'tvShow/file',
+    BASIC_INFO_TVSHOWS_BY_NAME : '/tvShow/',
+    BASIC_INFO_TVSHOWS_BY_ID: 'tvShow/'
+} as const;

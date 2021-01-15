@@ -26,7 +26,8 @@ export class AuthInterceptorService implements HttpInterceptor {
 
     // Public endpoints we dont need to set auth header.
     if(req.url == (endpoints.baseUrl+ `/${endpoints.userEndpoints.LOGIN}`) ||
-      req.url == (endpoints.baseUrl+ `/${endpoints.userEndpoints.ADD_USER}`)) {
+      req.url == (endpoints.baseUrl+ `/${endpoints.userEndpoints.ADD_USER}`) ||
+      req.url == (endpoints.baseUrl+ `${endpoints.tvShowEndpoints.BASIC_INFO_TVSHOWS_BY_NAME}`)) {
       console.log("Url publicas");
       return next.handle(req);
     }
