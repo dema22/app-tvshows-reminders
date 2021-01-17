@@ -23,9 +23,9 @@ export class TvShowBasicInfoSearchBarService {
           originalNameTvShow: tvShowName
       }
     }
-    return this.http.get<BasicTvShowInfo[]>(baseUrl+ `${tvShowEndpoints.BASIC_INFO_TVSHOWS_BY_NAME}`, config).pipe(
+    return this.http.get<BasicTvShowInfo[]>(baseUrl+ `${tvShowEndpoints.BASIC_INFO_TVSHOWS_BY_NAME}`, config);/*.pipe(
       tap((resultTvShowInfo) => console.log(resultTvShowInfo))
-    )
+    )*/
   }
   
   constructor(private http: HttpClient) { }

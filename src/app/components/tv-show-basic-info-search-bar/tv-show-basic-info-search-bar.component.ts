@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-info-search-bar.service';
+import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.component';
 
 @Component({
   selector: 'app-tv-show-basic-info-search-bar',
@@ -28,7 +29,7 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
   }
 
   onChanges(){
-    
+    //this.searchForm.get('searchBar').setValue(dropdownValue, { emitEvent: false });
     this.basicTvShowsInformation$ = this.searchForm.get('searchBar').valueChanges.pipe(
         // wait 300ms after each keystroke before considering the term
         debounceTime(300),
@@ -38,10 +39,11 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
       );
   }
 
-  /*openTvShowDialog(): void {
-    let dialogRef = this.dialog.open(DetailsTvShowComponent,{
-      height: '600px',
-      width: '600px',
+  openTvShowDialog(idTvShow: number): void {
+    let dialogRef = this.dialog.open(TvShowDetailsComponent,{
+      height: '800px',
+      width: '800px',
+      data: idTvShow
     });
-  }*/
+  }
 }

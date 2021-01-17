@@ -9,5 +9,9 @@ export const userEndpoints = {
 export const tvShowEndpoints = {
     LOAD_TVSHOWS : 'tvShow/file',
     BASIC_INFO_TVSHOWS_BY_NAME : '/tvShow/',
-    BASIC_INFO_TVSHOWS_BY_ID: 'tvShow/'
+    BASIC_INFO_TVSHOWS_BY_ID: '/tvShow/'
 } as const;
+
+export const tvShowDetailEndpoints = {
+    DETAILS_TV_SHOW : '/tvShowDetails/'
+}

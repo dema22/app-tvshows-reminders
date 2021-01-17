@@ -35,6 +35,7 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { DetailsTvShowComponent } from './components/details-tv-show/details-tv-show.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     LogInComponent,
     ErrorDialogComponent,
     LogOutComponent,
-    ProfileComponent
+    ProfileComponent,
+    DetailsTvShowComponent
   ],
   imports: [
     BrowserModule,
