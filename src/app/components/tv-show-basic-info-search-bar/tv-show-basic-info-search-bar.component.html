@@ -1,3 +1,15 @@
-<p>tv-show-basic-info-search-bar works! This is the SEARCH BAR COMPONENT!</p>
-
-
+<form [formGroup]="searchForm">
+  <mat-form-field>
+    <mat-label>Search Tv Show</mat-label>
+    <input type="text"
+           placeholder="Serach tv show by name"
+           matInput
+           formControlName="searchBar"
+           [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let tvShow of basicTvShowsInformation$ | async" [value]="tvShow">
+        <span>{{tvShow.id }}  {{tvShow.original_name}}</span>
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

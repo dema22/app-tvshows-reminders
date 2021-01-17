@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-info-search-bar.service';
 
@@ -8,18 +12,36 @@ import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-
   styleUrls: ['./tv-show-basic-info-search-bar.component.css'],
 })
 export class TvShowBasicInfoSearchBarComponent implements OnInit {
+
+  searchForm : FormGroup;
+  basicTvShowsInformation$ : Observable<BasicTvShowInfo[]>;
   
-  basicTvShowInformation : BasicTvShowInfo[];
-  constructor(private tvShowBasicInfoService : TvShowBasicInfoSearchBarService) {}
+  constructor(private fb: FormBuilder,
+             private tvShowBasicInfoService : TvShowBasicInfoSearchBarService,
+             private dialog: MatDialog ) {}
 
   ngOnInit(): void {
-    this.getTvShowBasicInfo();
+    this.searchForm = this.fb.group({
+      searchBar : ''
+    });
+    this.onChanges();
   }
 
-  getTvShowBasicInfo(): void {
-    console.log("entra");
-    this.tvShowBasicInfoService.getBasicTvShowInfoByName("Game of t").subscribe((result) => {
-      this.basicTvShowInformation = result;
-    });
+  onChanges(){
+    
+    this.basicTvShowsInformation$ = this.searchForm.get('searchBar').valueChanges.pipe(
+        // wait 300ms after each keystroke before considering the term
+        debounceTime(300),
+        // ignore new term if same as previous term
+        distinctUntilChanged(),
+        switchMap(value => this.tvShowBasicInfoService.getBasicTvShowInfoByName(value))
+      );
   }
+
+  /*openTvShowDialog(): void {
+    let dialogRef = this.dialog.open(DetailsTvShowComponent,{
+      height: '600px',
+      width: '600px',
+    });
+  }*/
 }
