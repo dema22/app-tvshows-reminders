@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-info-search-bar.service';
+import { isString } from 'util';
 import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.component';
 
 @Component({
@@ -29,8 +30,8 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
   }
 
   onChanges(){
-    //this.searchForm.get('searchBar').setValue(dropdownValue, { emitEvent: false });
     this.basicTvShowsInformation$ = this.searchForm.get('searchBar').valueChanges.pipe(
+        filter(isString),
         // wait 300ms after each keystroke before considering the term
         debounceTime(300),
         // ignore new term if same as previous term
@@ -39,7 +40,15 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
       );
   }
 
+  displayFn(tvShow: BasicTvShowInfo): string {
+    return tvShow ? tvShow.originalName : '';
+  }
+
   openTvShowDialog(idTvShow: number): void {
+    console.log("ENTRA A ABRIR DIALOGO");
+
+    this.searchForm.get('searchBar').setValue('');
+
     let dialogRef = this.dialog.open(TvShowDetailsComponent,{
       height: '800px',
       width: '800px',

@@ -20,7 +20,6 @@ export class TvShowDetailsComponent implements OnInit {
   }
 
   getTvShowDetails(idTvShow: number): void {
-    console.log("entra");
     this.tvShowDetailsService.getTvShowDetailsById(idTvShow).subscribe((tvShowsResult) => this.tvShowDetails = tvShowsResult);
   }
 
