@@ -4,6 +4,7 @@ import { User } from 'src/app/interfaces/User';
 import { UserService } from '../../services/user.service';
 import { Validators, FormBuilder, FormGroup, FormGroupDirective } from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { AuthStoreService } from 'src/app/services/auth-store.service';
 
 @Component({
   selector: 'app-registration',
@@ -14,7 +15,7 @@ export class RegistrationComponent implements OnInit {
   userRegistrationForm: FormGroup;
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective; // Directive to clear form and valitations.
 
-  constructor(private userService : UserService, private formBuilder : FormBuilder) { }
+  constructor(private userService : UserService, private formBuilder : FormBuilder, private authStore: AuthStoreService) { }
 
   ngOnInit(): void {
     this.userRegistrationForm = this.formBuilder.group({
@@ -24,6 +25,7 @@ export class RegistrationComponent implements OnInit {
       password: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]]
     });
+    this.authStore.isLoggedIn();
   }
 
   // When the user submit the registration form, we will mapped the information to our User Type

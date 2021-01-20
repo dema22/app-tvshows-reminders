@@ -14,8 +14,6 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent},
   { path: 'logOut', component: LogOutComponent},
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuardService]} // Every time a user want to access this private route the auth guard is going to run. If authenticated they get to the resource, if not, we redirect them to log in.
-  // otherwise redirect to home
-  //{ path: '**', redirectTo: '' }
 ];
 
 @NgModule({

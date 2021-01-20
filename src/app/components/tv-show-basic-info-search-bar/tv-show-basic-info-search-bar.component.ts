@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/operators';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
+import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-info-search-bar.service';
 import { isString } from 'util';
 import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.component';
@@ -20,13 +21,15 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
   
   constructor(private fb: FormBuilder,
              private tvShowBasicInfoService : TvShowBasicInfoSearchBarService,
-             private dialog: MatDialog ) {}
+             private dialog: MatDialog,
+             private authStore: AuthStoreService ) {}
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
       searchBar : ''
     });
     this.onChanges();
+    this.authStore.isLoggedIn();
   }
 
   onChanges(){
