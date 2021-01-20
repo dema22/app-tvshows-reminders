@@ -63,7 +63,6 @@ export class AuthStoreService {
     localStorage.setItem("expires_at", JSON.stringify(expirationTime));
     localStorage.setItem("role_id", idUserRole);
     this._isLoggedIn.next(true);
-    console.log("asd");
   }
 
   public logout() : void {
@@ -82,10 +81,6 @@ export class AuthStoreService {
       //console.log("Current date is: "  + currentDateInSeconds);
       this._isLoggedIn.next(currentDateInSeconds <= expirationTimeInSeconds);
   }
-
-  /*public isLoggedOut() : boolean {
-      return !this.isLoggedIn();
-  }*/
 
   private getExpirationTimeFromLocalStorage() : number {
       const expiration = localStorage.getItem("expires_at");

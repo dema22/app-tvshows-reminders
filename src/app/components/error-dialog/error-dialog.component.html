@@ -1,12 +1,18 @@
 <h1 mat-dialog-title>An error has occurred!</h1>
 <div mat-dialog-content>
-  <p *ngIf="error.error.statusCode">
+  <ng-container *ngIf="error.error.statusCode">
     <b>Status Code: {{ error.error.statusCode }}</b>
-  </p>
+  </ng-container>
+  <ng-container *ngIf="error.error.status">
+    <b>Status Code: {{ error.status }}</b>
+  </ng-container>
   <p>Something went wrong!</p>
-  <p class="error-message">
-    {{ error.error.messageErrors }}
-  </p>
+  <ng-container *ngIf="error.error.messageErrors" class="error-message">
+    <span>{{ error.error.messageErrors }}</span>
+  </ng-container>
+  <ng-container *ngIf="error.error.message" class="error-message">
+    <span>{{ error.error.message }}</span>
+  </ng-container>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button mat-dialog-close color="primary">Close</button>
