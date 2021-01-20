@@ -5,6 +5,7 @@ import { AuthResponse } from '../interfaces/AuthResponse';
 import { Credentials } from '../interfaces/Credentials';
 import { AuthService } from './auth.service';
 import jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthStoreService {
   private _isLoggedIn: Subject<boolean> = new Subject<boolean>();
   public readonly isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   public logIn(userCredentials: Credentials) : Observable<AuthResponse>{
     let obs: Observable<AuthResponse> = this.authService.logIn(userCredentials);
@@ -33,7 +34,7 @@ export class AuthStoreService {
           this.setSession(expirationTime, authResult, idUserRole);
         }
     );
-    
+    this.router.navigate(['home']);
     return obs;
   }
 
@@ -62,6 +63,7 @@ export class AuthStoreService {
     localStorage.setItem("expires_at", JSON.stringify(expirationTime));
     localStorage.setItem("role_id", idUserRole);
     this._isLoggedIn.next(true);
+    console.log("asd");
   }
 
   public logout() : void {
@@ -69,27 +71,21 @@ export class AuthStoreService {
     localStorage.removeItem("expires_at");
     localStorage.removeItem("role_id");
     this._isLoggedIn.next(false);
+    this.router.navigate(['logIn']);
   }
 
   // We check if the current date hasnt passed the expiration date: if true is valid, else the token has expired.
-  public isLoggedIn() : boolean {
+  public isLoggedIn() : void {
       let currentDateInSeconds : number = Math.trunc(Date.now() / 1000); // The number of seconds since the Unix Epoch, This value is floored to the nearest second, and does not include a milliseconds component.
       let expirationTimeInSeconds : number =  this.getExpirationTimeFromLocalStorage();
       //console.log("Exp time from local storage is : " + expirationTimeInSeconds);
       //console.log("Current date is: "  + currentDateInSeconds);
-      
-      if(currentDateInSeconds <= expirationTimeInSeconds){
-        this._isLoggedIn.next(true);
-        return true;
-      }else{
-        this._isLoggedIn.next(false);
-        return false;
-      }
+      this._isLoggedIn.next(currentDateInSeconds <= expirationTimeInSeconds);
   }
 
-  public isLoggedOut() : boolean {
+  /*public isLoggedOut() : boolean {
       return !this.isLoggedIn();
-  }
+  }*/
 
   private getExpirationTimeFromLocalStorage() : number {
       const expiration = localStorage.getItem("expires_at");

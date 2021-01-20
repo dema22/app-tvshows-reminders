@@ -53,6 +53,7 @@ export class LogInComponent implements OnInit {
   // We call the service so we can log in.
   userLogIn(userCredentials: Credentials): void {
     this.authStore.logIn(userCredentials);
+    
   }
 
   // The form will get reset without validation trigger.

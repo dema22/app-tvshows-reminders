@@ -1,8 +1,26 @@
-<p>tv-show-details works!</p>
 <mat-card>
-    <mat-card-title>Details Tv Show</mat-card-title>
+  <div *ngIf="!isLoading">
+    <mat-card-title>
+      {{ tvShowDetails.name }}
+    </mat-card-title>
     <mat-card-content>
-      {{ idTvShow }}
+      <span>{{ tvShowDetails.tagline }}</span>
+      <div class="flex-container">
+        <img src="{{tvShowDetails.backdropPath}}" class="img-item"/>
+        <div class="flex-item-container">
+          <span class="flex-item"> {{ tvShowDetails.overview}}</span>
+          <div class="flex-item-container-two">
+            <span class="flex-item-genre"> Genre: {{ tvShowDetails.genres}}</span>
+            <span class="flex-item-two">Status: {{ tvShowDetails.status}}</span>
+            <span class="flex-item-two">Original Language: {{ tvShowDetails.originalLanguage}}</span>
+            <span class="flex-item-two">Episode run time: {{ tvShowDetails.episodeRunTime}} m</span>
+            <span class="flex-item-two">Type: {{ tvShowDetails.type}}</span>
+          </div>
+        </div>
+        <span class="flex-item-two">Number of seasons: {{ tvShowDetails.numberOfSeasons}} </span>
+        <span class="flex-item-two">Number of episodes: {{ tvShowDetails.numberOfEpisodes}} </span>
+        <iframe width="100%" height="400px" src="https://www.youtube.com/embed/bjqEWgDVPe0"></iframe>
+      </div>
     </mat-card-content>
-  </mat-card>
-  
+  </div>
+</mat-card>

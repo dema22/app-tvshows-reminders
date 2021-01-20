@@ -11,16 +11,22 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class TvShowDetailsComponent implements OnInit {
 
+  isLoading : boolean;
   tvShowDetails = {} as TvShowDetails;
   constructor(@Inject(MAT_DIALOG_DATA) public idTvShow : number,
               private tvShowDetailsService: TvShowDetailsService) { }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.getTvShowDetails(this.idTvShow);
   }
 
   getTvShowDetails(idTvShow: number): void {
-    this.tvShowDetailsService.getTvShowDetailsById(idTvShow).subscribe((tvShowsResult) => this.tvShowDetails = tvShowsResult);
+    this.tvShowDetailsService.getTvShowDetailsById(idTvShow).subscribe((tvShowsResult) => {
+    this.tvShowDetails = tvShowsResult;
+    console.log(this.tvShowDetails);
+    this.isLoading = false;
+    });
   }
 
 }

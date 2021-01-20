@@ -30,9 +30,6 @@ export class AuthInterceptorService implements HttpInterceptor {
       req.url.includes((endpoints.baseUrl+ `${endpoints.tvShowDetailEndpoints.DETAILS_TV_SHOW}`))) {
       console.log("Url publicas");
       return next.handle(req);
-    }else{
-      console.log("No esta entrando a mandar la request como public");
-      console.log("Esta incluida : " + req.url.includes((endpoints.baseUrl+ `${endpoints.tvShowEndpoints.BASIC_INFO_TVSHOWS_BY_NAME}`)))
     }
 
     if (token) {

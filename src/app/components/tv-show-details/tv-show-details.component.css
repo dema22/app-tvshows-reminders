@@ -1,0 +1,39 @@
+.flex-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.flex-item {
+    width: 100%;
+    margin: 10px;
+    text-align: justify;
+}
+
+.flex-item-genre {
+    width: 100%;
+    margin-left: 5px;
+    margin-top: 10px;
+    text-align: justify;
+}
+
+.flex-item-two {
+    width: 100%;
+    margin: 5px;
+    text-align: justify;
+}
+
+.flex-item-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-item-container-two {
+    display: flex;
+    flex-direction: column;
+}
+
+.img-item{
+    width: 100%;
+    height: auto;
+}

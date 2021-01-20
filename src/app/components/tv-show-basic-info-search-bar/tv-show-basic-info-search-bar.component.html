@@ -7,7 +7,7 @@
            formControlName="searchBar"
            [matAutocomplete]="auto">
     <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let tvShow of basicTvShowsInformation$ | async" [value]="tvShow" (click)="openTvShowDialog(tvShow.id)" (onSelectionChange)="openTvShowDialog(tvShow.id)"> <!--(keypress.enter)="openTvShowDialog(tvShow.id)"--> 
+      <mat-option *ngFor="let tvShow of basicTvShowsInformation$ | async" [value]="tvShow" (onSelectionChange)="openTvShowDialog(tvShow.id)"> <!--(click)="openTvShowDialog(tvShow.id)"     (keypress.enter)="openTvShowDialog(tvShow.id)"--> 
         <span>{{tvShow.original_name}}</span>
       </mat-option>
     </mat-autocomplete>
