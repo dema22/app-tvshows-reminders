@@ -34,7 +34,7 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
 
   onChanges(){
     this.basicTvShowsInformation$ = this.searchForm.get('searchBar').valueChanges.pipe(
-        filter(isString),
+        filter((value) => typeof value === 'string'), //isString
         // wait 300ms after each keystroke before considering the term
         debounceTime(300),
         // ignore new term if same as previous term

@@ -15,9 +15,9 @@ export class AuthGuardService implements CanActivate {
   // If user is logged in and its id role is 1 (USER), we let them pass to the route.
   // If not , we are protecting this route, we make a logOut and redirect to logIn route.
   canActivate(): boolean {
-    this.authStore.isLoggedIn();
-    
-    if(this.authStore.isLoggedIn$ &&  this.authStore.getUserRoleromLocalStorage() === 1)
+    //this.authStore.isLoggedIn();
+    //console.log(this.authStore.isLoggedIn$);
+    if(this.authStore.isLoggedIn() &&  this.authStore.getUserRoleromLocalStorage() === 1)
       return true;
 
     this.authStore.logout();

@@ -1,6 +1,6 @@
 import { Token } from  '../interfaces/Token';
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
 import { AuthResponse } from '../interfaces/AuthResponse';
 import { Credentials } from '../interfaces/Credentials';
 import { AuthService } from './auth.service';
@@ -17,7 +17,7 @@ export class AuthStoreService {
   Subject:  does not return the current value on Subscription. It triggers only on .next(value) call 
   and return/output the value.
   */
-  private _isLoggedIn: Subject<boolean> = new Subject<boolean>();
+  private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public readonly isLoggedIn$: Observable<boolean> = this._isLoggedIn.asObservable();
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -74,12 +74,14 @@ export class AuthStoreService {
   }
 
   // We check if the current date hasnt passed the expiration date: if true is valid, else the token has expired.
-  public isLoggedIn() : void {
+  public isLoggedIn() : boolean {
       let currentDateInSeconds : number = Math.trunc(Date.now() / 1000); // The number of seconds since the Unix Epoch, This value is floored to the nearest second, and does not include a milliseconds component.
       let expirationTimeInSeconds : number =  this.getExpirationTimeFromLocalStorage();
       //console.log("Exp time from local storage is : " + expirationTimeInSeconds);
       //console.log("Current date is: "  + currentDateInSeconds);
       this._isLoggedIn.next(currentDateInSeconds <= expirationTimeInSeconds);
+      // get the current value of the subject and return it
+      return this._isLoggedIn.getValue();
   }
 
   private getExpirationTimeFromLocalStorage() : number {

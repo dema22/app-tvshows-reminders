@@ -3,6 +3,7 @@
     <span class="spacer-nav"></span>
     <a class="spacer-nav-actions" routerLink="/home">Home</a>
     <div *ngIf="isLoggedIn; else elseBlock"> <!-- is the user is logged in -->
+        <a class="spacer-nav-actions" routerLink="/reminders">Reminders</a>
         <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
         <a class="spacer-nav-actions" routerLink="/profile">Profile</a>
     </div>
