@@ -11,10 +11,10 @@ import { PageResponseReminder } from '../interfaces/PageResponseReminder';
 export class TvShowRemindersService {
 
   /* GET tv shows reminders from the server */
-  getTvShowRemindersPaginated(page: number, size:number): Observable<any> {// PageResponseReminder
+  getTvShowRemindersPaginated(page: number, size:number): Observable<PageResponseReminder> {//  any
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString()); // ?page=${page}&size=${size}`
 
-    return this.http.get<any>(baseUrl+ `${tvShowReminderEndpoints.REMINDERDS_PAGINATED}`, {params}).pipe( // PageResponseReminder
+    return this.http.get<PageResponseReminder>(baseUrl+ `${tvShowReminderEndpoints.REMINDERDS_PAGINATED}`, {params}).pipe( //  any
       tap((result) => console.log(result)) 
     );
   }

@@ -17,7 +17,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   loadReminders(page: number, size:number) {
     this.tvShowReminderService.getTvShowRemindersPaginated(page,size).pipe(
       tap((reminders) => console.log(reminders))     
-    ).subscribe((pageReminder) => this.tvShowRemindersSubject.next(pageReminder.reminders));
+    ).subscribe((pageReminder) => this.tvShowRemindersSubject.next(pageReminder.items));
   }
 
   // This method will be called once by the Data Table at table bootstrap time. The Data Table expects this method to return an Observable, and the values of that observable contain the data that the Data Table needs to display.
