@@ -15,3 +15,7 @@ export const tvShowEndpoints = {
 export const tvShowDetailEndpoints = {
     DETAILS_TV_SHOW : '/tvShowDetails/'
 }
+
+export const tvShowReminderEndpoints = {
+    REMINDERDS_PAGINATED : '/tvShowReminder/paginated'
+}

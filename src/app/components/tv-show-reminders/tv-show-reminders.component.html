@@ -1,1 +1,65 @@
 <p>tv-show-reminders works!</p>
+<mat-table
+  [dataSource]="dataSource"
+>
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
+    <mat-cell *matCellDef="let reminder">
+        <ng-container *ngIf="reminder?.tvShowDetailsResponseDTO?.name; else elseBlock">
+            {{ reminder.tvShowDetailsResponseDTO.name }}
+        </ng-container>
+        <ng-template #elseBlock>
+            {{ reminder.userTvShowDTO.nameTvShow}}
+        </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="genre">
+    <mat-header-cell *matHeaderCellDef>Genre</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+        <ng-container *ngIf="reminder?.tvShowDetailsResponseDTO?.genres; else elseBlock">
+            {{ reminder.tvShowDetailsResponseDTO.genres }}
+        </ng-container>
+        <ng-template #elseBlock>
+            {{ reminder.userTvShowDTO.genre}}
+        </ng-template>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="currentSeason">
+    <mat-header-cell *matHeaderCellDef>Watching Season</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+        {{reminder.currentSeason}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="currentEpisode">
+    <mat-header-cell *matHeaderCellDef>Current Episode</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+        {{reminder.currentEpisode}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="completed">
+    <mat-header-cell *matHeaderCellDef>completed</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+        {{reminder.completed}}
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="personalRating">
+    <mat-header-cell *matHeaderCellDef>Personal Rating</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+        {{reminder.personalRating}}
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>
+
+<!--<mat-paginator
+  [length]="course?.lessonsCount"
+  [pageSize]="3"
+  [pageSizeOptions]="[3, 5, 10]"
+></mat-paginator>-->

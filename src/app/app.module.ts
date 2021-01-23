@@ -27,7 +27,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-
+import {MatTableModule} from '@angular/material/table';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -68,6 +68,7 @@ import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show
     MatButtonModule,
     MatDialogModule,
     MatAutocompleteModule,
+    MatTableModule,
     // Routing
     AppRoutingModule,
     // Forms
