@@ -1,5 +1,5 @@
 
 export interface BasicTvShowInfo {
     id:number;
-    originalName:string;
+    original_name:string;
 }

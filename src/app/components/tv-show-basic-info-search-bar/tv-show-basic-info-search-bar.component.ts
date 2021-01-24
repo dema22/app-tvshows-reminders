@@ -43,7 +43,7 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
   }
 
   displayFn(tvShow: BasicTvShowInfo): string {
-    return tvShow ? tvShow.originalName : '';
+    return tvShow ? tvShow.original_name : '';
   }
 
   openTvShowDialog(idTvShow: number): void {

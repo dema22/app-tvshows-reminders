@@ -37,7 +37,7 @@ export class TvShowReminderDialogComponent implements OnInit {
     console.log(this.saveReminderForm.getRawValue().currentEpisode);
     console.log(this.saveReminderForm.getRawValue().currentSeason);
     let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
-    let basicTvShowInfo : BasicTvShowInfo = { id: this.idTvShow, originalName: null}
+    let basicTvShowInfo : BasicTvShowInfo = { id: this.idTvShow, original_name: null}
 
     let reminder: TvShowReminderEntity = {
       user: user,
