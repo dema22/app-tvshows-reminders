@@ -46,7 +46,7 @@ export class TvShowReminderDialogComponent implements OnInit {
       completed: this.saveReminderForm.value.completed,
       currentSeason: this.saveReminderForm.getRawValue().currentSeason,     
       currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  
-      personalRating: this.saveReminderForm.value.personalRating,
+      personalRating: this.saveReminderForm.value.personalRating
     };
     console.log(reminder);
     this.saveTvShowReminder(reminder);
