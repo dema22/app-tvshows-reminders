@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
+import { TvShowReminderEntity } from '../interfaces/TvShowReminderEntity';
 import { TvShowRemindersService } from './tv-show-reminders.service';
 
 @Injectable({
@@ -13,7 +14,8 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   private totalElementsForPagination = new BehaviorSubject<number>(0); 
   public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();
   private tvShowRemindersSubject = new BehaviorSubject<TvShowReminder[]>([]);
-  
+  public readonly tvShowReminder$: Observable<TvShowReminder[]> = this.tvShowRemindersSubject.asObservable();
+
   constructor(private tvShowReminderService: TvShowRemindersService) {}
 
   loadReminders(page: number, size:number) {
@@ -40,7 +42,9 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.tvShowRemindersSubject.complete();
   }
 
-  /*get getTotalElementsForPagination () : number {
-    return this.totalElementsForPagination;
-  }*/
+  saveReminder(reminder: TvShowReminderEntity) : void {
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => {
+      this.loadReminders(0,3);
+    });
+  }
 }

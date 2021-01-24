@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
 import { PageResponseReminder } from 'src/app/interfaces/PageResponseReminder';
@@ -25,14 +25,12 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tvShowRemindersService: TvShowRemindersService,
-              private tvShowDataSource : DataSourceTvShowRemindersService) {}
+  constructor(private tvShowRemindersService: TvShowRemindersService) {}
 
   ngOnInit(): void {
-    this.dataSource = new DataSourceTvShowRemindersService(
-      this.tvShowRemindersService
-    );
+    this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
+
     // Get the total number of element to paginated
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
       console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
@@ -43,12 +41,13 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   ngAfterViewInit() {
     this.paginator.page.pipe(tap(() => this.loadRemindersPage())).subscribe();
+
     // Get the total number of element to paginated
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
       console.log("ngAfterViewInit : Entra calcular la cantida de retorno de paginacion: ");
       this.totalElementsForPagination = totalElementsToPaginated;
       console.log(this.totalElementsForPagination);
-  });
+    });
   }
 
   loadRemindersPage() {
