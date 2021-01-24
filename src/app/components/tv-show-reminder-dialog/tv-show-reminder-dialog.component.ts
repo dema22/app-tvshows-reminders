@@ -4,7 +4,6 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
-import { TvShowReminders } from 'src/app/interfaces/TvShowReminders';
 import { User } from 'src/app/interfaces/User';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
