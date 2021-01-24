@@ -31,7 +31,8 @@ export class AuthStoreService {
           const decodedToken = this.decodeToken(authResult);
           const expirationTime = this.getExpirationTimeFromToken(decodedToken);
           const idUserRole = this.getUserRoleIdFromToken(decodedToken);
-          this.setSession(expirationTime, authResult, idUserRole);
+          const idUser = this.getUserIdFromToken(decodedToken);
+          this.setSession(expirationTime, authResult, idUserRole, idUser);
         }
     );
     this.router.navigate(['home']);
@@ -57,11 +58,19 @@ export class AuthStoreService {
     return idUserRole;
   }
 
-  // We store the token and its expiration time in localStorage entries.
-  private setSession(expirationTime : number, authResult, idUserRole: string) : void {
+  // We return subject info from token :the user id.
+  private getUserIdFromToken(decodedToken : Token ): string {
+    const idUser : string = decodedToken.sub.split(',')[0];
+    console.log("User id is : " + idUser);
+    return idUser;
+  }
+
+  // We store the token, its expiration time and the user id and its role id in localStorage entries.
+  private setSession(expirationTime : number, authResult, idUserRole: string, idUser : string) : void {
     localStorage.setItem('token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(expirationTime));
     localStorage.setItem("role_id", idUserRole);
+    localStorage.setItem("user_id", idUser);
     this._isLoggedIn.next(true);
   }
 
@@ -94,5 +103,11 @@ export class AuthStoreService {
     const role : string = localStorage.getItem("role_id");
     const roleId : number = JSON.parse(role);
     return roleId;
+  }
+
+  public getUserIdFromLocalStorage() : number {
+    const userId : string = localStorage.getItem("user_id");
+    const parseUserId : number = JSON.parse(userId);
+    return parseUserId;
   }
 }

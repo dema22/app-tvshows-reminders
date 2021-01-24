@@ -29,6 +29,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 // Forms
 import { ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +39,7 @@ import { LogOutComponent } from './components/log-out/log-out.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { DetailsTvShowComponent } from './components/details-tv-show/details-tv-show.component';
 import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show-reminders.component';
+import { TvShowReminderDialogComponent } from './components/tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,8 @@ import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show
     LogOutComponent,
     ProfileComponent,
     DetailsTvShowComponent,
-    TvShowRemindersComponent
+    TvShowRemindersComponent,
+    TvShowReminderDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +74,7 @@ import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show
     MatAutocompleteModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCheckboxModule,
     // Routing
     AppRoutingModule,
     // Forms

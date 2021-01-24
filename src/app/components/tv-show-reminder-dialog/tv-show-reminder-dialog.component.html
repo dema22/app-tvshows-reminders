@@ -1,0 +1,83 @@
+<form [formGroup]="saveReminderForm" (ngSubmit)="onSubmit()">
+  <div class="flex-container">
+    <div class="flex-row-item">
+      <mat-label class="label-completed"
+        >Have you finish watching this tv show?
+      </mat-label>
+      <mat-checkbox
+        placeholder="¿Completed?"
+        formControlName="completed"
+        (change)="showOptions($event)"
+      ></mat-checkbox>
+    </div>
+
+    <mat-form-field>
+      <mat-label>Current Season</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="Current Season"
+        formControlName="currentSeason"
+        class="form-control"
+      />
+    </mat-form-field>
+    <ng-container
+      *ngIf="
+        currentSeason.invalid && (currentSeason.dirty || currentSeason.touched)
+      "
+    >
+      <mat-error *ngIf="currentSeason.errors.required">
+        Current Season is required.
+      </mat-error>
+    </ng-container>
+
+    <mat-form-field>
+      <mat-label>Current Episode</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="Current Episode"
+        formControlName="currentEpisode"
+      />
+    </mat-form-field>
+    <ng-container
+      *ngIf="
+        currentEpisode.invalid &&
+        (currentEpisode.dirty || currentEpisode.touched)
+      "
+    >
+      <mat-error *ngIf="currentEpisode.errors.required">
+        Current Episode is required.
+      </mat-error>
+    </ng-container>
+
+    <mat-form-field>
+      <mat-label>Personal Rating</mat-label>
+      <input
+        type="number"
+        matInput
+        placeholder="Rate the show from 1 to 10 please."
+        formControlName="personalRating"
+      />
+    </mat-form-field>
+    <div
+      *ngIf="
+        personalRating.invalid &&
+        (personalRating.dirty || personalRating.touched)
+      "
+    >
+      <mat-error *ngIf="personalRating.errors.required">
+        Rating of the show is required.
+      </mat-error>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!saveReminderForm.valid"
+    >
+      Save Tv Show Reminder
+    </button>
+  </div>
+</form>

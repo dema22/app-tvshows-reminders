@@ -1,0 +1,14 @@
+.flex-container {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+
+.flex-row-item {
+    display: flex;
+    flex-direction: row;
+}
+
+.label-completed {
+    margin-right: 10px
+}
