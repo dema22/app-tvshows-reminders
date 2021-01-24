@@ -6,7 +6,6 @@ import { debounceTime, distinctUntilChanged, filter, switchMap } from 'rxjs/oper
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowBasicInfoSearchBarService } from 'src/app/services/tv-show-basic-info-search-bar.service';
-import { isString } from 'util';
 import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.component';
 
 @Component({

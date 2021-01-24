@@ -10,6 +10,8 @@ import { TvShowRemindersService } from './tv-show-reminders.service';
 })
 export class DataSourceTvShowRemindersService implements DataSource<TvShowReminders> {
 
+  private totalElementsForPagination = new BehaviorSubject<number>(0); 
+  public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();
   private tvShowRemindersSubject = new BehaviorSubject<TvShowReminders[]>([]);
   
   constructor(private tvShowReminderService: TvShowRemindersService) {}
@@ -17,7 +19,12 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   loadReminders(page: number, size:number) {
     this.tvShowReminderService.getTvShowRemindersPaginated(page,size).pipe(
       tap((reminders) => console.log(reminders))     
-    ).subscribe((pageReminder) => this.tvShowRemindersSubject.next(pageReminder.items));
+    ).subscribe((pageReminder) => {
+      if(pageReminder != null) {
+        this.tvShowRemindersSubject.next(pageReminder.items);
+        this.totalElementsForPagination.next(pageReminder.pageDescriptionDTO.totalElements);
+      }
+    });
   }
 
   // This method will be called once by the Data Table at table bootstrap time. The Data Table expects this method to return an Observable, and the values of that observable contain the data that the Data Table needs to display.
@@ -32,4 +39,8 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   disconnect(collectionViewer: CollectionViewer): void {
     this.tvShowRemindersSubject.complete();
   }
+
+  /*get getTotalElementsForPagination () : number {
+    return this.totalElementsForPagination;
+  }*/
 }

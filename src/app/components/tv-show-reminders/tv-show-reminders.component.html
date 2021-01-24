@@ -1,4 +1,4 @@
-<p>tv-show-reminders works!</p>
+<app-tv-show-basic-info-search-bar></app-tv-show-basic-info-search-bar>
 <mat-table
   [dataSource]="dataSource"
 >
@@ -34,14 +34,14 @@
   </ng-container>
 
   <ng-container matColumnDef="currentEpisode">
-    <mat-header-cell *matHeaderCellDef>Current Episode</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Watching Episode</mat-header-cell>
     <mat-cell class="description-cell" *matCellDef="let reminder">
         {{reminder.currentEpisode}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="completed">
-    <mat-header-cell *matHeaderCellDef>completed</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Completed</mat-header-cell>
     <mat-cell class="description-cell" *matCellDef="let reminder">
         {{reminder.completed}}
     </mat-cell>
@@ -58,8 +58,8 @@
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 
-<!--<mat-paginator
-  [length]="course?.lessonsCount"
+<mat-paginator
+  [length]=totalElementsForPagination
   [pageSize]="3"
   [pageSizeOptions]="[3, 5, 10]"
-></mat-paginator>-->
+></mat-paginator>
