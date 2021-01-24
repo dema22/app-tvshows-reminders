@@ -78,6 +78,7 @@ export class AuthStoreService {
     localStorage.removeItem("token");
     localStorage.removeItem("expires_at");
     localStorage.removeItem("role_id");
+    localStorage.removeItem("user_id");
     this._isLoggedIn.next(false);
     this.router.navigate(['logIn']);
   }

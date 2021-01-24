@@ -1,8 +1,13 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
+import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
+import { TvShowReminders } from 'src/app/interfaces/TvShowReminders';
+import { User } from 'src/app/interfaces/User';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
+import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
 
 @Component({
   selector: 'app-tv-show-reminder-dialog',
@@ -13,9 +18,11 @@ export class TvShowReminderDialogComponent implements OnInit {
   saveReminderForm: FormGroup;
 
   constructor(
+    private dialogRef: MatDialogRef<TvShowReminderDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public idTvShow: number,
     private formBuilder: FormBuilder,
-    private authStore: AuthStoreService
+    private authStore: AuthStoreService,
+    private tvShowReminderService : TvShowRemindersService
   ) {}
 
   ngOnInit(): void {
@@ -30,21 +37,24 @@ export class TvShowReminderDialogComponent implements OnInit {
   onSubmit() {
     console.log(this.saveReminderForm.getRawValue().currentEpisode);
     console.log(this.saveReminderForm.getRawValue().currentSeason);
+    let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
+    let basicTvShowInfo : BasicTvShowInfo = { id: this.idTvShow, originalName: null}
 
-    let reminder: any = {
-      user: {
-        idUser: this.authStore.getUserIdFromLocalStorage(),
-      },
-      basicTvShowInfo: {
-        id: this.idTvShow,
-      },
-      userTvShow: null, // we always set it to null because we are creating a tv show reminder from a tv show from the API.
+    let reminder: TvShowReminderEntity = {
+      user: user,
+      basicTvShowInfo: basicTvShowInfo,
+      userTvShow: null, // we always set it to null because we are creating a tv show reminder from a tv show from the search bar!
       completed: this.saveReminderForm.value.completed,
-      currentSeason: this.saveReminderForm.getRawValue().currentSeason,     //this.saveReminderForm.value.currentSeason,
-      currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  //this.saveReminderForm.value.currentEpisode,
+      currentSeason: this.saveReminderForm.getRawValue().currentSeason,     
+      currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  
       personalRating: this.saveReminderForm.value.personalRating,
     };
     console.log(reminder);
+    this.saveTvShowReminder(reminder);
+  }
+
+  saveTvShowReminder(reminder: TvShowReminderEntity) {
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => this.dialogRef.close());
   }
 
   showOptions(event:MatCheckboxChange): void {

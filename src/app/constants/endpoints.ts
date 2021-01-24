@@ -17,5 +17,6 @@ export const tvShowDetailEndpoints = {
 }
 
 export const tvShowReminderEndpoints = {
-    REMINDERDS_PAGINATED : '/tvShowReminder/paginated'
+    REMINDERDS_PAGINATED : '/tvShowReminder/paginated',
+    SAVE_REMINDER: '/tvShowReminder/'
 }
