@@ -5,7 +5,6 @@ import { tap } from 'rxjs/operators';
 import { baseUrl, tvShowReminderEndpoints } from '../constants/endpoints';
 import { PageResponseReminder } from '../interfaces/PageResponseReminder';
 import { TvShowReminderEntity } from '../interfaces/TvShowReminderEntity';
-import { TvShowReminders } from '../interfaces/TvShowReminders';
 
 @Injectable({
   providedIn: 'root'

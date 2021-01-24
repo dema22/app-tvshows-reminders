@@ -1,7 +1,7 @@
 import { PageDescription } from "./PageDescription";
-import { TvShowReminders } from "./TvShowReminders";
+import { TvShowReminder } from "./TvShowReminder";
 
 export interface PageResponseReminder {
-    items: TvShowReminders[];
+    items: TvShowReminder[];
     pageDescriptionDTO: PageDescription;
 }

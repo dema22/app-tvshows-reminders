@@ -2,17 +2,17 @@ import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { TvShowReminders } from '../interfaces/TvShowReminders';
+import { TvShowReminder } from '../interfaces/TvShowReminder';
 import { TvShowRemindersService } from './tv-show-reminders.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataSourceTvShowRemindersService implements DataSource<TvShowReminders> {
+export class DataSourceTvShowRemindersService implements DataSource<TvShowReminder> {
 
   private totalElementsForPagination = new BehaviorSubject<number>(0); 
   public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();
-  private tvShowRemindersSubject = new BehaviorSubject<TvShowReminders[]>([]);
+  private tvShowRemindersSubject = new BehaviorSubject<TvShowReminder[]>([]);
   
   constructor(private tvShowReminderService: TvShowRemindersService) {}
 
@@ -30,7 +30,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   // This method will be called once by the Data Table at table bootstrap time. The Data Table expects this method to return an Observable, and the values of that observable contain the data that the Data Table needs to display.
   // This method returns an Observable that emits the reminders data.. we don't want to expose the internal subject tvShowRemindersSubject directly.
   // This gives the data table (or any other subscriber) the ability to subscribe to the reminders data observable, without being able to emit values for that same observable.
-  connect(collectionViewer: CollectionViewer): Observable<TvShowReminders[]> {
+  connect(collectionViewer: CollectionViewer): Observable<TvShowReminder[]> {
     console.log('Connecting data source');
     return this.tvShowRemindersSubject.asObservable();
   }

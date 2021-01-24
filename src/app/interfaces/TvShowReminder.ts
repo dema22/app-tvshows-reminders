@@ -1,10 +1,10 @@
 import { TvShowDetails } from './TvShowDetails';
 import { UserTvShow } from './UserTvShow';
 
-export interface TvShowReminders {
+export interface TvShowReminder {
   idTvShowReminder: number;
-  userTvShow: UserTvShow;
-  tvShowDetails: TvShowDetails;
+  userTvShowDTO: UserTvShow;
+  tvShowDetailsResponseDTO: TvShowDetails;
   completed: boolean;
   currentSeason: number;
   currentEpisode: number;
