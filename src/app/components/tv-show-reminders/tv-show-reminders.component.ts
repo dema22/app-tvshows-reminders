@@ -16,6 +16,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   reminder = {} as PageResponseReminder;
   dataSource: DataSourceTvShowRemindersService;
   displayedColumns = [
+    'posterImg',
     'name',
     'genre',
     'currentSeason',

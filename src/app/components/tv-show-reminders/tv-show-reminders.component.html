@@ -1,7 +1,20 @@
 <app-tv-show-basic-info-search-bar></app-tv-show-basic-info-search-bar>
-<mat-table
+<mat-table class="reminders-table"
   [dataSource]="dataSource"
 >
+  <ng-container matColumnDef="posterImg">
+    <mat-header-cell *matHeaderCellDef>Poster</mat-header-cell>
+    <mat-cell class="posterImg-cell" *matCellDef="let reminder">
+        <ng-container *ngIf="reminder?.tvShowDetailsResponseDTO?.posterPath; else elseBlock">
+          <img src="{{ reminder.tvShowDetailsResponseDTO.posterPath }}" class="img-poster"/>
+        </ng-container>
+        <ng-template #elseBlock>
+            <span> There is no image for this tv show. </span>
+        </ng-template>
+    </mat-cell>
+  </ng-container>
+
+
   <ng-container matColumnDef="name">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
     <mat-cell *matCellDef="let reminder">
@@ -62,4 +75,5 @@
   [length]=totalElementsForPagination
   [pageSize]="3"
   [pageSizeOptions]="[3, 5, 10]"
+  clas="reminders-paginator"
 ></mat-paginator>
