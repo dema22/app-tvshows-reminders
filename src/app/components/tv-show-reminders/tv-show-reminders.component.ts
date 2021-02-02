@@ -50,15 +50,10 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
+  // We are using the AfterViewInit lifecycle hook because we need to make sure that the paginator component queried via @ViewChild is already available.
   ngAfterViewInit() {
     this.paginator.page.pipe(tap(() => this.loadRemindersPage())).subscribe();
-
-    // Get the total number of element to paginated
-    this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
-      console.log("ngAfterViewInit : Entra calcular la cantida de retorno de paginacion: ");
-      this.totalElementsForPagination = totalElementsToPaginated;
-      console.log(this.totalElementsForPagination);
-    });
   }
 
   loadRemindersPage() {
