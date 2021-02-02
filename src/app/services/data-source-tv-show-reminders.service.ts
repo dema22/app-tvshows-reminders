@@ -42,9 +42,9 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.tvShowRemindersSubject.complete();
   }
 
-  saveReminder(reminder: TvShowReminderEntity) : void {
+  /*saveReminder(reminder: TvShowReminderEntity) : void {
     this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => {
       this.loadReminders(0,3);
     });
-  }
+  }*/
 }

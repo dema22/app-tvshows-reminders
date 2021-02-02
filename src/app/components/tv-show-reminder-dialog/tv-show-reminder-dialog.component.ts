@@ -6,6 +6,7 @@ import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
 import { User } from 'src/app/interfaces/User';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
+import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
 
@@ -23,7 +24,8 @@ export class TvShowReminderDialogComponent implements OnInit {
     private formBuilder: FormBuilder,
     private authStore: AuthStoreService,
     private tvShowReminderService : TvShowRemindersService,
-    private dataSourceReminders: DataSourceTvShowRemindersService
+    private dataSourceReminders: DataSourceTvShowRemindersService,
+    private communicationService: CommunicationService
   ) {}
 
   ngOnInit(): void {
@@ -55,8 +57,10 @@ export class TvShowReminderDialogComponent implements OnInit {
   }
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
-    this.dataSourceReminders.saveReminder(reminder);
-    //this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => this.dialogRef.close());
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => {
+      this.communicationService.emitChange(reminder);
+      this.dialogRef.close();
+    });
   }
 
   showOptions(event:MatCheckboxChange): void {
