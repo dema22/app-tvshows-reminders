@@ -57,8 +57,8 @@ export class TvShowReminderDialogComponent implements OnInit {
   }
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
-    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe(() => {
-      this.communicationService.emitChange(reminder);
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminderDTO) => {
+      this.communicationService.emitChange(reminderDTO);
       this.dialogRef.close();
     });
   }

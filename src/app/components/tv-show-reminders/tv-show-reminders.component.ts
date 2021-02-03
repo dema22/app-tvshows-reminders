@@ -32,22 +32,26 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   ngOnInit(): void {
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
+    this.getTotalsElementsForPagination();
+    this.pushRemindersToDataSource();
+  }
 
-    // Get the total number of element to paginated
+  // Get the total number of element to paginated
+  getTotalsElementsForPagination(){
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
       console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
       this.totalElementsForPagination = totalElementsToPaginated;
       console.log(this.totalElementsForPagination);
     });
+  }
 
-    // If we add a tv show reminder dialog from the modal, we are going to reload the reminders page to get the latest reminders of the user.
-    this.communicationService.changeEmitted$.subscribe(() => {
-      //console.log("I add a reminder from the TvShowReminderDialog")
-      //console.log(data);
-      // Reload the page
-      //this.dataSource.loadReminders(0, 3);
-      this.loadRemindersPage();
-    });
+  // If we add a tv show reminder dialog from the modal, we are going to reload the reminders page to get the latest reminders of the user.
+  pushRemindersToDataSource() {
+  this.communicationService.changeEmitted$.subscribe((reminderDTO) => {
+    console.log("We get the remindersDTO from the modal");
+    console.log(reminderDTO);
+    this.dataSource.saveReminderInDataSource(reminderDTO,this.paginator.pageSize);
+  });
   }
 
   // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
@@ -62,10 +66,4 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       this.paginator.pageSize // size of the page (elements)
     );
   }
-
-  /*
-  (page)="onPaginateChange($event)"
-  onPaginateChange(event? : PageEvent){
-    console.log(event);
-  }*/
 }
