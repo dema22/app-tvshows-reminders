@@ -1,10 +1,12 @@
 import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
 import { PageResponseReminder } from 'src/app/interfaces/PageResponseReminder';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
+import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
 
 @Component({
   selector: 'app-tv-show-reminders',
@@ -27,7 +29,9 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tvShowRemindersService: TvShowRemindersService,  private communicationService: CommunicationService) {}
+  constructor(private tvShowRemindersService: TvShowRemindersService,
+              private communicationService: CommunicationService,
+              private dialog: MatDialog,) {}
 
   ngOnInit(): void {
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
@@ -65,5 +69,13 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       this.paginator.pageIndex, // number of page
       this.paginator.pageSize // size of the page (elements)
     );
+  }
+
+  openUserTvShowDialog() {
+    console.log("Open user tv show dialog");
+    let dialogRef = this.dialog.open(UserTvShowComponent,{
+      height: '500px',
+      width: '500px'
+    });
   }
 }
