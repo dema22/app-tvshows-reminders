@@ -2,13 +2,16 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
 import { User } from 'src/app/interfaces/User';
+import { UserTvShow } from 'src/app/interfaces/UserTvShow';
+import { UserTvShowEntity } from 'src/app/interfaces/UserTvShowEntity';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { CommunicationService } from 'src/app/services/communication.service';
-import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
+import { UserTvShowService } from 'src/app/services/user-tv-show.service';
 
 @Component({
   selector: 'app-tv-show-reminder-dialog',
@@ -20,15 +23,18 @@ export class TvShowReminderDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<TvShowReminderDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public idTvShow: number,
+    @Inject(MAT_DIALOG_DATA) public data: {idTvShow: number, userTvShow:  UserTvShowEntity},
     private formBuilder: FormBuilder,
     private authStore: AuthStoreService,
     private tvShowReminderService : TvShowRemindersService,
-    private dataSourceReminders: DataSourceTvShowRemindersService,
+    private userTvShowService : UserTvShowService,
     private communicationService: CommunicationService
   ) {}
 
   ngOnInit(): void {
+    console.log("Custom object: ")
+    console.log(this.data);
+
     this.saveReminderForm = this.formBuilder.group({
       completed: [false, Validators.required],
       currentSeason: ['', Validators.required], 
@@ -37,11 +43,21 @@ export class TvShowReminderDialogComponent implements OnInit {
     });
   }
 
+  // When saving a reminder, we check what data we get from the dialogs.
+  // If we get an id of a tv show , we call a method to save a reminder with a tv show from our system
+  // If we get a tv show created by the user, we call a method to save a reminder with this tv show created by the user.
   onSubmit() {
-    console.log(this.saveReminderForm.getRawValue().currentEpisode);
-    console.log(this.saveReminderForm.getRawValue().currentSeason);
+    if(this.data.idTvShow !== null)
+      this.saveReminderWithTvShowFromSystem();
+    else
+      this.saveReminderWithTvShowCreatedByUser();
+  }
+
+  saveReminderWithTvShowFromSystem(){
+    //console.log(this.saveReminderForm.getRawValue().currentEpisode);
+    //console.log(this.saveReminderForm.getRawValue().currentSeason);
     let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
-    let basicTvShowInfo : BasicTvShowInfo = { id: this.idTvShow, original_name: null}
+    let basicTvShowInfo : BasicTvShowInfo = { id: this.data.idTvShow, original_name: null}
 
     let reminder: TvShowReminderEntity = {
       user: user,
@@ -52,8 +68,35 @@ export class TvShowReminderDialogComponent implements OnInit {
       currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  
       personalRating: this.saveReminderForm.value.personalRating
     };
-    console.log(reminder);
+    //console.log(reminder);
     this.saveTvShowReminder(reminder);
+  }
+
+  saveReminderWithTvShowCreatedByUser(){
+    // first we save the tv show created by the user, we suscribe, when it completes, we save our reminder with this userTvShow.
+    this.saveUserTvShow(this.data.userTvShow).subscribe((savedUserTvShow) => {
+      console.log("Once i finish saving the userTvShow, i save the reminder for this tv show");
+      
+      let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
+      
+      let reminder: TvShowReminderEntity = {
+        user: user,
+        basicTvShowInfo: null,// we always set it to null because we are creating a tv show reminder with a tv show created by the user.
+        userTvShow: savedUserTvShow, 
+        completed: this.saveReminderForm.value.completed,
+        currentSeason: this.saveReminderForm.getRawValue().currentSeason,     
+        currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  
+        personalRating: this.saveReminderForm.value.personalRating
+      };
+
+      console.log("Showing the reminder with the user tv show");
+      console.log(reminder);
+      this.saveTvShowReminder(reminder);
+    });
+  }
+
+  saveUserTvShow(userTvShow: UserTvShowEntity) : Observable<UserTvShow>{
+    return this.userTvShowService.saveUserTvShow(userTvShow);
   }
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {

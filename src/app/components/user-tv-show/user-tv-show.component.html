@@ -1,1 +1,56 @@
-<p>user-tv-show works!</p>
+<p>
+  Enter the information of the tv show you want to save on our system, please!
+</p>
+
+<form [formGroup]="createdUserTvShowForm" (ngSubmit)="onSubmit()">
+  <div class="flex-container">
+    <mat-form-field>
+      <mat-label>Name Tv Show</mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Name Tv Show"
+        formControlName="nameTvShow"
+        class="form-control"
+      />
+    </mat-form-field>
+    <ng-container
+      *ngIf="nameTvShow.invalid && (nameTvShow.dirty || nameTvShow.touched)"
+    >
+      <mat-error *ngIf="nameTvShow.errors.required">
+        Name Tv Show is required.
+      </mat-error>
+    </ng-container>
+
+    <mat-form-field>
+      <mat-label>Genre </mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Genre Tv Show"
+        formControlName="genre"
+        class="form-control"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Production Company </mat-label>
+      <input
+        type="text"
+        matInput
+        placeholder="Production Company of the tv Show"
+        formControlName="productionCompany"
+        class="form-control"
+      />
+    </mat-form-field>
+
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="!createdUserTvShowForm.valid"
+    >
+      Save your tv show
+    </button>
+  </div>
+</form>

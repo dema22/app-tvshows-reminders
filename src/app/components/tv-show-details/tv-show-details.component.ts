@@ -58,7 +58,10 @@ export class TvShowDetailsComponent implements OnInit {
     let dialogRef = this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',
-      data: this.idTvShow
+      data: {
+        idTvShow: this.idTvShow,
+        userTvShow: null
+      }
     });
     
   }
