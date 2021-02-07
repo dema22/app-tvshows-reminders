@@ -3,9 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
 import { PageResponseReminder } from 'src/app/interfaces/PageResponseReminder';
+import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
+import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
 
 @Component({
@@ -25,6 +27,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     'currentEpisode',
     'completed',
     'personalRating',
+    'actions'
   ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,11 +54,11 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   // If we add a tv show reminder dialog from the modal, we are going to reload the reminders page to get the latest reminders of the user.
   pushRemindersToDataSource() {
-  this.communicationService.changeEmitted$.subscribe((reminderDTO) => {
-    console.log("We get the remindersDTO from the modal");
-    console.log(reminderDTO);
-    this.dataSource.saveReminderInDataSource(reminderDTO,this.paginator.pageSize);
-  });
+    this.communicationService.changeEmitted$.subscribe((reminderDTO) => {
+      console.log("We get the remindersDTO from the modal");
+      console.log(reminderDTO);
+      this.dataSource.saveReminderInDataSource(reminderDTO,this.paginator.pageSize);
+    });
   }
 
   // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
@@ -76,6 +79,20 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     let dialogRef = this.dialog.open(UserTvShowComponent,{
       height: '500px',
       width: '500px'
+    });
+  }
+  
+  openReminderDialog(reminder : TvShowReminder) {
+    console.log("Load the reminder we click");
+    console.log(reminder)
+    this.dialog.open(TvShowReminderDialogComponent,{
+      height: '500px',
+      width: '500px',
+      data: {
+        reminder: reminder,
+        idTvShow: null,
+        userTvShow: null
+      }
     });
   }
 }

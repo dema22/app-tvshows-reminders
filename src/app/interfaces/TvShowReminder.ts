@@ -7,6 +7,7 @@ export interface TvShowReminder {
   tvShowDetailsResponseDTO: TvShowDetails;
   completed: boolean;
   currentSeason: number;
-  currentEpisode: number;
+  currentEpisode: number; 
   personalRating: number;
+  generatedWithOperation?: number;
 }

@@ -39,6 +39,7 @@ export class UserTvShowComponent implements OnInit {
       height: '500px',
       width: '500px',
       data: {
+        reminder: null,
         idTvShow: null,
         userTvShow: tvShowCreatedByUser
       }

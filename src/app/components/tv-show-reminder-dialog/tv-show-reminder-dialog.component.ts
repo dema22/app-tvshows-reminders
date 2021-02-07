@@ -4,7 +4,9 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
+import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
+import { TvShowReminderPatchDTO } from 'src/app/interfaces/TvShowReminderPatchDTO';
 import { User } from 'src/app/interfaces/User';
 import { UserTvShow } from 'src/app/interfaces/UserTvShow';
 import { UserTvShowEntity } from 'src/app/interfaces/UserTvShowEntity';
@@ -23,7 +25,7 @@ export class TvShowReminderDialogComponent implements OnInit {
 
   constructor(
     private dialogRef: MatDialogRef<TvShowReminderDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: {idTvShow: number, userTvShow:  UserTvShowEntity},
+    @Inject(MAT_DIALOG_DATA) public data: {reminder: TvShowReminder, idTvShow: number, userTvShow:  UserTvShowEntity},
     private formBuilder: FormBuilder,
     private authStore: AuthStoreService,
     private tvShowReminderService : TvShowRemindersService,
@@ -35,22 +37,58 @@ export class TvShowReminderDialogComponent implements OnInit {
     console.log("Custom object: ")
     console.log(this.data);
 
-    this.saveReminderForm = this.formBuilder.group({
-      completed: [false, Validators.required],
-      currentSeason: ['', Validators.required], 
-      currentEpisode: ['', Validators.required],
-      personalRating: ['', Validators.required],
-    });
+    // We are going to create a reminder
+    if(this.data.idTvShow !== null || this.data.userTvShow !== null){
+      //console.log("CREATING TV SHOW REMINDER");
+      this.saveReminderForm = this.formBuilder.group({
+        completed: [false, Validators.required],
+        currentSeason: ['', Validators.required], 
+        currentEpisode: ['', Validators.required],
+        personalRating: ['', Validators.required],
+      });
+    // We are going to update a reminder
+    }else{
+      //console.log("UPDATE TV SHOW REMINDER");
+      this.saveReminderForm = this.formBuilder.group({
+        completed: [this.data.reminder.completed],
+        currentSeason: [this.data.reminder.currentSeason], 
+        currentEpisode: [this.data.reminder.currentEpisode],
+        personalRating: [this.data.reminder.personalRating],
+      });
+    }
   }
 
-  // When saving a reminder, we check what data we get from the dialogs.
-  // If we get an id of a tv show , we call a method to save a reminder with a tv show from our system
-  // If we get a tv show created by the user, we call a method to save a reminder with this tv show created by the user.
+  // If we have a reminder, we are using the form to update it.
+  // If we are creating a new tv show reminder, we are going to create the reminder from a tv show from the system or with a tv show created by the user.
   onSubmit() {
-    if(this.data.idTvShow !== null)
-      this.saveReminderWithTvShowFromSystem();
-    else
-      this.saveReminderWithTvShowCreatedByUser();
+    console.log(this.data.reminder);
+    // We are going to update the reminder
+    if(this.data.reminder !== null){
+      this.updateReminder();
+    }else{ // We are going to save a new reminder
+      if(this.data.idTvShow !== null)
+        this.saveReminderWithTvShowFromSystem();
+      else
+        this.saveReminderWithTvShowCreatedByUser();
+    }
+  }
+
+  updateReminder(){
+    let updateReminder: TvShowReminderPatchDTO = {
+      completed: this.saveReminderForm.value.completed,
+      currentSeason: this.saveReminderForm.getRawValue().currentSeason,     
+      currentEpisode: this.saveReminderForm.getRawValue().currentEpisode,  
+      personalRating: this.saveReminderForm.value.personalRating
+    }
+
+    this.tvShowReminderService.updateTvShowReminder(updateReminder, this.data.reminder.idTvShowReminder).subscribe((reminderDTO) => {
+      console.log("We update the reminder successfully.");
+      reminderDTO.generatedWithOperation = 2;
+      this.communicationService.emitChange(reminderDTO);
+      this.dialogRef.close();
+    });
+
+    console.log(updateReminder);
   }
 
   saveReminderWithTvShowFromSystem(){
@@ -101,6 +139,7 @@ export class TvShowReminderDialogComponent implements OnInit {
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
     this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminderDTO) => {
+      reminderDTO.generatedWithOperation = 1;
       this.communicationService.emitChange(reminderDTO);
       this.dialogRef.close();
     });

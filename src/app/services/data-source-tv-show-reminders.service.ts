@@ -45,16 +45,33 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   // We are going to push the reminder if the page size has not been fill yet.
   // We Get the reminders array from the subject, push reminder into our copy's array, apply the local updated array value as our new array of Reminders Subject
   // We always update the count of elements for the paginator.
+  
   saveReminderInDataSource(reminder: TvShowReminder, pageSize: number) : void {
-    console.log("Array lenght: ");
-    console.log(this.tvShowRemindersSubject.getValue().length);
+    //console.log("Array lenght: ");
+    //console.log(this.tvShowRemindersSubject.getValue().length);
 
-    if(this.tvShowRemindersSubject.getValue().length < pageSize){      
+    console.log(this.tvShowRemindersSubject.getValue().length);
+    console.log(pageSize);
+
+    if(this.tvShowRemindersSubject.getValue().length < pageSize && reminder.generatedWithOperation === 1){  
+      console.log("INSERT DATA SOURCE");    
       let tvShowReminders = this.tvShowRemindersSubject.getValue();
       tvShowReminders.push(reminder);
       this.tvShowRemindersSubject.next(tvShowReminders);
+    }else if (this.tvShowRemindersSubject.getValue().length === pageSize && reminder.generatedWithOperation === 2) {
+      console.log("UPDATE DATA SOURCE");
+      let tvShowReminders = this.tvShowRemindersSubject.getValue();
+      let searchReminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
+      tvShowReminders[searchReminderIndex] = reminder;
+      this.tvShowRemindersSubject.next(tvShowReminders);
+    }else{
+      console.log("NO ACTUALIZO NADA DEL DATA SOURCE");
     }
-    this.updateCountElementsForPaginator();
+
+    // If we make an insert we always update the elements cout for the paginator.
+    if(reminder.generatedWithOperation === 1){
+      this.updateCountElementsForPaginator();
+    }
   }
 
   // We increment the count elements for paginator.

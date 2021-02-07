@@ -23,3 +23,12 @@
     width: 100%;
     height: auto;
 }
+
+.flex-container-actions {
+    display: flex;
+    flex-direction: column;
+}
+
+.action-item {
+    margin: 10px;
+}

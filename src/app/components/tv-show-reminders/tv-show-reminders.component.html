@@ -70,6 +70,21 @@
     </mat-cell>
   </ng-container>
 
+  <!-- Add a column for reminders actions (update and  delete) -->
+  <ng-container matColumnDef="actions">
+    <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder">
+      <div class="flex-container-actions">
+        <button mat-raised-button color="primary" class="action-item" (click)="openReminderDialog(reminder)">
+          Update
+        </button>
+        <button mat-raised-button color="primary" class="action-item" (click)="openReminderDialog(reminder)">
+          Delete
+        </button>
+      </div>
+    </mat-cell>
+  </ng-container>
+
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
