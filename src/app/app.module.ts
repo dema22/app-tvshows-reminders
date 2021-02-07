@@ -41,6 +41,7 @@ import { DetailsTvShowComponent } from './components/details-tv-show/details-tv-
 import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show-reminders.component';
 import { TvShowReminderDialogComponent } from './components/tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 import { UserTvShowComponent } from './components/user-tv-show/user-tv-show.component';
+import { DeleteReminderDialogComponent } from './components/delete-reminder-dialog/delete-reminder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { UserTvShowComponent } from './components/user-tv-show/user-tv-show.comp
     DetailsTvShowComponent,
     TvShowRemindersComponent,
     TvShowReminderDialogComponent,
-    UserTvShowComponent
+    UserTvShowComponent,
+    DeleteReminderDialogComponent
   ],
   imports: [
     BrowserModule,

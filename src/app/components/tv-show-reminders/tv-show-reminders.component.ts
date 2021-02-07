@@ -7,6 +7,7 @@ import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
+import { DeleteReminderDialogComponent } from '../delete-reminder-dialog/delete-reminder-dialog.component';
 import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
 
@@ -41,6 +42,8 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
     this.pushRemindersToDataSource();
+    this.updateReminderToDataSource();
+    this.deleteReminderFromDataSource();
   }
 
   // Get the total number of element to paginated
@@ -52,12 +55,28 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
-  // If we add a tv show reminder dialog from the modal, we are going to reload the reminders page to get the latest reminders of the user.
+  // If we add a tv show reminder dialog from the modal, we are going to reload the reminders data source with this new reminder.
   pushRemindersToDataSource() {
-    this.communicationService.changeEmitted$.subscribe((reminderDTO) => {
+    this.communicationService.changeEmittedForSavingReminder$.subscribe((reminderDTO) => {
       console.log("We get the remindersDTO from the modal");
       console.log(reminderDTO);
       this.dataSource.saveReminderInDataSource(reminderDTO,this.paginator.pageSize);
+    });
+  }
+
+  // If we update a tv show reminder, we are going to load this new reminders in the data source.
+  updateReminderToDataSource() {
+    this.communicationService.changeEmittedForUpdatingReminder$.subscribe((reminderDTO) => {
+      console.log("We get the remindersDTO from the modal");
+      console.log(reminderDTO);
+      this.dataSource.updateReminderInDataSource(reminderDTO,this.paginator.pageSize);
+    });
+  }
+
+  deleteReminderFromDataSource() {
+    this.communicationService.changeEmittedForDeletingReminder$.subscribe((reminderDTO) => {
+      console.log(reminderDTO);
+      this.dataSource.deleteReminderFromDataSource(reminderDTO,this.paginator.pageSize);
     });
   }
 
@@ -88,6 +107,19 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',
+      data: {
+        reminder: reminder,
+        idTvShow: null,
+        userTvShow: null
+      }
+    });
+  }
+
+  deleteReminderDialog(reminder : TvShowReminder) {
+    console.log(reminder)
+    this.dialog.open(DeleteReminderDialogComponent,{
+      height: '250px',
+      width: '250px',
       data: {
         reminder: reminder,
         idTvShow: null,

@@ -9,5 +9,4 @@ export interface TvShowReminder {
   currentSeason: number;
   currentEpisode: number; 
   personalRating: number;
-  generatedWithOperation?: number;
 }

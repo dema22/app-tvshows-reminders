@@ -40,5 +40,9 @@ export class TvShowRemindersService {
     );*/
   }
 
+  deleteTvShowReminder(idTvShowReminder: number) {
+    return this.http.delete(baseUrl+ `${tvShowReminderEndpoints.DELETE_REMINDER}${idTvShowReminder}`);
+  }
+
   constructor(private http: HttpClient) { }
 }

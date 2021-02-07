@@ -83,8 +83,7 @@ export class TvShowReminderDialogComponent implements OnInit {
 
     this.tvShowReminderService.updateTvShowReminder(updateReminder, this.data.reminder.idTvShowReminder).subscribe((reminderDTO) => {
       console.log("We update the reminder successfully.");
-      reminderDTO.generatedWithOperation = 2;
-      this.communicationService.emitChange(reminderDTO);
+      this.communicationService.emitChangeWhenUpdatingReminder(reminderDTO);
       this.dialogRef.close();
     });
 
@@ -139,8 +138,7 @@ export class TvShowReminderDialogComponent implements OnInit {
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
     this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminderDTO) => {
-      reminderDTO.generatedWithOperation = 1;
-      this.communicationService.emitChange(reminderDTO);
+      this.communicationService.emitChangeWhenSavingReminder(reminderDTO);
       this.dialogRef.close();
     });
   }
