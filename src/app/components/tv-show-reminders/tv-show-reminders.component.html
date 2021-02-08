@@ -93,5 +93,6 @@
   [length]=totalElementsForPagination
   [pageSize]="3"
   [pageSizeOptions]="[3, 5, 10]"
-  clas="reminders-paginator"
+  class="reminders-paginator"
+  (page)="pageEvents($event)"
 ></mat-paginator>

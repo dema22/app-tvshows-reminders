@@ -3,20 +3,16 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
-import { TvShowReminderEntity } from '../interfaces/TvShowReminderEntity';
 import { TvShowRemindersService } from './tv-show-reminders.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DataSourceTvShowRemindersService
-  implements DataSource<TvShowReminder> {
+export class DataSourceTvShowRemindersService implements DataSource<TvShowReminder> {
   private totalElementsForPagination = new BehaviorSubject<number>(0);
   public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();
   private tvShowRemindersSubject = new BehaviorSubject<TvShowReminder[]>([]);
-  public readonly tvShowReminder$: Observable<
-    TvShowReminder[]
-  > = this.tvShowRemindersSubject.asObservable();
+  public readonly tvShowReminder$: Observable<TvShowReminder[]> = this.tvShowRemindersSubject.asObservable();
 
   constructor(private tvShowReminderService: TvShowRemindersService) {}
 
@@ -80,33 +76,44 @@ export class DataSourceTvShowRemindersService
     this.tvShowRemindersSubject.next(tvShowReminders);
   }
 
-  deleteReminderFromDataSource(reminder: TvShowReminder, pageSize: number): void {
+  deleteReminderFromDataSource(reminder: TvShowReminder, pageSize: number, currentPage: number): void {
     console.log('DELETE REMINDER FROM DATA SOURCE');
-    console.log(this.tvShowRemindersSubject.getValue().length);
-
+    
     let tvShowReminders = this.tvShowRemindersSubject.getValue();
     let reminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
     tvShowReminders.splice(reminderIndex,1); 
     this.tvShowRemindersSubject.next(tvShowReminders);
-
-
-    console.log(pageSize);
-    console.log(this.totalElementsForPagination.getValue());
-
-    let pagination = this.totalElementsForPagination.getValue();
-    pagination -= 1;
-    this.totalElementsForPagination.next(pagination);
+    
+    this.decrementCountElementsForPaginator();
 
     if(this.tvShowRemindersSubject.getValue().length === 0){
       console.log("Si hay un elemento y lo elimino, debo recargar la pagina anterior");
-      //this.loadReminders(0,pageSize);
+      if(currentPage !== 0){
+        currentPage -= 1;
+        this.loadReminders(currentPage,pageSize);
+      }      
     }
+  }
+
+  deleteReminderFromDataSourceTwo(reminder: TvShowReminder, pageSize: number, currentPage: number): void {
+    console.log('DELETE REMINDER FROM DATA SOURCE');
+    let tvShowReminders = this.tvShowRemindersSubject.getValue();
+    let reminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
+    tvShowReminders.splice(reminderIndex,1); 
+    this.tvShowRemindersSubject.next(tvShowReminders);
   }
 
   // We increment the count elements for paginator.
   updateCountElementsForPaginator() {
     let pagination = this.totalElementsForPagination.getValue();
     pagination += 1;
+    this.totalElementsForPagination.next(pagination);
+  }
+
+  // Decrement the elements count for the paginator.
+  decrementCountElementsForPaginator(){
+    let pagination = this.totalElementsForPagination.getValue();
+    pagination -= 1;
     this.totalElementsForPagination.next(pagination);
   }
 }

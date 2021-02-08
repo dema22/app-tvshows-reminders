@@ -18,7 +18,7 @@ import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
 })
 export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   totalElementsForPagination : number;
-  reminder = {} as PageResponseReminder;
+  currentPage : number = 0;
   dataSource: DataSourceTvShowRemindersService;
   displayedColumns = [
     'posterImg',
@@ -38,6 +38,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
               private dialog: MatDialog,) {}
 
   ngOnInit(): void {
+    console.log("NG ON INIT DE LA TABLA");
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
@@ -76,7 +77,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   deleteReminderFromDataSource() {
     this.communicationService.changeEmittedForDeletingReminder$.subscribe((reminderDTO) => {
       console.log(reminderDTO);
-      this.dataSource.deleteReminderFromDataSource(reminderDTO,this.paginator.pageSize);
+      this.dataSource.deleteReminderFromDataSourceTwo(reminderDTO,this.paginator.pageSize, this.currentPage);
     });
   }
 
@@ -127,4 +128,11 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       }
     });
   }
+
+  pageEvents(event: any) {
+    console.log(event.pageIndex);
+    console.log(event.pageSize);
+    this.currentPage = event.pageIndex;
+    console.log(event);
+ }
 }
