@@ -11,8 +11,12 @@ import { TvShowRemindersService } from './tv-show-reminders.service';
 export class DataSourceTvShowRemindersService implements DataSource<TvShowReminder> {
   private totalElementsForPagination = new BehaviorSubject<number>(0);
   public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();
+  
   private tvShowRemindersSubject = new BehaviorSubject<TvShowReminder[]>([]);
   public readonly tvShowReminder$: Observable<TvShowReminder[]> = this.tvShowRemindersSubject.asObservable();
+
+  private goToPreviousPageSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public readonly goToPreviousPage$ : Observable<boolean> = this.goToPreviousPageSubject.asObservable();
 
   constructor(private tvShowReminderService: TvShowRemindersService) {}
 
@@ -89,7 +93,9 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     if(this.tvShowRemindersSubject.getValue().length === 0){
       console.log("Si hay un elemento y lo elimino, debo recargar la pagina anterior");
       if(currentPage !== 0){
+        console.log("ENTRA PREVIO PAG");
         currentPage -= 1;
+        this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
         this.loadReminders(currentPage,pageSize);
       }      
     }

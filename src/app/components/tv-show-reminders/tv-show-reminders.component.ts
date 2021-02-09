@@ -47,6 +47,14 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.deleteReminderFromDataSource();
   }
 
+  changePage(){
+    this.dataSource.goToPreviousPage$.subscribe((condition) => {
+      console.log("MORTA CHUPA VERGA");
+      console.log(condition);
+      this.paginator.previousPage();
+    });
+  }
+
   // Get the total number of element to paginated
   getTotalsElementsForPagination(){
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
@@ -77,7 +85,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   deleteReminderFromDataSource() {
     this.communicationService.changeEmittedForDeletingReminder$.subscribe((reminderDTO) => {
       console.log(reminderDTO);
-      this.dataSource.deleteReminderFromDataSourceTwo(reminderDTO,this.paginator.pageSize, this.currentPage);
+      this.dataSource.deleteReminderFromDataSource(reminderDTO,this.paginator.pageSize, this.currentPage);
     });
   }
 
@@ -85,6 +93,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   // We are using the AfterViewInit lifecycle hook because we need to make sure that the paginator component queried via @ViewChild is already available.
   ngAfterViewInit() {
     this.paginator.page.pipe(tap(() => this.loadRemindersPage())).subscribe();
+    this.changePage();
   }
 
   loadRemindersPage() {
