@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { BasicTvShowInfo } from 'src/app/interfaces/BasicTvShowInfo';
 import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
+import { TvShowReminderEmitted } from 'src/app/interfaces/TvShowReminderEmitted';
 import { TvShowReminderEntity } from 'src/app/interfaces/TvShowReminderEntity';
 import { TvShowReminderPatchDTO } from 'src/app/interfaces/TvShowReminderPatchDTO';
 import { User } from 'src/app/interfaces/User';
@@ -81,9 +82,15 @@ export class TvShowReminderDialogComponent implements OnInit {
       personalRating: this.saveReminderForm.value.personalRating
     }
 
-    this.tvShowReminderService.updateTvShowReminder(updateReminder, this.data.reminder.idTvShowReminder).subscribe((reminderDTO) => {
+    this.tvShowReminderService.updateTvShowReminder(updateReminder, this.data.reminder.idTvShowReminder).subscribe((reminder) => {
       console.log("We update the reminder successfully.");
-      this.communicationService.emitChangeWhenUpdatingReminder(reminderDTO);
+      
+      let emmitedReminder : TvShowReminderEmitted = { 
+        tvShowReminder: reminder,
+        emittedOperation: 'update'
+      };
+
+      this.communicationService.emitReminder(emmitedReminder);
       this.dialogRef.close();
     });
 
@@ -137,8 +144,13 @@ export class TvShowReminderDialogComponent implements OnInit {
   }
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
-    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminderDTO) => {
-      this.communicationService.emitChangeWhenSavingReminder(reminderDTO);
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminder) => {
+      let emmitedReminder : TvShowReminderEmitted = { 
+        tvShowReminder: reminder,
+        emittedOperation: 'save'
+      };
+
+      this.communicationService.emitReminder(emmitedReminder);
       this.dialogRef.close();
     });
   }

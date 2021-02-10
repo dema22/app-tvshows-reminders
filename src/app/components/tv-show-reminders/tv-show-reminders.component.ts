@@ -42,9 +42,10 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
-    this.pushRemindersToDataSource();
-    this.updateReminderToDataSource();
-    this.deleteReminderFromDataSource();
+    this.manageEmittedReminders();
+    //this.pushRemindersToDataSource();
+    //this.updateReminderToDataSource();
+    // this.deleteReminderFromDataSource();
   }
 
   changePage(){
@@ -64,6 +65,16 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  manageEmittedReminders() {
+    this.communicationService.changeEmittedForReminder$.subscribe((emittedReminder) => {
+      console.log("We get the emmited reminder from the modal");
+      console.log(emittedReminder);
+      this.dataSource.manageEmmitedReminder(emittedReminder,this.paginator.pageSize, this.currentPage);
+    });
+  }
+
+
+  /*
   // If we add a tv show reminder dialog from the modal, we are going to reload the reminders data source with this new reminder.
   pushRemindersToDataSource() {
     this.communicationService.changeEmittedForSavingReminder$.subscribe((reminderDTO) => {
@@ -88,6 +99,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       this.dataSource.deleteReminderFromDataSource(reminderDTO,this.paginator.pageSize, this.currentPage);
     });
   }
+  */
 
   // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
   // We are using the AfterViewInit lifecycle hook because we need to make sure that the paginator component queried via @ViewChild is already available.
@@ -133,7 +145,9 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       data: {
         reminder: reminder,
         idTvShow: null,
-        userTvShow: null
+        userTvShow: null,
+        pageIndex: this.paginator.pageIndex,
+        pageSize: this.paginator.pageSize
       }
     });
   }

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
+import { TvShowReminderEmitted } from 'src/app/interfaces/TvShowReminderEmitted';
 import { UserTvShowEntity } from 'src/app/interfaces/UserTvShowEntity';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
@@ -13,7 +14,7 @@ import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.servi
 export class DeleteReminderDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<DeleteReminderDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {reminder: TvShowReminder, idTvShow: number, userTvShow:  UserTvShowEntity},
+              @Inject(MAT_DIALOG_DATA) public data: {reminder: TvShowReminder, idTvShow: number, userTvShow:  UserTvShowEntity, pageIndex: number, pageSize: number},
               private tvShowReminderService : TvShowRemindersService,
               private communicationService: CommunicationService) { }
 
@@ -22,7 +23,16 @@ export class DeleteReminderDialogComponent implements OnInit {
 
   deleteReminder(){
     this.tvShowReminderService.deleteTvShowReminder(this.data.reminder.idTvShowReminder).subscribe(() => {
-      this.communicationService.emitChangeWhenDeletingReminder(this.data.reminder);
+      
+      console.log(this.data.pageIndex);
+      console.log(this.data.pageSize);
+
+      let emmitedReminder : TvShowReminderEmitted = { 
+        tvShowReminder: this.data.reminder,
+        emittedOperation: 'delete'
+      };
+
+      this.communicationService.emitReminder(emmitedReminder);
       this.dialogRef.close();
     });
   }

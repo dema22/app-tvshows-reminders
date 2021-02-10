@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
+import { TvShowReminderEmitted } from '../interfaces/TvShowReminderEmitted';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,12 @@ export class CommunicationService {
     changeEmittedForUpdatingReminder$ = this.emitChangeSourceForUpdatingReminder.asObservable();
     changeEmittedForDeletingReminder$ = this.emitChangeSourceForDeletingReminder.asObservable();
 
+    private emitChangeSourceForReminder = new Subject<TvShowReminderEmitted>();
+    changeEmittedForReminder$   = this.emitChangeSourceForReminder.asObservable();
+
+    emitReminder(emmitedReminder: TvShowReminderEmitted) {
+      this.emitChangeSourceForReminder.next(emmitedReminder);
+    }
     
     emitChangeWhenSavingReminder(reminder: TvShowReminder) {
         this.emitChangeSourceForSavingReminder.next(reminder);

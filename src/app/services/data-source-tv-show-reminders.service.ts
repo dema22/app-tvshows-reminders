@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
+import { TvShowReminderEmitted } from '../interfaces/TvShowReminderEmitted';
 import { TvShowRemindersService } from './tv-show-reminders.service';
 
 @Injectable({
@@ -47,6 +48,17 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.tvShowRemindersSubject.complete();
   }
 
+  manageEmmitedReminder(emittedReminder: TvShowReminderEmitted, pageSize: number, currentPage: number) : void {
+    console.log(emittedReminder.tvShowReminder);
+
+    if(emittedReminder.emittedOperation === 'save')
+      this.saveReminderInDataSource(emittedReminder.tvShowReminder, pageSize);
+    else if(emittedReminder.emittedOperation === 'update')
+      this.updateReminderInDataSource(emittedReminder.tvShowReminder);
+    else if(emittedReminder.emittedOperation === 'delete')
+      this.deleteReminderFromDataSource(emittedReminder.tvShowReminder,pageSize,currentPage);
+  }
+
   // We are going to push the reminder if the page size has not been fill yet.
   // We Get the reminders array from the subject, push reminder into our copy's array, apply the local updated array value as our new array of Reminders Subject
   // We always update the count of elements for the paginator.
@@ -69,7 +81,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
 
   // We are going to search in the subject array to find this reminder that has been updated.
   // We replace it we the latest information.
-  updateReminderInDataSource(reminder: TvShowReminder, pageSize: number): void {
+  updateReminderInDataSource(reminder: TvShowReminder): void {
     console.log('UPDATE DATA SOURCE');
     let tvShowReminders = this.tvShowRemindersSubject.getValue();
     let searchReminderIndex = tvShowReminders.findIndex(
@@ -99,14 +111,6 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
         this.loadReminders(currentPage,pageSize);
       }      
     }
-  }
-
-  deleteReminderFromDataSourceTwo(reminder: TvShowReminder, pageSize: number, currentPage: number): void {
-    console.log('DELETE REMINDER FROM DATA SOURCE');
-    let tvShowReminders = this.tvShowRemindersSubject.getValue();
-    let reminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
-    tvShowReminders.splice(reminderIndex,1); 
-    this.tvShowRemindersSubject.next(tvShowReminders);
   }
 
   // We increment the count elements for paginator.
