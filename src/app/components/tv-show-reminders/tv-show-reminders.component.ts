@@ -144,8 +144,8 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       width: '250px',
       data: {
         reminder: reminder,
-        idTvShow: null,
-        userTvShow: null,
+        //idTvShow: null,
+        //userTvShow: null,
         pageIndex: this.paginator.pageIndex,
         pageSize: this.paginator.pageSize
       }

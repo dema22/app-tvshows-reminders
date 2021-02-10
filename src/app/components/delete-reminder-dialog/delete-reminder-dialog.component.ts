@@ -14,7 +14,7 @@ import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.servi
 export class DeleteReminderDialogComponent implements OnInit {
 
   constructor(private dialogRef: MatDialogRef<DeleteReminderDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: {reminder: TvShowReminder, idTvShow: number, userTvShow:  UserTvShowEntity, pageIndex: number, pageSize: number},
+              @Inject(MAT_DIALOG_DATA) public data: {reminder: TvShowReminder, /*idTvShow: number, userTvShow:  UserTvShowEntity, */pageIndex: number, pageSize: number},
               private tvShowReminderService : TvShowRemindersService,
               private communicationService: CommunicationService) { }
 
