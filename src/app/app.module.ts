@@ -37,7 +37,6 @@ import { ErrorDialogComponent } from './components/error-dialog/error-dialog.com
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { LogOutComponent } from './components/log-out/log-out.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { DetailsTvShowComponent } from './components/details-tv-show/details-tv-show.component';
 import { TvShowRemindersComponent } from './components/tv-show-reminders/tv-show-reminders.component';
 import { TvShowReminderDialogComponent } from './components/tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 import { UserTvShowComponent } from './components/user-tv-show/user-tv-show.component';
@@ -55,7 +54,6 @@ import { DeleteReminderDialogComponent } from './components/delete-reminder-dial
     ErrorDialogComponent,
     LogOutComponent,
     ProfileComponent,
-    DetailsTvShowComponent,
     TvShowRemindersComponent,
     TvShowReminderDialogComponent,
     UserTvShowComponent,
