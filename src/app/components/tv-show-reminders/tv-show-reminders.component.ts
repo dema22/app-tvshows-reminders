@@ -46,6 +46,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     //this.pushRemindersToDataSource();
     //this.updateReminderToDataSource();
     // this.deleteReminderFromDataSource();
+    this.manageEmittedPageReminders();
   }
 
   changePage(){
@@ -69,6 +70,12 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       //console.log("We get the emmited reminder from the modal");
       //console.log(emittedReminder);
       this.dataSource.manageEmmitedReminder(emittedReminder,this.paginator.pageSize, this.currentPage);
+    });
+  }
+
+  manageEmittedPageReminders() {
+    this.communicationService.changeEmittedForPageReminder$.subscribe((pageReminders) => {
+      this.dataSource.manageEmmitePagedReminder(pageReminders,this.paginator.pageSize, this.currentPage);
     });
   }
 

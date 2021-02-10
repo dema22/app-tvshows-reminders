@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
@@ -40,8 +40,19 @@ export class TvShowRemindersService {
     );*/
   }
 
-  deleteTvShowReminder(idTvShowReminder: number) {
-    return this.http.delete(baseUrl+ `${tvShowReminderEndpoints.DELETE_REMINDER}${idTvShowReminder}`);
+  deleteTvShowReminder(idTvShowReminder: number, pageIndex: number, pageSize: number) : Observable<PageResponseReminder> {
+    
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        pageIndex: pageIndex,
+        size: pageSize
+      }, 
+    };
+
+    return this.http.delete<PageResponseReminder>(baseUrl+ `${tvShowReminderEndpoints.DELETE_REMINDER}${idTvShowReminder}`, options);
   }
 
   constructor(private http: HttpClient) { }
