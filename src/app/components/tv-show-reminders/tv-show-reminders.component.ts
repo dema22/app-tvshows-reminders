@@ -60,14 +60,14 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
       //console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
       this.totalElementsForPagination = totalElementsToPaginated;
-      console.log(this.totalElementsForPagination);
+      //console.log(this.totalElementsForPagination);
     });
   }
 
   manageEmittedReminders() {
     this.communicationService.changeEmittedForReminder$.subscribe((emittedReminder) => {
       //console.log("We get the emmited reminder from the modal");
-      console.log(emittedReminder);
+      //console.log(emittedReminder);
       this.dataSource.manageEmmitedReminder(emittedReminder,this.paginator.pageSize, this.currentPage);
     });
   }
@@ -136,7 +136,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   }
 
   deleteReminderDialog(reminder : TvShowReminder) {
-    console.log(reminder)
+    //console.log(reminder)
     this.dialog.open(DeleteReminderDialogComponent,{
       height: '250px',
       width: '250px',
@@ -149,9 +149,9 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   }
 
   pageEvents(event: any) {
-    console.log(event.pageIndex);
-    console.log(event.pageSize);
+    //console.log(event.pageIndex);
+    //console.log(event.pageSize);
     this.currentPage = event.pageIndex;
-    console.log(event);
+    //console.log(event);
  }
 }

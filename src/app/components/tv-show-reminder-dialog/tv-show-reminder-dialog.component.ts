@@ -35,8 +35,8 @@ export class TvShowReminderDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("Custom object: ")
-    console.log(this.data);
+    //console.log("Custom object: ")
+    //console.log(this.data);
 
     // We are going to create a reminder
     if(this.data.idTvShow !== null || this.data.userTvShow !== null){
@@ -156,7 +156,7 @@ export class TvShowReminderDialogComponent implements OnInit {
   }
 
   showOptions(event:MatCheckboxChange): void {
-    console.log(event.checked);
+    //console.log(event.checked);
     if(event.checked){
       this.currentSeason.setValue(null);
       this.currentEpisode.setValue(null);

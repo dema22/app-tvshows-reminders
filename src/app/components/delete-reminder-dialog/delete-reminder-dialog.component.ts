@@ -24,8 +24,8 @@ export class DeleteReminderDialogComponent implements OnInit {
   deleteReminder(){
     this.tvShowReminderService.deleteTvShowReminder(this.data.reminder.idTvShowReminder).subscribe(() => {
       
-      console.log(this.data.pageIndex);
-      console.log(this.data.pageSize);
+      //console.log(this.data.pageIndex);
+      //console.log(this.data.pageSize);
 
       let emmitedReminder : TvShowReminderEmitted = { 
         tvShowReminder: this.data.reminder,

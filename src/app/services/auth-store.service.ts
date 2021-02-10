@@ -27,7 +27,7 @@ export class AuthStoreService {
 
     obs.subscribe(
           (authResult) => {
-          console.log(authResult);
+          //console.log(authResult);
           const decodedToken = this.decodeToken(authResult);
           const expirationTime = this.getExpirationTimeFromToken(decodedToken);
           const idUserRole = this.getUserRoleIdFromToken(decodedToken);

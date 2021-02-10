@@ -24,7 +24,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   loadReminders(page: number, size: number) {
     this.tvShowReminderService
       .getTvShowRemindersPaginated(page, size)
-      .pipe(tap((reminders) => console.log(reminders)))
+      //.pipe(tap((reminders) => console.log(reminders)))
       .subscribe((pageReminder) => {
         if (pageReminder != null) {
           this.tvShowRemindersSubject.next(pageReminder.items);
