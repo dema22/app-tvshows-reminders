@@ -47,21 +47,21 @@ export class AuthStoreService {
   // We return the jwt expiration time in seconds.
   private getExpirationTimeFromToken(decodedToken : Token) : number {
     const expirationTime : number = decodedToken.exp;
-    console.log("Exp in seconds : " + expirationTime);
+    //console.log("Exp in seconds : " + expirationTime);
     return expirationTime;
   }
 
   // We return subject info from token : role of the user id.
   private getUserRoleIdFromToken(decodedToken : Token ): string {
     const idUserRole : string = decodedToken.sub.split(',')[2];
-    console.log("User role is : " + idUserRole);
+    //console.log("User role is : " + idUserRole);
     return idUserRole;
   }
 
   // We return subject info from token :the user id.
   private getUserIdFromToken(decodedToken : Token ): string {
     const idUser : string = decodedToken.sub.split(',')[0];
-    console.log("User id is : " + idUser);
+    //console.log("User id is : " + idUser);
     return idUser;
   }
 

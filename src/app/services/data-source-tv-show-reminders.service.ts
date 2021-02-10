@@ -39,7 +39,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   // This method returns an Observable that emits the reminders data.. we don't want to expose the internal subject tvShowRemindersSubject directly.
   // This gives the data table (or any other subscriber) the ability to subscribe to the reminders data observable, without being able to emit values for that same observable.
   connect(collectionViewer: CollectionViewer): Observable<TvShowReminder[]> {
-    console.log('Connecting data source');
+    //console.log('Connecting data source');
     return this.tvShowRemindersSubject.asObservable();
   }
 
@@ -49,7 +49,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   }
 
   manageEmmitedReminder(emittedReminder: TvShowReminderEmitted, pageSize: number, currentPage: number) : void {
-    console.log(emittedReminder.tvShowReminder);
+    //console.log(emittedReminder.tvShowReminder);
 
     if(emittedReminder.emittedOperation === 'save')
       this.saveReminderInDataSource(emittedReminder.tvShowReminder, pageSize);
@@ -71,7 +71,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     //console.log(pageSize);
 
     if (this.tvShowRemindersSubject.getValue().length < pageSize) {
-      console.log('INSERT DATA SOURCE');
+      //console.log('INSERT DATA SOURCE');
       let tvShowReminders = this.tvShowRemindersSubject.getValue();
       tvShowReminders.push(reminder);
       this.tvShowRemindersSubject.next(tvShowReminders);
@@ -82,7 +82,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   // We are going to search in the subject array to find this reminder that has been updated.
   // We replace it we the latest information.
   updateReminderInDataSource(reminder: TvShowReminder): void {
-    console.log('UPDATE DATA SOURCE');
+    //console.log('UPDATE DATA SOURCE');
     let tvShowReminders = this.tvShowRemindersSubject.getValue();
     let searchReminderIndex = tvShowReminders.findIndex(
       (searchReminder) =>
@@ -93,7 +93,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   }
 
   deleteReminderFromDataSource(reminder: TvShowReminder, pageSize: number, currentPage: number): void {
-    console.log('DELETE REMINDER FROM DATA SOURCE');
+    //console.log('DELETE REMINDER FROM DATA SOURCE');
     
     let tvShowReminders = this.tvShowRemindersSubject.getValue();
     let reminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
@@ -103,9 +103,9 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.decrementCountElementsForPaginator();
 
     if(this.tvShowRemindersSubject.getValue().length === 0){
-      console.log("Si hay un elemento y lo elimino, debo recargar la pagina anterior");
+      //console.log("Si hay un elemento y lo elimino, debo recargar la pagina anterior");
       if(currentPage !== 0){
-        console.log("ENTRA PREVIO PAG");
+        //console.log("ENTRA PREVIO PAG");
         currentPage -= 1;
         this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
         this.loadReminders(currentPage,pageSize);

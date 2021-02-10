@@ -12,7 +12,7 @@ export class LogOutComponent implements OnInit {
   constructor(private authStore: AuthStoreService) { }
 
   ngOnInit(): void {
-    console.log("Te deslogeo");
+    //console.log("Te deslogeo");
     this.authStore.logout();
   }
 

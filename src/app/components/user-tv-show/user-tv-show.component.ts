@@ -34,7 +34,7 @@ export class UserTvShowComponent implements OnInit {
       genre: this.createdUserTvShowForm.value.genre,
       productionCompany: this.createdUserTvShowForm.value.productionCompany
     };
-    console.log(tvShowCreatedByUser);
+    //console.log(tvShowCreatedByUser);
     this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',

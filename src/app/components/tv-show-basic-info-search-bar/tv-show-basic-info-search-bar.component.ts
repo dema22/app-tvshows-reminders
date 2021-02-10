@@ -47,7 +47,7 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
   }
 
   openTvShowDialog(idTvShow: number): void {
-    console.log("ENTRA A ABRIR DIALOGO");
+    //console.log("ENTRA A ABRIR DIALOGO");
 
     this.searchForm.get('searchBar').setValue('');
 

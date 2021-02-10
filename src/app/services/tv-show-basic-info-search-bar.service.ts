@@ -17,7 +17,7 @@ export class TvShowBasicInfoSearchBarService {
       return of([]);
     };
 
-    console.log(tvShowName);
+    //console.log(tvShowName);
     const config = {
       params: {
           originalNameTvShow: tvShowName

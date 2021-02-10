@@ -53,8 +53,6 @@ export class TvShowDetailsComponent implements OnInit {
 
   // Open the reminders dialog
   openRemindersDialog(): void {
-    console.log("ENTRA A ABRIR REMINDER DIALOGO");
-
     let dialogRef = this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',

@@ -38,7 +38,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
               private dialog: MatDialog,) {}
 
   ngOnInit(): void {
-    console.log("NG ON INIT DE LA TABLA");
+    //console.log("NG ON INIT DE LA TABLA");
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
@@ -50,8 +50,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   changePage(){
     this.dataSource.goToPreviousPage$.subscribe((condition) => {
-      console.log("MORTA CHUPA VERGA");
-      console.log(condition);
+      //console.log(condition);
       this.paginator.previousPage();
     });
   }
@@ -59,7 +58,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   // Get the total number of element to paginated
   getTotalsElementsForPagination(){
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
-      console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
+      //console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
       this.totalElementsForPagination = totalElementsToPaginated;
       console.log(this.totalElementsForPagination);
     });
@@ -67,12 +66,11 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
 
   manageEmittedReminders() {
     this.communicationService.changeEmittedForReminder$.subscribe((emittedReminder) => {
-      console.log("We get the emmited reminder from the modal");
+      //console.log("We get the emmited reminder from the modal");
       console.log(emittedReminder);
       this.dataSource.manageEmmitedReminder(emittedReminder,this.paginator.pageSize, this.currentPage);
     });
   }
-
 
   /*
   // If we add a tv show reminder dialog from the modal, we are going to reload the reminders data source with this new reminder.
@@ -116,7 +114,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   }
 
   openUserTvShowDialog() {
-    console.log("Open user tv show dialog");
+    //console.log("Open user tv show dialog");
     let dialogRef = this.dialog.open(UserTvShowComponent,{
       height: '500px',
       width: '500px'
@@ -124,8 +122,8 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   }
   
   openReminderDialog(reminder : TvShowReminder) {
-    console.log("Load the reminder we click");
-    console.log(reminder)
+    //console.log("Load the reminder we click");
+    //console.log(reminder)
     this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',
@@ -144,8 +142,6 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
       width: '250px',
       data: {
         reminder: reminder,
-        //idTvShow: null,
-        //userTvShow: null,
         pageIndex: this.paginator.pageIndex,
         pageSize: this.paginator.pageSize
       }

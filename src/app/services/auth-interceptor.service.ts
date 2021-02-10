@@ -28,7 +28,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       req.url == (endpoints.baseUrl+ `/${endpoints.userEndpoints.ADD_USER}`) ||
       req.url == (endpoints.baseUrl+ `${endpoints.tvShowEndpoints.BASIC_INFO_TVSHOWS_BY_NAME}`)||
       req.url.includes((endpoints.baseUrl+ `${endpoints.tvShowDetailEndpoints.DETAILS_TV_SHOW}`))) {
-      console.log("Url publicas");
+      //console.log("Url publicas");
       return next.handle(req);
     }
 
@@ -36,7 +36,7 @@ export class AuthInterceptorService implements HttpInterceptor {
       const cloned = req.clone({
         headers: req.headers.set('Authorization', 'Bearer ' + token),
       });
-      console.log("Mando request con beaarer token");
+      //console.log("Mando request con beaarer token");
       return next.handle(cloned);
     }
   }

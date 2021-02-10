@@ -62,7 +62,7 @@ export class TvShowReminderDialogComponent implements OnInit {
   // If we have a reminder, we are using the form to update it.
   // If we are creating a new tv show reminder, we are going to create the reminder from a tv show from the system or with a tv show created by the user.
   onSubmit() {
-    console.log(this.data.reminder);
+    //console.log(this.data.reminder);
     // We are going to update the reminder
     if(this.data.reminder !== null){
       this.updateReminder();
@@ -83,7 +83,7 @@ export class TvShowReminderDialogComponent implements OnInit {
     }
 
     this.tvShowReminderService.updateTvShowReminder(updateReminder, this.data.reminder.idTvShowReminder).subscribe((reminder) => {
-      console.log("We update the reminder successfully.");
+      //console.log("We update the reminder successfully.");
       
       let emmitedReminder : TvShowReminderEmitted = { 
         tvShowReminder: reminder,
@@ -94,7 +94,7 @@ export class TvShowReminderDialogComponent implements OnInit {
       this.dialogRef.close();
     });
 
-    console.log(updateReminder);
+    //console.log(updateReminder);
   }
 
   saveReminderWithTvShowFromSystem(){
@@ -119,7 +119,7 @@ export class TvShowReminderDialogComponent implements OnInit {
   saveReminderWithTvShowCreatedByUser(){
     // first we save the tv show created by the user, we suscribe, when it completes, we save our reminder with this userTvShow.
     this.saveUserTvShow(this.data.userTvShow).subscribe((savedUserTvShow) => {
-      console.log("Once i finish saving the userTvShow, i save the reminder for this tv show");
+      //console.log("Once i finish saving the userTvShow, i save the reminder for this tv show");
       
       let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
       
@@ -133,8 +133,8 @@ export class TvShowReminderDialogComponent implements OnInit {
         personalRating: this.saveReminderForm.value.personalRating
       };
 
-      console.log("Showing the reminder with the user tv show");
-      console.log(reminder);
+      //console.log("Showing the reminder with the user tv show");
+      //console.log(reminder);
       this.saveTvShowReminder(reminder);
     });
   }

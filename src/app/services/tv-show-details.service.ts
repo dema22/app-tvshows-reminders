@@ -20,9 +20,9 @@ export class TvShowDetailsService {
 
   /* GET tv shows details from the server */
   getTvShowDetailsById(idTvShow: number): Observable<TvShowDetails> {
-    return this.http.get<TvShowDetails>(baseUrl+ `${tvShowDetailEndpoints.DETAILS_TV_SHOW}${idTvShow}`).pipe(
+    return this.http.get<TvShowDetails>(baseUrl+ `${tvShowDetailEndpoints.DETAILS_TV_SHOW}${idTvShow}`);/*.pipe(
       tap((result) => console.log(result)) 
-    );
+    );*/
   }
 
   constructor(private http: HttpClient) { }

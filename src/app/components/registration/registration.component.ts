@@ -62,39 +62,3 @@ export class RegistrationComponent implements OnInit {
     setTimeout(() => this.formGroupDirective.resetForm(), 200);
   }
 }
-
-
-
-
-/*
-
-
-//user = {} as User;
-  dummyUser: User = { 
-    name: "Alejandro",
-    lastName: "Jorge",
-    username: "abuelo!!!!!!!!!!!aaaaaaaaaaaaaaaa",
-    password: "respeta",
-    email: "alejandrojdemaria@hotmail.com",
-    role: {
-      idRole: 1 
-    }
-  };
-
-  userCredentials : Credentials = {
-    username: "feli",
-    password: "respeta"
-  }
-
-  registrationOfUser(dummyUser: User): void {
-    this.userService.addUser(dummyUser).subscribe();
-  }
-
-  logInOfUser(userCredentials: Credentials): void {
-    this.userService.logIn(userCredentials).subscribe();
-  }
-
-  getProfileOfLoggedUser(): void {
-    this.userService.getUserProfile().subscribe();
-  }
-*/

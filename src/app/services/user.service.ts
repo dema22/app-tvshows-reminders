@@ -26,7 +26,7 @@ export class UserService {
 
   // Get profile of the logged user
   getUserProfile(): Observable<UserProfile> {
-    console.log("entra a buscar user profile");
+    //console.log("entra a buscar user profile");
     return this.http.get<UserProfile>(baseUrl+ `/${userEndpoints.PROFILE}`).pipe(
       tap((profileResult) => console.log(profileResult))
     );
