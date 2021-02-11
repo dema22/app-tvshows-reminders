@@ -40,7 +40,7 @@ export class TvShowRemindersService {
     );*/
   }
 
-  deleteTvShowReminder(idTvShowReminder: number, pageIndex: number, pageSize: number) : Observable<PageResponseReminder> {
+  deleteTvShowReminder(idTvShowReminder: number, pageIndex: number, pageSize: number) : Observable<TvShowReminder[]> {
     
     const options = {
       headers: new HttpHeaders({
@@ -52,7 +52,7 @@ export class TvShowRemindersService {
       }, 
     };
 
-    return this.http.delete<PageResponseReminder>(baseUrl+ `${tvShowReminderEndpoints.DELETE_REMINDER}${idTvShowReminder}`, options);
+    return this.http.delete<TvShowReminder[]>(baseUrl+ `${tvShowReminderEndpoints.DELETE_REMINDER}${idTvShowReminder}`, options);
   }
 
   constructor(private http: HttpClient) { }

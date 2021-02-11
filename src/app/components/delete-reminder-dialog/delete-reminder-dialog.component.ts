@@ -24,15 +24,10 @@ export class DeleteReminderDialogComponent implements OnInit {
   }
 
   deleteReminder(){
-    this.tvShowReminderService.deleteTvShowReminder(this.data.reminder.idTvShowReminder, this.data.pageIndex, this.data.pageSize).subscribe((responsePageReminders) => {
-      let pageReminders : PageResponseReminder = { items:null, pageDescriptionDTO: null};
-
-      // The service returns null, i assign a pageRemider empty object.
-      if(responsePageReminders === null){
-        responsePageReminders = pageReminders;
-      }
-
-      this.communicationService.emitPageReminders(responsePageReminders);
+    this.tvShowReminderService.deleteTvShowReminder(this.data.reminder.idTvShowReminder, this.data.pageIndex, this.data.pageSize).subscribe((reminders) => {
+      let reminderList: TvShowReminder[] = [];
+      // I emit the reminders array from the service or if it returns null i emit an empty reminder list.
+      reminders !== null ? this.communicationService.emitReminderArray(reminders) : this.communicationService.emitReminderArray(reminderList);
       this.dialogRef.close();
     });
   }

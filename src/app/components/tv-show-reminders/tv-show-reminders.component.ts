@@ -2,7 +2,6 @@ import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { tap } from 'rxjs/operators';
-import { PageResponseReminder } from 'src/app/interfaces/PageResponseReminder';
 import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
@@ -43,10 +42,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
     this.manageEmittedReminders();
-    //this.pushRemindersToDataSource();
-    //this.updateReminderToDataSource();
-    // this.deleteReminderFromDataSource();
-    this.manageEmittedPageReminders();
+    this.manageEmittedRemindersArray();
   }
 
   changePage(){
@@ -73,38 +69,11 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
-  manageEmittedPageReminders() {
-    this.communicationService.changeEmittedForPageReminder$.subscribe((pageReminders) => {
-      this.dataSource.manageEmmitePagedReminder(pageReminders,this.paginator.pageSize, this.currentPage);
+  manageEmittedRemindersArray() {
+    this.communicationService.changeEmittedForReminderArray$.subscribe((reminders) => {
+      this.dataSource.manageEmmitedReminderArray(reminders,this.paginator.pageSize, this.currentPage);
     });
   }
-
-  /*
-  // If we add a tv show reminder dialog from the modal, we are going to reload the reminders data source with this new reminder.
-  pushRemindersToDataSource() {
-    this.communicationService.changeEmittedForSavingReminder$.subscribe((reminderDTO) => {
-      console.log("We get the remindersDTO from the modal");
-      console.log(reminderDTO);
-      this.dataSource.saveReminderInDataSource(reminderDTO,this.paginator.pageSize);
-    });
-  }
-
-  // If we update a tv show reminder, we are going to load this new reminders in the data source.
-  updateReminderToDataSource() {
-    this.communicationService.changeEmittedForUpdatingReminder$.subscribe((reminderDTO) => {
-      console.log("We get the remindersDTO from the modal");
-      console.log(reminderDTO);
-      this.dataSource.updateReminderInDataSource(reminderDTO,this.paginator.pageSize);
-    });
-  }
-
-  deleteReminderFromDataSource() {
-    this.communicationService.changeEmittedForDeletingReminder$.subscribe((reminderDTO) => {
-      console.log(reminderDTO);
-      this.dataSource.deleteReminderFromDataSource(reminderDTO,this.paginator.pageSize, this.currentPage);
-    });
-  }
-  */
 
   // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
   // We are using the AfterViewInit lifecycle hook because we need to make sure that the paginator component queried via @ViewChild is already available.

@@ -1,8 +1,6 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { PageResponseReminder } from '../interfaces/PageResponseReminder';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
 import { TvShowReminderEmitted } from '../interfaces/TvShowReminderEmitted';
 import { TvShowRemindersService } from './tv-show-reminders.service';
@@ -56,12 +54,6 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
       this.saveReminderInDataSource(emittedReminder.tvShowReminder, pageSize);
     else if(emittedReminder.emittedOperation === 'update')
       this.updateReminderInDataSource(emittedReminder.tvShowReminder);
-    else if(emittedReminder.emittedOperation === 'delete')
-      this.deleteReminderFromDataSource(emittedReminder.tvShowReminder,pageSize,currentPage);
-  }
-
-  manageEmmitePagedReminder(emittedPageReminder: PageResponseReminder, pageSize: number, currentPage: number) : void {
-    this.deleteReminderFromDataSourceTwo(emittedPageReminder,pageSize,currentPage);
   }
 
   // We are going to push the reminder if the page size has not been fill yet.
@@ -97,20 +89,23 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.tvShowRemindersSubject.next(tvShowReminders);
   }
 
-  deleteReminderFromDataSourceTwo(emittedReminder: PageResponseReminder, pageSize: number, currentPage: number): void {
+  manageEmmitedReminderArray(reminders: TvShowReminder[], pageSize: number, currentPage: number) : void {
+    this.deleteReminderFromDataSource(reminders,pageSize,currentPage);
+  }
+
+  deleteReminderFromDataSource(reminder: TvShowReminder[], pageSize: number, currentPage: number): void {
     // Array from subject
     let tvShowReminder = this.tvShowRemindersSubject.getValue();
     
-    // If we get a page from reminder we assign it to the subject array.
+    // If we get a list of reminder we assign it to the subject array.
     // Else we delete the content of the array.
-    if(emittedReminder.items != null){
-      tvShowReminder = emittedReminder.items;
+    if(reminder.length > 0){
+      tvShowReminder = reminder;
       this.tvShowRemindersSubject.next(tvShowReminder);
       console.log(this.tvShowRemindersSubject.getValue());
     }else{
       tvShowReminder.splice(0,tvShowReminder.length);
       this.tvShowRemindersSubject.next(tvShowReminder);
-      console.log(this.tvShowRemindersSubject.getValue());
     }
 
     // decrement one reminder from the total count
@@ -118,32 +113,11 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
 
     // If the current page is empty and its not the first page.
     // We are going to reload the previous page.
-    if(emittedReminder.items === null && currentPage !== 0) { 
+    if(reminder.length  === 0 && currentPage !== 0) { 
       currentPage -= 1;
       console.log("movete a la anterior : " + currentPage);
       this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
       this.loadReminders(currentPage,pageSize);
-    }
-  }
-
-  deleteReminderFromDataSource(reminder: TvShowReminder, pageSize: number, currentPage: number): void {
-    //console.log('DELETE REMINDER FROM DATA SOURCE');
-    
-    let tvShowReminders = this.tvShowRemindersSubject.getValue();
-    let reminderIndex = tvShowReminders.findIndex((searchReminder) => searchReminder.idTvShowReminder === reminder.idTvShowReminder);
-    tvShowReminders.splice(reminderIndex,1); 
-    this.tvShowRemindersSubject.next(tvShowReminders);
-    
-    this.decrementCountElementsForPaginator();
-
-    if(this.tvShowRemindersSubject.getValue().length === 0){
-      //console.log("Si hay un elemento y lo elimino, debo recargar la pagina anterior");
-      if(currentPage !== 0){
-        //console.log("ENTRA PREVIO PAG");
-        currentPage -= 1;
-        this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
-        this.loadReminders(currentPage,pageSize);
-      }      
     }
   }
 
