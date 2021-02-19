@@ -1,6 +1,8 @@
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { PageInfo } from '../interfaces/PageInfo';
 import { TvShowReminder } from '../interfaces/TvShowReminder';
 import { TvShowReminderEmitted } from '../interfaces/TvShowReminderEmitted';
 import { TvShowRemindersService } from './tv-show-reminders.service';
@@ -15,15 +17,18 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   private tvShowRemindersSubject = new BehaviorSubject<TvShowReminder[]>([]);
   public readonly tvShowReminder$: Observable<TvShowReminder[]> = this.tvShowRemindersSubject.asObservable();
 
-  private goToPreviousPageSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  public readonly goToPreviousPage$ : Observable<boolean> = this.goToPreviousPageSubject.asObservable();
+  private goToPageSubject: BehaviorSubject<PageInfo> = new BehaviorSubject<PageInfo>({pageIndex: null, pageSize: null, length: null});
+  public readonly goToPage$ : Observable<PageInfo> = this.goToPageSubject.asObservable();
 
   constructor(private tvShowReminderService: TvShowRemindersService) {}
 
+  // This function we load a reminder page of the size the user want.
+  // We call the service to get this page information.
+  // If we get reminders we will store them in the subject and will store the total elements for the pagination.
   loadReminders(page: number, size: number) {
     this.tvShowReminderService
       .getTvShowRemindersPaginated(page, size)
-      //.pipe(tap((reminders) => console.log(reminders)))
+      .pipe(tap((reminders) => console.log(reminders)))
       .subscribe((pageReminder) => {
         if (pageReminder != null) {
           this.tvShowRemindersSubject.next(pageReminder.items);
@@ -47,9 +52,9 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.tvShowRemindersSubject.complete();
   }
 
+  // If the user save a reminder, we will manage this reminder, meaning saving in the data source.
+  // The same when the user update a reminder.
   manageEmmitedReminder(emittedReminder: TvShowReminderEmitted, pageSize: number, currentPage: number) : void {
-    //console.log(emittedReminder.tvShowReminder);
-
     if(emittedReminder.emittedOperation === 'save')
       this.saveReminderInDataSource(emittedReminder.tvShowReminder, pageSize);
     else if(emittedReminder.emittedOperation === 'update')
@@ -57,23 +62,29 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
   }
 
   // We are going to push the reminder if the page size has not been fill yet.
-  // We Get the reminders array from the subject, push reminder into our copy's array, apply the local updated array value as our new array of Reminders Subject
-  // We always update the count of elements for the paginator.
+  // If the page doesnt have space, we will look for the last page, and create a PageInfo object with the information in  which page the reminder is going to be added.
+  // After that, we just load the reminders for that page we calculate.
 
   saveReminderInDataSource(reminder: TvShowReminder, pageSize: number): void {
-    //console.log("Array lenght: ");
-    //console.log(this.tvShowRemindersSubject.getValue().length);
+    // We always update the total elements, because we are adding a new reminder to the total.
+    this.updateCountElementsForPaginator();
 
-    //console.log(this.tvShowRemindersSubject.getValue().length);
-    //console.log(pageSize);
-
+    // if we have space in the current page we just push the reminder to the subject.
     if (this.tvShowRemindersSubject.getValue().length < pageSize) {
-      //console.log('INSERT DATA SOURCE');
       let tvShowReminders = this.tvShowRemindersSubject.getValue();
       tvShowReminders.push(reminder);
       this.tvShowRemindersSubject.next(tvShowReminders);
+    }else if(this.tvShowRemindersSubject.getValue().length === pageSize) { // If the page doesnt have more space, i will look for an empty page.
+      let totalElements = this.totalElementsForPagination.getValue(); // 4 : 3 = 2 - 1 = 1 -> go to page 1 // 10 : 3 = 4 -1 = 3 -> go to page 3.
+      let lastPage = Math.ceil(totalElements / pageSize) - 1;
+      console.log(lastPage);
+      this.goToPageSubject.next({
+        pageIndex: lastPage,
+        pageSize: pageSize,
+        length: totalElements
+      });
+      this.loadReminders(lastPage, pageSize);
     }
-    this.updateCountElementsForPaginator();
   }
 
   // We are going to search in the subject array to find this reminder that has been updated.
@@ -93,10 +104,18 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     this.deleteReminderFromDataSource(reminders,pageSize,currentPage);
   }
 
+  // When a reminder is being delete we get from the back end the rest of reminder that page has.
+  // So if we have a list of reminders we just assign it to the array subject.
+  // If we dont get any array we empty the content int the array subject.
+  // Finally we need to pay attention to a special case, when the user delete the last reminder of a page.
+  // We are going to go to the previous page. For this we are going to create a PageInfo object to hold this information and then reload the information
+  // of this previous page.
   deleteReminderFromDataSource(reminder: TvShowReminder[], pageSize: number, currentPage: number): void {
+    console.log("enter function current page is : " + currentPage);
     // Array from subject
     let tvShowReminder = this.tvShowRemindersSubject.getValue();
-    
+    let totalElements = this.tvShowRemindersSubject.getValue().length;
+
     // If we get a list of reminder we assign it to the subject array.
     // Else we delete the content of the array.
     if(reminder.length > 0){
@@ -104,6 +123,7 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
       this.tvShowRemindersSubject.next(tvShowReminder);
       console.log(this.tvShowRemindersSubject.getValue());
     }else{
+      console.log("ELSE DE DELETE");
       tvShowReminder.splice(0,tvShowReminder.length);
       this.tvShowRemindersSubject.next(tvShowReminder);
     }
@@ -114,9 +134,15 @@ export class DataSourceTvShowRemindersService implements DataSource<TvShowRemind
     // If the current page is empty and its not the first page.
     // We are going to reload the previous page.
     if(reminder.length  === 0 && currentPage !== 0) { 
+      console.log("Reminder length: " + reminder.length + " and current page is : " + currentPage);
       currentPage -= 1;
       console.log("movete a la anterior : " + currentPage);
-      this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
+      //this.goToPreviousPageSubject.next(!this.goToPreviousPageSubject.getValue());
+      this.goToPageSubject.next({
+        pageIndex: currentPage,
+        pageSize: pageSize,
+        length: totalElements
+      });
       this.loadReminders(currentPage,pageSize);
     }
   }

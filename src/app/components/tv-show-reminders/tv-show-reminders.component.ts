@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { tap } from 'rxjs/operators';
+import { PageInfo } from 'src/app/interfaces/PageInfo';
 import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
@@ -16,6 +16,7 @@ import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
   styleUrls: ['./tv-show-reminders.component.css'],
 })
 export class TvShowRemindersComponent implements OnInit , AfterViewInit {
+  pageInfo : PageInfo  = {} as PageInfo;
   totalElementsForPagination : number;
   currentPage : number = 0;
   dataSource: DataSourceTvShowRemindersService;
@@ -37,7 +38,6 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
               private dialog: MatDialog,) {}
 
   ngOnInit(): void {
-    //console.log("NG ON INIT DE LA TABLA");
     this.dataSource = new DataSourceTvShowRemindersService(this.tvShowRemindersService);
     this.dataSource.loadReminders(0, 3);
     this.getTotalsElementsForPagination();
@@ -45,14 +45,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     this.manageEmittedRemindersArray();
   }
 
-  changePage(){
-    this.dataSource.goToPreviousPage$.subscribe((condition) => {
-      //console.log(condition);
-      this.paginator.previousPage();
-    });
-  }
-
-  // Get the total number of element to paginated
+  // Get the total number of element for the pagination.
   getTotalsElementsForPagination(){
     this.dataSource.totalElementsForPagination$.subscribe((totalElementsToPaginated) => {
       //console.log("ngOnInit: Entra calcular la cantida de retorno de paginacion: ");
@@ -61,6 +54,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // We get a emmited reminder from the communication service.
   manageEmittedReminders() {
     this.communicationService.changeEmittedForReminder$.subscribe((emittedReminder) => {
       //console.log("We get the emmited reminder from the modal");
@@ -69,24 +63,67 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // We get a reminder array from the communication service.
   manageEmittedRemindersArray() {
+    console.log("from manageEmittedReminders: " + this.currentPage);
+
     this.communicationService.changeEmittedForReminderArray$.subscribe((reminders) => {
+      // When the user tries to delete the last row in the page 0, i dont know why the current page is not getting the 0 value when we initialized the attribute.
+      if(this.currentPage === null) {
+         this.currentPage = 0; 
+      }
+
       this.dataSource.manageEmmitedReminderArray(reminders,this.paginator.pageSize, this.currentPage);
     });
   }
 
   // The link between the paginator and the Data Source is done in the ngAfterViewInit() 
   // We are using the AfterViewInit lifecycle hook because we need to make sure that the paginator component queried via @ViewChild is already available.
+  // Everytime  the paginator changes the page size or page index it will trigger the page event.
+  // We will call the loadReminderPage to load the information of the current page 
+  // or if the user is adding a reminder or deleting a reminder ( we just set the pageInfo object to null). 
+
   ngAfterViewInit() {
-    this.paginator.page.pipe(tap(() => this.loadRemindersPage())).subscribe();
-    this.changePage();
+    this.paginator.page.subscribe(() => {
+      console.log(this.pageInfo.pageIndex);
+      if(this.pageInfo.pageIndex != null && this.pageInfo.pageSize != null && this.pageInfo.length != null){
+        console.log("We go to page");
+        this.pageInfo.pageIndex = null;
+        this.pageInfo.pageSize = null;
+        this.pageInfo.length = null;
+      }else{
+        console.log("user touch arrow direction.");
+        this.loadRemindersPage();
+      }
+    });
+    this.goToPage();
   }
 
+  // Load the reminder page of the current page the user is on.
   loadRemindersPage() {
     this.dataSource.loadReminders(
       this.paginator.pageIndex, // number of page
       this.paginator.pageSize // size of the page (elements)
     );
+  }
+
+  // Every time we emit a pageInformation object from the data source means that the user added a reminder or delete a reminder and we need to go to a specifc page.
+  // We do this using the .next() method on the page event.
+  goToPage() {
+    this.dataSource.goToPage$.subscribe((pageInformation) => {
+      console.log("Go to page ");
+      this.pageInfo = pageInformation;
+      console.log(this.pageInfo);
+      
+      this.paginator.pageIndex = this.pageInfo.pageIndex;
+      console.log("Go to page -> page inex is  : " + this.paginator.pageIndex);
+
+        this.paginator.page.next({      
+          pageIndex: pageInformation.pageIndex,
+          pageSize: pageInformation.pageSize,
+          length: pageInformation.length
+        });
+    });
   }
 
   openUserTvShowDialog() {
@@ -124,6 +161,8 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // Each time the user click on the paginator arrows we will trigger this function.
+  // We saved the pageIndex info from the pageEvent.
   pageEvents(event: any) {
     //console.log(event.pageIndex);
     //console.log(event.pageSize);

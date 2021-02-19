@@ -2,7 +2,7 @@
   Enter the information of the tv show you want to save on our system, please!
 </p>
 
-<form [formGroup]="createdUserTvShowForm" (ngSubmit)="onSubmit()">
+<form autocomplete="off" [formGroup]="createdUserTvShowForm" (ngSubmit)="onSubmit()">
   <div class="flex-container">
     <mat-form-field>
       <mat-label>Name Tv Show</mat-label>
