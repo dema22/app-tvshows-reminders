@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/interfaces/User';
-import { UserTvShow } from 'src/app/interfaces/UserTvShow';
 import { UserTvShowEntity } from 'src/app/interfaces/UserTvShowEntity';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
@@ -35,7 +34,7 @@ export class UserTvShowComponent implements OnInit {
       productionCompany: this.createdUserTvShowForm.value.productionCompany
     };
     //console.log(tvShowCreatedByUser);
-    this.dialog.open(TvShowReminderDialogComponent,{
+    let dialogRef = this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
       width: '500px',
       data: {
@@ -44,6 +43,15 @@ export class UserTvShowComponent implements OnInit {
         userTvShow: tvShowCreatedByUser
       }
     });
+
+    // When we finish saving a reminder (from the nested dialog) for a tv show created by the user,
+    // we close this parent dialog. 
+    dialogRef.afterClosed().subscribe((saveReminder) => {
+      console.log(saveReminder);
+      if(saveReminder !== undefined)
+        this.dialog.closeAll();
+    });
+
   }
 
   // Getters

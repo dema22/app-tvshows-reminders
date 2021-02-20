@@ -49,13 +49,15 @@ export class TvShowReminderDialogComponent implements OnInit {
       });
     // We are going to update a reminder
     }else{
-      //console.log("UPDATE TV SHOW REMINDER");
+      console.log("UPDATE TV SHOW REMINDER");
+      console.log(this.data.reminder);
       this.saveReminderForm = this.formBuilder.group({
         completed: [this.data.reminder.completed],
         currentSeason: [this.data.reminder.currentSeason], 
         currentEpisode: [this.data.reminder.currentEpisode],
         personalRating: [this.data.reminder.personalRating],
       });
+      this.setFormBehaviourWhenLoaded();
     }
   }
 
@@ -144,14 +146,14 @@ export class TvShowReminderDialogComponent implements OnInit {
   }
 
   saveTvShowReminder(reminder: TvShowReminderEntity) {
-    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((reminder) => {
+    this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((saveReminder) => {
       let emmitedReminder : TvShowReminderEmitted = { 
-        tvShowReminder: reminder,
+        tvShowReminder: saveReminder,
         emittedOperation: 'save'
       };
 
       this.communicationService.emitReminder(emmitedReminder);
-      this.dialogRef.close();
+      this.dialogRef.close(saveReminder);
     });
   }
 
@@ -166,7 +168,24 @@ export class TvShowReminderDialogComponent implements OnInit {
       this.currentSeason.enable();
       this.currentEpisode.enable();
     }
-}
+  }
+
+  // When loading the reminder form for an update, we call this function.
+  setFormBehaviourWhenLoaded(): void {
+    if(this.data.reminder.completed){
+      this.currentSeason.setValue(null);
+      this.currentEpisode.setValue(null);
+      this.currentSeason.disable();
+      this.currentEpisode.disable();
+    }else{
+      this.currentSeason.enable();
+      this.currentEpisode.enable();
+    }
+  }
+
+  closeDialogFromButton() {
+    this.dialogRef.close(undefined);
+  }
 
   // Getters
   get completed () { return this.saveReminderForm.get('completed'); }

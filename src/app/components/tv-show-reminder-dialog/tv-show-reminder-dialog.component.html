@@ -71,13 +71,25 @@
       </mat-error>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="!saveReminderForm.valid"
-    >
-      Save Tv Show Reminder
-    </button>
+    <div class="flex-row-btns">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!saveReminderForm.valid"
+      >
+        Save Tv Show Reminder
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="closeDialogFromButton()"
+      >
+        Closed
+      </button>
+    </div>
+
   </div>
 </form>

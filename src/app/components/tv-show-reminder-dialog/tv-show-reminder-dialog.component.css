@@ -1,14 +1,20 @@
 .flex-container {
-    display: flex;
-    width: 100%;
-    flex-direction: column;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 .flex-row-item {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .label-completed {
-    margin-right: 10px
+  margin-right: 10px;
+}
+
+.flex-row-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
