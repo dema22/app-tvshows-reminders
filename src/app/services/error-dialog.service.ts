@@ -6,6 +6,7 @@ import { ErrorDialogComponent } from '../components/error-dialog/error-dialog.co
 @Injectable({
   providedIn: 'root'
 })
+// Done.
 export class ErrorDialogService {
   constructor(public dialog: MatDialog) { }
 

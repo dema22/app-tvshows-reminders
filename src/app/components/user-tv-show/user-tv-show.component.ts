@@ -11,6 +11,7 @@ import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-sho
   templateUrl: './user-tv-show.component.html',
   styleUrls: ['./user-tv-show.component.css']
 })
+// Done.
 export class UserTvShowComponent implements OnInit {
   createdUserTvShowForm: FormGroup;
 
@@ -24,6 +25,7 @@ export class UserTvShowComponent implements OnInit {
     });
   }
 
+  // We created the UserTvShowEntity object and we pass it to the Tv Show Reminder Dialog component.
   onSubmit() {
     let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
 

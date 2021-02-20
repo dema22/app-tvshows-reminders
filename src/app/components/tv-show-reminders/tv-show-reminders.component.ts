@@ -15,6 +15,7 @@ import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
   templateUrl: './tv-show-reminders.component.html',
   styleUrls: ['./tv-show-reminders.component.css'],
 })
+// Done.
 export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   pageInfo : PageInfo  = {} as PageInfo;
   totalElementsForPagination : number;
@@ -126,6 +127,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // We open UserTvShowComponent dialog. 
   openUserTvShowDialog() {
     //console.log("Open user tv show dialog");
     let dialogRef = this.dialog.open(UserTvShowComponent,{
@@ -134,6 +136,7 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
   
+  // We open the TvShowReminderDialogComponent and we pass the TvShowReminder object so we can update it from that dialog. 
   openReminderDialog(reminder : TvShowReminder) {
     //console.log("Load the reminder we click");
     //console.log(reminder)
@@ -148,6 +151,8 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // We open the DeleteReminderDialogComponent and we pass the TvShowReminder object so we can delete it from that dialog. 
+  // We will also pass the the pageIndex and pageSize.
   deleteReminderDialog(reminder : TvShowReminder) {
     //console.log(reminder)
     this.dialog.open(DeleteReminderDialogComponent,{

@@ -14,7 +14,8 @@ import { AuthStoreService } from './auth-store.service';
 @Injectable({
   providedIn: 'root',
 })
-// Intercept every request and we check every response to verify if there are any erros.
+// Done.
+// Intercept every request and we check every response to verify if there are any errors.
 // If they are we show a dialog to the user.
 export class HttpErrorInterceptorService implements HttpInterceptor {
   constructor(public errorDialogService: ErrorDialogService, public authStore: AuthStoreService) {}

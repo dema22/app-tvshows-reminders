@@ -7,9 +7,9 @@ import { UserService } from 'src/app/services/user.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
 })
+// Done.
 export class ProfileComponent implements OnInit {
   constructor(
-    private authService: AuthService,
     private userService: UserService
   ) {}
 
@@ -18,6 +18,6 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfileOfLoggedUser(): void {
-    this.userService.getUserProfile().subscribe();
+    this.userService.getUserProfile().subscribe(/*(profile) => console.log(profile)*/);
   }
 }

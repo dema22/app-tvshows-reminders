@@ -11,6 +11,7 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
+// Done.
 export class RegistrationComponent implements OnInit {
   userRegistrationForm: FormGroup;
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective; // Directive to clear form and valitations.
@@ -43,6 +44,7 @@ export class RegistrationComponent implements OnInit {
     };
     this.registrationOfUser(user);
     this.reset();
+    // What to do ? Redirect to log in or show message that we created the user?
   }
 
   // Getters

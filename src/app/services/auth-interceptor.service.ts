@@ -11,6 +11,7 @@ import * as endpoints from '../constants/endpoints';
 @Injectable({
   providedIn: 'root',
 })
+// Done.
 export class AuthInterceptorService implements HttpInterceptor {
   constructor() {}
 

@@ -6,7 +6,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-
+// Done
 // The canActivate method returns a boolean indicating whether or not navigation to a route should be allowed. 
 export class AuthGuardService implements CanActivate {
 

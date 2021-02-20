@@ -12,6 +12,7 @@ import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-sho
   templateUrl: './tv-show-details.component.html',
   styleUrls: ['./tv-show-details.component.css']
 })
+// Done.
 export class TvShowDetailsComponent implements OnInit {
   
   isLoggedIn : boolean;
@@ -31,6 +32,7 @@ export class TvShowDetailsComponent implements OnInit {
     this.checkIfIsLoggedIn();
   }
 
+  // We check if its logged in so we can show the add reminder button in the HTML.
   checkIfIsLoggedIn() {
     this.authStore.isLoggedIn$.subscribe((value) => this.isLoggedIn = value);
   }
@@ -38,9 +40,9 @@ export class TvShowDetailsComponent implements OnInit {
   // We get the tv show details from our service, sanitized the trailers url, and then set the loading flag to false.
   getTvShowDetails(idTvShow: number): void {
     this.tvShowDetailsService.getTvShowDetailsById(idTvShow).subscribe((tvShowsResult) => {
-    this.tvShowDetails = tvShowsResult;
-    this.sanitizeVideosUrl();
-    this.isLoading = false;
+      this.tvShowDetails = tvShowsResult;
+      this.sanitizeVideosUrl();
+      this.isLoading = false;
     });
   }
 
@@ -51,7 +53,7 @@ export class TvShowDetailsComponent implements OnInit {
     }
   }
 
-  // Open the reminders dialog
+  // Open the reminders dialog, we pass the id of the tv show.
   openRemindersDialog(): void {
     let dialogRef = this.dialog.open(TvShowReminderDialogComponent,{
       height: '500px',
@@ -62,6 +64,5 @@ export class TvShowDetailsComponent implements OnInit {
         userTvShow: null
       }
     });
-    
   }
 }

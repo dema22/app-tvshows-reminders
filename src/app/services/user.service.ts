@@ -17,6 +17,7 @@ import { baseUrl, userEndpoints} from '../constants/endpoints';
 @Injectable({
   providedIn: 'root'
 })
+// Done.
 export class UserService {
 
   /* Send the user information from the registration to the server */

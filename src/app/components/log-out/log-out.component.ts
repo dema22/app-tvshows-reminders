@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './log-out.component.html',
   styleUrls: ['./log-out.component.css']
 })
+// Done.
 export class LogOutComponent implements OnInit {
 
   constructor(private authStore: AuthStoreService) { }

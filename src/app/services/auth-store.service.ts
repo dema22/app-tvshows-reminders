@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
+// Done
 export class AuthStoreService {
 
   /*
@@ -22,6 +23,8 @@ export class AuthStoreService {
 
   constructor(private authService: AuthService, private router: Router) { }
 
+  // We get the token from the service. Then we will decoded the token, get the information from the token like its exp time, user role and user id.
+  // Finnally, we will set all this information in local storage and re direct to the home.
   public logIn(userCredentials: Credentials) : Observable<AuthResponse>{
     let obs: Observable<AuthResponse> = this.authService.logIn(userCredentials);
 
@@ -66,6 +69,7 @@ export class AuthStoreService {
   }
 
   // We store the token, its expiration time and the user id and its role id in localStorage entries.
+  // We set the state of loggedIn in true.
   private setSession(expirationTime : number, authResult, idUserRole: string, idUser : string) : void {
     localStorage.setItem('token', authResult.token);
     localStorage.setItem("expires_at", JSON.stringify(expirationTime));
@@ -74,6 +78,8 @@ export class AuthStoreService {
     this._isLoggedIn.next(true);
   }
 
+  // Delete the local storage entries and set the state of the loggedIn in false.
+  // We redirect to the logIn route.
   public logout() : void {
     localStorage.removeItem("token");
     localStorage.removeItem("expires_at");
@@ -83,12 +89,13 @@ export class AuthStoreService {
     this.router.navigate(['logIn']);
   }
 
-  // We check if the current date hasnt passed the expiration date: if true is valid, else the token has expired.
+  // We check if the current date hasnt passed the expiration date: if true, is valid, else, the token has expired.
   public isLoggedIn() : boolean {
       let currentDateInSeconds : number = Math.trunc(Date.now() / 1000); // The number of seconds since the Unix Epoch, This value is floored to the nearest second, and does not include a milliseconds component.
       let expirationTimeInSeconds : number =  this.getExpirationTimeFromLocalStorage();
       //console.log("Exp time from local storage is : " + expirationTimeInSeconds);
       //console.log("Current date is: "  + currentDateInSeconds);
+      // Set the state of the loggedIn.
       this._isLoggedIn.next(currentDateInSeconds <= expirationTimeInSeconds);
       // get the current value of the subject and return it
       return this._isLoggedIn.getValue();

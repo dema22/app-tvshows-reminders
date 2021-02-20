@@ -8,11 +8,12 @@ import { BasicTvShowInfo } from '../interfaces/BasicTvShowInfo';
 @Injectable({
   providedIn: 'root'
 })
+// Done.
 export class TvShowBasicInfoSearchBarService {
 
-  // Get basic tv show information based on the name that the user wants to query.
+  // Get basic tv show(s) information based on the name that the user wants to query.
   getBasicTvShowInfoByName(tvShowName: string): Observable<BasicTvShowInfo[]> {
-    // if not search term, return empty array.
+    // if not search term, return empty observable array.
     if(!tvShowName.trim()){
       return of([]);
     };

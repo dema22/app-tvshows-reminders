@@ -13,6 +13,7 @@ import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.compo
   templateUrl: './tv-show-basic-info-search-bar.component.html',
   styleUrls: ['./tv-show-basic-info-search-bar.component.css'],
 })
+// Done.
 export class TvShowBasicInfoSearchBarComponent implements OnInit {
 
   searchForm : FormGroup;
@@ -31,6 +32,8 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
     this.authStore.isLoggedIn();
   }
 
+  // We will listen to the  valueChanges observable of the form, so we can get each value and call the service to get the information of the name of the show.
+  // We will get an observable of a basic tv show information.
   onChanges(){
     this.basicTvShowsInformation$ = this.searchForm.get('searchBar').valueChanges.pipe(
         filter((value) => typeof value === 'string'), //isString
@@ -42,10 +45,12 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
       );
   }
 
+  // We will display the name of the tv show if we have a result(s).
   displayFn(tvShow: BasicTvShowInfo): string {
     return tvShow ? tvShow.original_name : '';
   }
 
+  // We open the tv show details dialog. We pass the id of the tv show we are selecting.
   openTvShowDialog(idTvShow: number): void {
     //console.log("ENTRA A ABRIR DIALOGO");
 

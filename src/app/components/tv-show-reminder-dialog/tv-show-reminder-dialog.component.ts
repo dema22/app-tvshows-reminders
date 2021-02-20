@@ -21,6 +21,7 @@ import { UserTvShowService } from 'src/app/services/user-tv-show.service';
   templateUrl: './tv-show-reminder-dialog.component.html',
   styleUrls: ['./tv-show-reminder-dialog.component.css'],
 })
+// Done.
 export class TvShowReminderDialogComponent implements OnInit {
   saveReminderForm: FormGroup;
 
@@ -34,6 +35,7 @@ export class TvShowReminderDialogComponent implements OnInit {
     private communicationService: CommunicationService
   ) {}
 
+  // We initialized the form with information or not, depending if we are saving or updating a reminder.
   ngOnInit(): void {
     //console.log("Custom object: ")
     //console.log(this.data);
@@ -76,6 +78,9 @@ export class TvShowReminderDialogComponent implements OnInit {
     }
   }
 
+  // We created the object with the info we want to update.
+  // Update the reminder with this information, and we get the reminder now updated from the service.
+  // Finally we created TvShowReminderEmitted to emit through the communication service.
   updateReminder(){
     let updateReminder: TvShowReminderPatchDTO = {
       completed: this.saveReminderForm.value.completed,
@@ -99,6 +104,7 @@ export class TvShowReminderDialogComponent implements OnInit {
     //console.log(updateReminder);
   }
 
+  // We create a TvShowReminderEntity and we call the save method.
   saveReminderWithTvShowFromSystem(){
     //console.log(this.saveReminderForm.getRawValue().currentEpisode);
     //console.log(this.saveReminderForm.getRawValue().currentSeason);
@@ -118,7 +124,10 @@ export class TvShowReminderDialogComponent implements OnInit {
     this.saveTvShowReminder(reminder);
   }
 
+  // Once the tv show created by the user is saved.
+  // We created a TvShowReminderEntity and call the save method.
   saveReminderWithTvShowCreatedByUser(){
+
     // first we save the tv show created by the user, we suscribe, when it completes, we save our reminder with this userTvShow.
     this.saveUserTvShow(this.data.userTvShow).subscribe((savedUserTvShow) => {
       //console.log("Once i finish saving the userTvShow, i save the reminder for this tv show");
@@ -145,6 +154,8 @@ export class TvShowReminderDialogComponent implements OnInit {
     return this.userTvShowService.saveUserTvShow(userTvShow);
   }
 
+  // Method that will saved a reminder entity. We get the savedReminder, we use it to created a TvShowReminderEmitted object.
+  // We send this TvShowReminderEmitted to the communicationService.
   saveTvShowReminder(reminder: TvShowReminderEntity) {
     this.tvShowReminderService.saveTvShowReminder(reminder).subscribe((saveReminder) => {
       let emmitedReminder : TvShowReminderEmitted = { 
@@ -157,6 +168,7 @@ export class TvShowReminderDialogComponent implements OnInit {
     });
   }
 
+  // Show options on form depending if the input is checked or not.
   showOptions(event:MatCheckboxChange): void {
     //console.log(event.checked);
     if(event.checked){

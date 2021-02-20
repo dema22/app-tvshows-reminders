@@ -6,11 +6,13 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
+// Done.
 export class NavbarComponent implements OnInit {
   isLoggedIn : boolean;
   
   constructor(private authStore: AuthStoreService) { }
 
+  // We check the state of the loggeInd observable to know what option to show on the navbar html.
   ngOnInit(): void {
     //console.log("Entra NGONINIT");
     this.authStore.isLoggedIn$.subscribe((value) => { 

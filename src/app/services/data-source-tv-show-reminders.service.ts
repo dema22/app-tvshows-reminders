@@ -10,6 +10,7 @@ import { TvShowRemindersService } from './tv-show-reminders.service';
 @Injectable({
   providedIn: 'root',
 })
+// Done.
 export class DataSourceTvShowRemindersService implements DataSource<TvShowReminder> {
   private totalElementsForPagination = new BehaviorSubject<number>(0);
   public readonly totalElementsForPagination$: Observable<number> = this.totalElementsForPagination.asObservable();

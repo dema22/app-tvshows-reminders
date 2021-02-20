@@ -11,9 +11,10 @@ import { TvShowReminderPatchDTO } from '../interfaces/TvShowReminderPatchDTO';
 @Injectable({
   providedIn: 'root'
 })
+// Done.
 export class TvShowRemindersService {
 
-  /* GET tv shows reminders from the server */
+  /* GET tv shows reminders from the server with pagination.*/
   getTvShowRemindersPaginated(page: number, size:number): Observable<PageResponseReminder> {
     const params = new HttpParams().set('page', page.toString()).set('size', size.toString()); 
 
@@ -22,6 +23,7 @@ export class TvShowRemindersService {
     );*/
   }
 
+  /* Save a TvShowReminderEntity and returns the TvShowReminder we just created based on the entity. */
   saveTvShowReminder(tvShowReminder : TvShowReminderEntity): Observable<TvShowReminder> {
     return this.http.post<TvShowReminder>(baseUrl+ `${tvShowReminderEndpoints.SAVE_REMINDER}`, tvShowReminder);/*.pipe(
       tap((result) => {
@@ -31,6 +33,7 @@ export class TvShowRemindersService {
     );;*/
   }
 
+  /* Updates a reminder based on the info in TvShowReminderPatchDTO object. It will return the TvShowReminder updated. */
   updateTvShowReminder(tvShowReminderToUpdate: TvShowReminderPatchDTO, idTvShowReminder: number): Observable<TvShowReminder> {
     return this.http.patch<TvShowReminder>(baseUrl+ `${tvShowReminderEndpoints.UPDATE_REMINDER}${idTvShowReminder}`, tvShowReminderToUpdate);/*.pipe(
       tap((result) => {
@@ -40,6 +43,8 @@ export class TvShowRemindersService {
     );*/
   }
 
+  /* It deletes a tv show reminder. And it returns a tv show reminder array with the rest of reminder we have on that page index and page size.
+  If we dont have any reminder in that page, it returns null. */
   deleteTvShowReminder(idTvShowReminder: number, pageIndex: number, pageSize: number) : Observable<TvShowReminder[]> {
     
     const options = {

@@ -14,6 +14,7 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.css'],
 })
+// Done.
 export class LogInComponent implements OnInit {
   loginForm: FormGroup;
   @ViewChild(FormGroupDirective) formGroupDirective: FormGroupDirective; // Directive to clear form and valitations.
@@ -53,7 +54,6 @@ export class LogInComponent implements OnInit {
   // We call the service so we can log in.
   userLogIn(userCredentials: Credentials): void {
     this.authStore.logIn(userCredentials);
-    
   }
 
   // The form will get reset without validation trigger.
