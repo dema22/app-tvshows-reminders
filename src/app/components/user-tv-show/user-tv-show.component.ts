@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 import { User } from 'src/app/interfaces/User';
 import { UserTvShowEntity } from 'src/app/interfaces/UserTvShowEntity';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
@@ -15,18 +16,42 @@ import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-sho
 export class UserTvShowComponent implements OnInit {
   createdUserTvShowForm: FormGroup;
 
-  constructor(private authStore: AuthStoreService, private formBuilder: FormBuilder, private dialog: MatDialog) { }
+  constructor(private authStore: AuthStoreService, private formBuilder: FormBuilder, private dialog: MatDialog, @Inject(MAT_DIALOG_DATA) public data : {reminder: TvShowReminder}) { }
 
   ngOnInit(): void {
-    this.createdUserTvShowForm = this.formBuilder.group({
-      nameTvShow: ['', Validators.required], 
-      genre: [''],
-      productionCompany: ['']
-    });
+    // We load the user tv show information on the form. We are going to update it.
+    if(this.data.reminder){
+      console.log("we will update the user tv show.");
+      this.createdUserTvShowForm = this.formBuilder.group({
+        nameTvShow: [this.data.reminder.userTvShowDTO.nameTvShow, Validators.required], 
+        genre: [this.data.reminder.userTvShowDTO.genre],
+        productionCompany: [this.data.reminder.userTvShowDTO.productionCompany]
+      });
+    }else{
+      // We intialized an empty form to created a user tv show.
+      this.createdUserTvShowForm = this.formBuilder.group({
+        nameTvShow: ['', Validators.required], 
+        genre: [''],
+        productionCompany: ['']
+      });
+    }
+  }
+
+  // If we get a data object with a reminder, it means we already have a reminder with a user tv show. We are going to update it.
+  // If not we are going to created a user tv show.
+  onSubmit() {
+    if(this.data.reminder !== null)
+      this.updateUserTvShow();
+    else
+      this.createdUserTvShow();
+  }
+
+  updateUserTvShow(){
+    console.log("We update a user tv show");
   }
 
   // We created the UserTvShowEntity object and we pass it to the Tv Show Reminder Dialog component.
-  onSubmit() {
+  createdUserTvShow() {
     let user : User = {idUser: this.authStore.getUserIdFromLocalStorage(), name: null, lastName: null, username: null, password: null, email: null, role: null};
 
     let tvShowCreatedByUser: UserTvShowEntity = {
@@ -53,7 +78,6 @@ export class UserTvShowComponent implements OnInit {
       if(saveReminder !== undefined)
         this.dialog.closeAll();
     });
-
   }
 
   // Getters

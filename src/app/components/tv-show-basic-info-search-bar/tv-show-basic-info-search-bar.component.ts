@@ -59,7 +59,11 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
     let dialogRef = this.dialog.open(TvShowDetailsComponent,{
       height: '800px',
       width: '800px',
-      data: idTvShow
+      data: {
+        idTvShow: idTvShow,
+        reminder: null,
+        saveReminder: true
+      }
     });
   }
 }

@@ -6,6 +6,7 @@ import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
+import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
 
 @Component({
   selector: 'app-tv-show-details',
@@ -20,7 +21,7 @@ export class TvShowDetailsComponent implements OnInit {
   isLoading : boolean;
   tvShowDetails = {} as TvShowDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public idTvShow : number,
+  constructor(@Inject(MAT_DIALOG_DATA) public data : {idTvShow : number, reminder: TvShowReminder, saveReminder: boolean},
               private tvShowDetailsService: TvShowDetailsService,
               private sanitizer: DomSanitizer,
               private authStore: AuthStoreService,
@@ -28,11 +29,16 @@ export class TvShowDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.getTvShowDetails(this.idTvShow);
+
+    if(this.data.idTvShow)
+      this.getTvShowDetails(this.data.idTvShow);
+    else
+      this.geDetailsFromReminder(this.data.reminder);
+
     this.checkIfIsLoggedIn();
   }
 
-  // We check if its logged in so we can show the add reminder button in the HTML.
+  // We check if its logged in so we can show the add reminder button in the HTML. We also check for the data object the saveReminder flag.
   checkIfIsLoggedIn() {
     this.authStore.isLoggedIn$.subscribe((value) => this.isLoggedIn = value);
   }
@@ -44,6 +50,13 @@ export class TvShowDetailsComponent implements OnInit {
       this.sanitizeVideosUrl();
       this.isLoading = false;
     });
+  }
+
+  geDetailsFromReminder(reminder: TvShowReminder): void {
+    console.log("Load reminder deatails from the table row");
+    this.tvShowDetails = reminder.tvShowDetailsResponseDTO;
+    this.sanitizeVideosUrl();
+    this.isLoading = false;
   }
 
   // We iterate the url from the details object, and populate each new secured url into the safeUrlVideos array.
@@ -60,7 +73,7 @@ export class TvShowDetailsComponent implements OnInit {
       width: '500px',
       data: {
         reminder: null,
-        idTvShow: this.idTvShow,
+        idTvShow: this.data.idTvShow,
         userTvShow: null
       }
     });

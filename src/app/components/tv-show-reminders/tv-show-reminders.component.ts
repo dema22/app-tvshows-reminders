@@ -3,10 +3,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { PageInfo } from 'src/app/interfaces/PageInfo';
 import { TvShowReminder } from 'src/app/interfaces/TvShowReminder';
+import { UserTvShow } from 'src/app/interfaces/UserTvShow';
 import { CommunicationService } from 'src/app/services/communication.service';
 import { DataSourceTvShowRemindersService } from 'src/app/services/data-source-tv-show-reminders.service';
 import { TvShowRemindersService } from 'src/app/services/tv-show-reminders.service';
 import { DeleteReminderDialogComponent } from '../delete-reminder-dialog/delete-reminder-dialog.component';
+import { TvShowDetailsComponent } from '../tv-show-details/tv-show-details.component';
 import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
 import { UserTvShowComponent } from '../user-tv-show/user-tv-show.component';
 
@@ -127,12 +129,28 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
     });
   }
 
+  // We open the details dialog
+  openDetailsDialog(reminder: TvShowReminder) {
+    this.dialog.open(TvShowDetailsComponent,{
+      height: '800px',
+      width: '800px',
+      data: {
+        idTvShow: null,
+        reminder: reminder,
+        saveReminder: false
+      }
+    });
+  }
+
   // We open UserTvShowComponent dialog. 
-  openUserTvShowDialog() {
+  openUserTvShowDialog(reminder: TvShowReminder) {
     //console.log("Open user tv show dialog");
     let dialogRef = this.dialog.open(UserTvShowComponent,{
       height: '500px',
-      width: '500px'
+      width: '500px',
+      data: {
+        reminder: reminder
+      }
     });
   }
   
@@ -164,6 +182,19 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
         pageSize: this.paginator.pageSize
       }
     });
+  }
+
+  // We open the UserTvShow dialog if we have a reminder based on a user tv show.
+  // Or we open the DetailsDialog if we have a reminder from a tv show from the system.
+  openDialogBasedOnRow(reminder : TvShowReminder) {
+    //console.log("Abro dialog cuando clickeo row");
+    //console.log(reminder);
+
+    if(reminder.userTvShowDTO){
+      this.openUserTvShowDialog(reminder);
+    }else if(reminder.tvShowDetailsResponseDTO){
+      this.openDetailsDialog(reminder);
+    }
   }
 
   // Each time the user click on the paginator arrows we will trigger this function.

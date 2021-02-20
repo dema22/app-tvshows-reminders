@@ -1,6 +1,6 @@
 <app-tv-show-basic-info-search-bar></app-tv-show-basic-info-search-bar>
 <div class="flex-container">
-  <button mat-raised-button color="primary" class="user-tvshow-btn" (click)="openUserTvShowDialog()">Create Tv Show</button>
+  <button mat-raised-button color="primary" class="user-tvshow-btn" (click)="openUserTvShowDialog(null)">Create Tv Show</button>
 </div>
 <mat-table class="reminders-table"
   [dataSource]="dataSource"
@@ -73,7 +73,7 @@
   <!-- Add a column for reminders actions (update and  delete) -->
   <ng-container matColumnDef="actions">
     <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
-    <mat-cell class="description-cell" *matCellDef="let reminder">
+    <mat-cell class="description-cell" *matCellDef="let reminder" (click)="$event.stopPropagation()">
       <div class="flex-container-actions">
         <button mat-raised-button color="primary" class="action-item" (click)="openReminderDialog(reminder)">
           Update
@@ -86,7 +86,7 @@
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  <mat-row  (click)="openDialogBasedOnRow(row)" *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 
 <mat-paginator

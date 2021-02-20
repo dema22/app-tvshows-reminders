@@ -50,7 +50,12 @@
       type="submit"
       [disabled]="!createdUserTvShowForm.valid"
     >
-      Continue
+      <ng-container *ngIf="data.reminder; else elseBlock">
+        Update
+      </ng-container >
+      <ng-template #elseBlock> 
+        Continue
+      </ng-template>
     </button>
   </div>
 </form>
