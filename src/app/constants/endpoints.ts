@@ -24,5 +24,6 @@ export const tvShowReminderEndpoints = {
 }
 
 export const userTvShowEndpoints = {
-    SAVE_USER_TVSHOW: '/userTvShow/'
+    SAVE_USER_TVSHOW: '/userTvShow/',
+    UPDATE_USER_TVSHOW: '/userTvShow/'
 }

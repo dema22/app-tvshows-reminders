@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserProfile } from 'src/app/interfaces/UserProfile';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { UserService } from 'src/app/services/user.service';
 })
 // Done.
 export class ProfileComponent implements OnInit {
+  loading : boolean = false;
+  profile : UserProfile;
+  
   constructor(
     private userService: UserService
   ) {}
@@ -18,6 +21,10 @@ export class ProfileComponent implements OnInit {
   }
 
   getProfileOfLoggedUser(): void {
-    this.userService.getUserProfile().subscribe(/*(profile) => console.log(profile)*/);
+    this.userService.getUserProfile().subscribe((profile) => {
+      console.log(profile);
+      this.profile = profile;
+      this.loading = true;
+    });
   }
 }

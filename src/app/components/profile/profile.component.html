@@ -1,1 +1,27 @@
-<p>profile works!</p>
+<div class="main-div">
+  <mat-card>
+    <mat-card-header *ngIf="loading">
+      <mat-card-title class="card-title">
+          Hello {{ profile.name }} ! Thanks for taking the time to check the application.
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        I created this small web app using Javascripct with Angular + Material frameworks for the front end. The
+        API was built with Java with Srpingboot, using the Hibernate ORM + JPA,
+        with a MySQL database. For the API security i use JWT tokens with Spring
+        Security. I am looking for a junior position so I can keep improving on
+        Full Stack Web Development.
+      </p>
+      <p>You can check the source code of this proyect at : </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a href="https://github.com/dema22/app-tvshows-reminders/tree/master/src" target="_blank">
+          <button mat-button>Front End Repository</button>
+      </a>
+      <a href="https://github.com/dema22/api-tv-movies/tree/master/src/main/java/com/example/spring" target="_blank">
+          <button mat-button>Api Repository</button>
+      </a>
+    </mat-card-actions>
+  </mat-card>
+</div>
