@@ -119,6 +119,11 @@ export class UserTvShowComponent implements OnInit {
     });
   }
 
+  // Close the current dialog when the button is click
+  closeDialogFromButton() {
+    this.dialogRef.close();
+  }
+
   // Getters
   get nameTvShow () { return this.createdUserTvShowForm.get('nameTvShow'); }
   get genre () { return this.createdUserTvShowForm.get('genre'); }

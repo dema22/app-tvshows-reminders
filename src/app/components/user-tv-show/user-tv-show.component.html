@@ -1,8 +1,10 @@
-<p>
-  Enter the information of the tv show!
-</p>
+<p>Enter the information of the tv show!</p>
 
-<form autocomplete="off" [formGroup]="createdUserTvShowForm" (ngSubmit)="onSubmit()">
+<form
+  autocomplete="off"
+  [formGroup]="createdUserTvShowForm"
+  (ngSubmit)="onSubmit()"
+>
   <div class="flex-container">
     <mat-form-field>
       <mat-label>Name Tv Show</mat-label>
@@ -44,18 +46,27 @@
       />
     </mat-form-field>
 
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      [disabled]="!createdUserTvShowForm.valid"
-    >
-      <ng-container *ngIf="data.reminder; else elseBlock">
-        Update
-      </ng-container >
-      <ng-template #elseBlock> 
-        Continue
-      </ng-template>
-    </button>
+    <div class="flex-row-btns">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="!createdUserTvShowForm.valid"
+      >
+        <ng-container *ngIf="data.reminder; else elseBlock">
+          Update
+        </ng-container>
+        <ng-template #elseBlock> Continue </ng-template>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="closeDialogFromButton()"
+      >
+        Closed
+      </button>
+    </div>
   </div>
 </form>

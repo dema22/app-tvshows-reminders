@@ -41,10 +41,22 @@
             class="flex-item-two"
           ></iframe>
         </ng-container>
-        <!-- Add the button to save the details of a tv show as a reminder only. This button is displayed if the user is logged in -->
-        <ng-containter *ngIf="isLoggedIn && data.saveReminder">
-          <button (click)="openRemindersDialog()" mat-dialog-close mat-raised-button color="primary">Save Tv Show as Reminder</button>
-        </ng-containter> 
+
+        <div class="flex-row-btns">
+          <!-- "Save as reminder" button is display if the user is loggedIn and we get true from the data.saveReminder boolean. -->
+          <ng-containter *ngIf="isLoggedIn && data.saveReminder">
+            <button (click)="openRemindersDialog()" mat-dialog-close mat-raised-button color="primary">Save Tv Show as Reminder</button>
+          </ng-containter>
+           
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="closeDialogFromButton()"
+          >
+            Closed
+          </button>
+        </div>
       </div>
     </mat-card-content>
   </div>

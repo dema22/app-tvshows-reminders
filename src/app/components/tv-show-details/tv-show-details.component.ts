@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 
 import { TvShowDetailsService } from '../../services/tv-show-details.service';
 import { TvShowDetails } from '../../interfaces/TvShowDetails';
-import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DomSanitizer, SafeResourceUrl} from '@angular/platform-browser';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 import { TvShowReminderDialogComponent } from '../tv-show-reminder-dialog/tv-show-reminder-dialog.component';
@@ -21,7 +21,8 @@ export class TvShowDetailsComponent implements OnInit {
   isLoading : boolean;
   tvShowDetails = {} as TvShowDetails;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data : {idTvShow : number, reminder: TvShowReminder, saveReminder: boolean},
+  constructor(private dialogRef: MatDialogRef<TvShowDetailsComponent>,
+              @Inject(MAT_DIALOG_DATA) public data : {idTvShow : number, reminder: TvShowReminder, saveReminder: boolean},
               private tvShowDetailsService: TvShowDetailsService,
               private sanitizer: DomSanitizer,
               private authStore: AuthStoreService,
@@ -77,5 +78,10 @@ export class TvShowDetailsComponent implements OnInit {
         userTvShow: null
       }
     });
+  }
+
+  // Close the current dialog when the button is click
+  closeDialogFromButton() {
+    this.dialogRef.close();
   }
 }
