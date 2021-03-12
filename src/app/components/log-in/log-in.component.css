@@ -1,13 +1,14 @@
-mat-card{
-    margin-top: 100px;
-    margin-left: 400px;
-    margin-right: 400px;
-  }
-  
-  mat-form-field {
-    width: 100%;
-  }
-  
-  mat-card-title{
-    text-align: center;
-  }
+mat-card {
+  margin-top: 5%;
+  margin-left: 40%;
+  margin-right: 40%;
+  padding: 5%;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-title {
+  text-align: center;
+}
