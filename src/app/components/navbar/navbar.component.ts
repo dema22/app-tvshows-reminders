@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { AuthStoreService } from 'src/app/services/auth-store.service';
 
 @Component({
@@ -9,7 +9,8 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
 // Done.
 export class NavbarComponent implements OnInit {
   isLoggedIn : boolean;
-  
+  @Output() public sidenavToggle = new EventEmitter();
+
   constructor(private authStore: AuthStoreService) { }
 
   // We check the state of the loggeInd observable to know what option to show on the navbar html.
@@ -20,4 +21,9 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = value; 
     });
   }
+
+  onToggleSidenav() {
+    this.sidenavToggle.emit();
+  }
+
 }

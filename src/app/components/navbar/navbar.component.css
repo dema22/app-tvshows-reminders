@@ -12,9 +12,9 @@ a:hover,
 a:active {
   text-decoration: none; 
   color: white;
-  font-size: smaller;
+  font-size: medium;
 }
 
 span {
-  font-size: xx-small;
+  font-size:medium;
 }
