@@ -42,6 +42,10 @@ import { TvShowReminderDialogComponent } from './components/tv-show-reminder-dia
 import { UserTvShowComponent } from './components/user-tv-show/user-tv-show.component';
 import { DeleteReminderDialogComponent } from './components/delete-reminder-dialog/delete-reminder-dialog.component';
 
+// Flexbox for angular
+import {FlexLayoutModule} from '@angular/flex-layout';
+import { SideNavbarComponent } from './components/side-navbar/side-navbar.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,7 +61,8 @@ import { DeleteReminderDialogComponent } from './components/delete-reminder-dial
     TvShowRemindersComponent,
     TvShowReminderDialogComponent,
     UserTvShowComponent,
-    DeleteReminderDialogComponent
+    DeleteReminderDialogComponent,
+    SideNavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +85,9 @@ import { DeleteReminderDialogComponent } from './components/delete-reminder-dial
     // Routing
     AppRoutingModule,
     // Forms
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    // Flexlayout for angular
+    FlexLayoutModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, 
