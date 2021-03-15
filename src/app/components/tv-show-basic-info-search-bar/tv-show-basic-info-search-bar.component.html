@@ -1,15 +1,17 @@
-<form [formGroup]="searchForm">
-  <mat-form-field>
-    <mat-label>Search Tv Show</mat-label>
-    <input type="text"
-           placeholder="Serach tv show by name"
-           matInput
-           formControlName="searchBar"
-           [matAutocomplete]="auto">
-    <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn">
-      <mat-option *ngFor="let tvShow of basicTvShowsInformation$ | async" [value]="tvShow" (onSelectionChange)="openTvShowDialog(tvShow.id)"> <!--(click)="openTvShowDialog(tvShow.id)"     (keypress.enter)="openTvShowDialog(tvShow.id)"--> 
-        <span>{{tvShow.original_name}}</span>
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div class ="container">
+  <form [formGroup]="searchForm">
+    <mat-form-field>
+      <mat-label>Search Tv Show</mat-label>
+      <input type="text"
+            placeholder="Serach tv show by name"
+            matInput
+            formControlName="searchBar"
+            [matAutocomplete]="auto">
+      <mat-autocomplete  #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let tvShow of basicTvShowsInformation$ | async" [value]="tvShow" (onSelectionChange)="openTvShowDialog(tvShow.id)"> <!--(click)="openTvShowDialog(tvShow.id)"     (keypress.enter)="openTvShowDialog(tvShow.id)"--> 
+          <span>{{tvShow.original_name}}</span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</div>

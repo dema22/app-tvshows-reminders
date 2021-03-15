@@ -6,6 +6,6 @@ mat-sidenav {
   width: 250px;
 }
 
-main {
-  padding: 10px;
-}
+/*.content {
+  flex: 1 0 auto;
+}*/

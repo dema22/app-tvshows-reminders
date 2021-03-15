@@ -21,3 +21,7 @@ a:active {
 span{
   font-size:smaller;
 }
+
+/*.footer {
+  flex-shrink: 0;
+}*/
