@@ -6,6 +6,12 @@ mat-sidenav {
   width: 250px;
 }
 
-/*.content {
-  flex: 1 0 auto;
-}*/
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-content {
+  flex-grow: 1;
+}

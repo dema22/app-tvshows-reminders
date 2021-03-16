@@ -1,14 +1,14 @@
-.container {
+/*.container {
   min-height: 5%;
 }
 
 .footer {
-  position: fixed;
+  position: fixed; da problemas ?
   bottom: 0;
   justify-content: center;
   width: 100%;
   height: 25px;
-}
+}*/
 
 a:link,
 a:visited,
@@ -22,6 +22,9 @@ span{
   font-size:smaller;
 }
 
-/*.footer {
-  flex-shrink: 0;
-}*/
+.footer {
+  /*flex-shrink: 0;*/
+  justify-content: center;
+  width: 100%;
+  height: 25px;
+}
