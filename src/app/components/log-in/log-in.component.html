@@ -1,16 +1,29 @@
-<mat-card>
+
+  <mat-card class="card-container">
     <mat-card-title>Log In</mat-card-title>
     <mat-card-content>
-      <form  autocomplete="off" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <mat-form-field>
+      <form
+        autocomplete="off"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
+        class="form-container"
+      >
+        <mat-form-field class="flex-input">
           <mat-label>Username</mat-label>
-          <input type="text" matInput placeholder="Username" formControlName="username" />
+          <input
+            type="text"
+            matInput
+            placeholder="Username"
+            formControlName="username"
+          />
         </mat-form-field>
         <div *ngIf="username.invalid && (username.dirty || username.touched)">
-          <mat-error *ngIf="username.errors.required"> Username is required. </mat-error>
+          <mat-error *ngIf="username.errors.required">
+            Username is required.
+          </mat-error>
         </div>
-  
-        <mat-form-field>
+
+        <mat-form-field class="flex-input">
           <mat-label>Password</mat-label>
           <input
             type="password"
@@ -26,6 +39,7 @@
         </div>
 
         <button
+          class="flex-button"
           mat-raised-button
           color="primary"
           type="submit"
@@ -36,4 +50,4 @@
       </form>
     </mat-card-content>
   </mat-card>
-  
+

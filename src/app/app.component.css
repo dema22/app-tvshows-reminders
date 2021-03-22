@@ -13,5 +13,9 @@ mat-sidenav {
 }
 
 .site-content {
+  /*display: flex;
+  justify-content: center; 
+  align-items: center; */
+  border: 10px solid violet;
   flex-grow: 1;
 }
