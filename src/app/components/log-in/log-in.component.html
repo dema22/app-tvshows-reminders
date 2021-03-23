@@ -1,7 +1,7 @@
-
+<div class="card-container-wrapper">
   <mat-card class="card-container">
     <mat-card-title>Log In</mat-card-title>
-    <mat-card-content>
+    <mat-card-content class="card-container-content">
       <form
         autocomplete="off"
         [formGroup]="loginForm"
@@ -38,16 +38,11 @@
           </mat-error>
         </div>
 
-        <button
-          class="flex-button"
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="!loginForm.valid"
-        >
+        <button mat-raised-button type="submit" [disabled]="!loginForm.valid">
           Submit
         </button>
       </form>
     </mat-card-content>
   </mat-card>
-
+  <div></div>
+</div>

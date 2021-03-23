@@ -123,5 +123,8 @@
       }
     }
   },
-  "defaultProject": "tvshows-reminders-app"
+  "defaultProject": "tvshows-reminders-app",
+  "cli": {
+    "analytics": "d41b774d-5db2-42b0-aa1d-738ca8e53461"
+  }
 }

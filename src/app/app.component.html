@@ -22,13 +22,14 @@
   <mat-sidenav #sidenav>
     <app-side-navbar (sidenavClose)="sidenav.close()"></app-side-navbar>
   </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="site">
-      <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
-      <div class="site-content">
-        <router-outlet></router-outlet>
-      </div>
-      <app-footer></app-footer>
+  <mat-sidenav-content class="site">
+    <app-navbar
+      class="site-navbar"
+      (sidenavToggle)="sidenav.toggle()"
+    ></app-navbar>
+    <div class="site-content">
+      <router-outlet></router-outlet>
     </div>
+    <app-footer class="site-footer"></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

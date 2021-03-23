@@ -1,20 +1,24 @@
+.navbar {
+  background-color: rgba(53, 47, 47, 0.5) !important;
+}
+
 .spacer-nav-actions {
-    padding: 0 14px;
+  padding: 0 14px;
 }
 
 .spacer-nav {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 a:link,
 a:visited,
 a:hover,
 a:active {
-  text-decoration: none; 
+  text-decoration: none;
   color: white;
   font-size: medium;
 }
 
 span {
-  font-size:medium;
+  font-size: medium;
 }
