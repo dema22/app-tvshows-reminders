@@ -10,3 +10,13 @@ body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.card-container-wrapper {
+  display: flex;
+  /*border: 2px solid yellow;*/
+  /*height: calc(100vh - 81px);*/
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: center;
+}

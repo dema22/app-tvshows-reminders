@@ -1,16 +1,17 @@
 .card-container {
-  background-color: black;
+  background-color: blue;
   display: flex;
   flex-direction: column;
   justify-content: center; 
   align-items: center;
-  /*
+}
+
+/*
   This rezis items inside the container
   max-width: 700px;
   margin: auto;*/
-}
 
-/*mat-card-title {
+mat-card-title {
   text-align: center;
 }
 
@@ -20,7 +21,7 @@
   justify-content: center;
   align-items: center;
   /*background-color: violet;*/
-/*}
+}
 
 .flex-input {
   width: 50%;
@@ -30,4 +31,4 @@
   margin-top: 20px;
   width: 100px;
   height: 50px;
-}*/
+}
