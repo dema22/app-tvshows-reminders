@@ -40,10 +40,24 @@
     width: 60px;
 }
 
-@media (max-width: 400px) {
+@media (max-width: 425px) {
     mat-header-cell {
-      font-size: 10px;
-    }
-  }
+        font-size: 10px;
+      }
 
+    .description-cell {
+        font-size: 12px;
+    }
+
+    span {
+        font-size:smaller;
+        padding: 0;
+    }
+    .action-item{
+        padding: 0;
+        width: 20px;
+        height: 30px;
+        margin: 5px;
+    }
+}
 
