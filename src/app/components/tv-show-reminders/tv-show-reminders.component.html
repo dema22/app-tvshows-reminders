@@ -6,8 +6,8 @@
   [dataSource]="dataSource"
 >
   <ng-container matColumnDef="posterImg">
-    <mat-header-cell *matHeaderCellDef>Poster</mat-header-cell>
-    <mat-cell class="posterImg-cell" *matCellDef="let reminder">
+    <mat-header-cell *matHeaderCellDef fxShow fxHide.lt-md>Poster</mat-header-cell>
+    <mat-cell class="posterImg-cell" *matCellDef="let reminder" fxShow fxHide.lt-md>
         <ng-container *ngIf="reminder?.tvShowDetailsResponseDTO?.posterPath; else elseBlock">
           <img src="{{ reminder.tvShowDetailsResponseDTO.posterPath }}" class="img-poster"/>
         </ng-container>
@@ -31,8 +31,8 @@
   </ng-container>
 
   <ng-container matColumnDef="genre">
-    <mat-header-cell *matHeaderCellDef>Genre</mat-header-cell>
-    <mat-cell class="description-cell" *matCellDef="let reminder">
+    <mat-header-cell *matHeaderCellDef fxShow fxHide.lt-md>Genre</mat-header-cell>
+    <mat-cell class="description-cell" *matCellDef="let reminder" fxShow fxHide.lt-md>
         <ng-container *ngIf="reminder?.tvShowDetailsResponseDTO?.genres; else elseBlock">
             {{ reminder.tvShowDetailsResponseDTO.genres }}
         </ng-container>
@@ -43,14 +43,14 @@
   </ng-container>
 
   <ng-container matColumnDef="currentSeason">
-    <mat-header-cell *matHeaderCellDef>Watching Season</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Season</mat-header-cell>
     <mat-cell class="description-cell" *matCellDef="let reminder">
         {{reminder.currentSeason}}
     </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="currentEpisode">
-    <mat-header-cell *matHeaderCellDef>Watching Episode</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Episode</mat-header-cell>
     <mat-cell class="description-cell" *matCellDef="let reminder">
         {{reminder.currentEpisode}}
     </mat-cell>
@@ -64,7 +64,7 @@
   </ng-container>
 
   <ng-container matColumnDef="personalRating">
-    <mat-header-cell *matHeaderCellDef>Personal Rating</mat-header-cell>
+    <mat-header-cell *matHeaderCellDef>Rating</mat-header-cell>
     <mat-cell class="description-cell" *matCellDef="let reminder">
         {{reminder.personalRating}}
     </mat-cell>

@@ -34,3 +34,16 @@
 .action-item {
     margin: 10px;
 }
+
+.mat-column-currentSeason, .mat-column-currentEpisode {
+    flex: none;
+    width: 60px;
+}
+
+@media (max-width: 400px) {
+    mat-header-cell {
+      font-size: 10px;
+    }
+  }
+
+

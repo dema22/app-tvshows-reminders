@@ -3,12 +3,10 @@
     <app-side-navbar (sidenavClose)="sidenav.close()"></app-side-navbar>
   </mat-sidenav>
   <mat-sidenav-content class="site">
-    <!--<div class="site">-->
-      <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
-      <div class="site-content">
-        <router-outlet></router-outlet>
-      </div>
-      <app-footer></app-footer>
-    <!--</div>-->
+    <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
+    <div class="site-content">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>
