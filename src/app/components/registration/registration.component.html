@@ -1,84 +1,100 @@
-<mat-card>
-  <mat-card-title>Registration</mat-card-title>
-  <mat-card-content>
-    <form autocomplete="off" [formGroup]="userRegistrationForm" (ngSubmit)="onSubmit()">
-      <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input type="text" matInput placeholder="Name" formControlName="name" />
-      </mat-form-field>
-      <div *ngIf="name.invalid && (name.dirty || name.touched)">
-        <mat-error *ngIf="name.errors.required"> Name is required. </mat-error>
-      </div>
-
-      <mat-form-field>
-        <mat-label>Last name</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Lastname"
-          formControlName="lastName"
-        />
-      </mat-form-field>
-      <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-        <mat-error *ngIf="lastName.errors.required">
-          Last Name is required.
-        </mat-error>
-      </div>
-
-      <mat-form-field>
-        <mat-label>User name</mat-label>
-        <input
-          type="text"
-          matInput
-          placeholder="Username"
-          formControlName="username"
-        />
-      </mat-form-field>
-      <div *ngIf="username.invalid && (username.dirty || username.touched)">
-        <mat-error *ngIf="username.errors.required">
-          Username is required.
-        </mat-error>
-      </div>
-
-      <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input
-          type="password"
-          matInput
-          placeholder="Password"
-          formControlName="password"
-        />
-      </mat-form-field>
-      <div *ngIf="password.invalid && (password.dirty || password.touched)">
-        <mat-error *ngIf="password.errors.required">
-          Password is required.
-        </mat-error>
-      </div>
-
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input
-          type="email"
-          matInput
-          placeholder="Email"
-          formControlName="email"
-        />
-      </mat-form-field>
-      <div *ngIf="email.invalid && (email.dirty || email.touched)">
-        <mat-error *ngIf="email.errors.required">
-          Email is required.
-        </mat-error>
-        <mat-error *ngIf="email.errors.email"> Not a valid email. </mat-error>
-      </div>
-
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="!userRegistrationForm.valid"
+<div class="container-wrapper">
+  <mat-card class="card-container">
+    <mat-card-title>Registration</mat-card-title>
+    <mat-card-content>
+      <form
+        autocomplete="off"
+        [formGroup]="userRegistrationForm"
+        (ngSubmit)="onSubmit()"
+        class="form-container"
       >
-        Submit
-      </button>
-    </form>
-  </mat-card-content>
-</mat-card>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Name"
+            formControlName="name"
+            class="flex-input"
+          />
+        </mat-form-field>
+        <div *ngIf="name.invalid && (name.dirty || name.touched)">
+          <mat-error *ngIf="name.errors.required">
+            Name is required.
+          </mat-error>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Last name</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Lastname"
+            formControlName="lastName"
+          />
+        </mat-form-field>
+        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+          <mat-error *ngIf="lastName.errors.required">
+            Last Name is required.
+          </mat-error>
+        </div>
+
+        <mat-form-field>
+          <mat-label>User name</mat-label>
+          <input
+            type="text"
+            matInput
+            placeholder="Username"
+            formControlName="username"
+          />
+        </mat-form-field>
+        <div *ngIf="username.invalid && (username.dirty || username.touched)">
+          <mat-error *ngIf="username.errors.required">
+            Username is required.
+          </mat-error>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Password</mat-label>
+          <input
+            type="password"
+            matInput
+            placeholder="Password"
+            formControlName="password"
+          />
+        </mat-form-field>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)">
+          <mat-error *ngIf="password.errors.required">
+            Password is required.
+          </mat-error>
+        </div>
+
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            type="email"
+            matInput
+            placeholder="Email"
+            formControlName="email"
+          />
+        </mat-form-field>
+        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+          <mat-error *ngIf="email.errors.required">
+            Email is required.
+          </mat-error>
+          <mat-error *ngIf="email.errors.email"> Not a valid email. </mat-error>
+        </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="!userRegistrationForm.valid"
+          class="flex-btn"
+        >
+          Submit
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

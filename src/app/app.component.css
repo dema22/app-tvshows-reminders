@@ -9,13 +9,12 @@ mat-sidenav {
 .site {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  /*min-height: 100%;*/
+  /*align-items: center;
+  justify-content: center;*/
 }
 
 .site-content {
-  /*display: flex;
-  justify-content: center; 
-  align-items: center; */
-  /*border: 10px solid violet;*/
-  flex-grow: 1;
+  /*border: 10px solid orange;*/
+  flex: 1;
 }
