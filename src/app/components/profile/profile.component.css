@@ -19,12 +19,6 @@ a:active {
 
 @media (max-width: 700px) {
   .main-div{
-    width: 85%;
-  }
-}
-
-@media (max-width: 700px) {
-  .main-div{
     width: 90%;
   }
 }

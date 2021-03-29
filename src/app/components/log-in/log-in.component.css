@@ -19,10 +19,12 @@ mat-card-title {
   width: 50%;
 }
 
+@media (max-height: 548px) {
+  
+}
 
 @media (max-width: 500px) {
   .card-container {
-    background-color: lightblue;
     width: 60%;
     height: 50%;
   }
