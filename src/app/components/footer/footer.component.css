@@ -1,8 +1,3 @@
-.container {
-  overflow: hidden;
-  border: 1px solid yellow;
-}
-
 a:link,
 a:visited,
 a:hover,
@@ -12,11 +7,27 @@ a:active {
 }
 
 span{
-  font-size:smaller;
+  /*border: 2px solid yellow;*/
+  font-size: small;
+  /*font-size:smaller;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;*/
 }
 
 .footer {
   justify-content: center;
+  /*border: 2px solid black;*/
   width: 100%;
-  height: 25px;
+  height: 100%;
+}
+
+mat-toolbar {
+  white-space:unset;
+}
+
+@media (max-width: 410px) {
+  .footer {
+    height: 80px;
+  }
 }

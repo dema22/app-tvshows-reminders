@@ -6,9 +6,10 @@ mat-sidenav {
   width: 250px;
 }
 
+/* Flex container*/
 .site {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* The items will stack on each other*/
   /*min-height: 100%;*/
   /*align-items: center;
   justify-content: center;*/
