@@ -1,63 +1,65 @@
 .flex-container {
-    display: flex;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .user-tvshow-btn {
-    margin-left: auto;
-    margin-right: 50px;
-    margin-bottom: 50px;
-    margin-top: 50px;
+  margin: 50px;
 }
 
 .reminders-table {
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+  margin: 10px;
 }
 
 .reminders-paginator {
-    margin-bottom: 10px;
-    margin-left: 10px;
-    margin-right: 10px;
+  margin: 10px;
+}
+
+mat-cell,
+mat-header-cell {
+  justify-content: center;
 }
 
 .img-poster {
-    width: 100%;
-    height: auto;
+  width: 80%;
+  margin: 10px;
 }
 
 .flex-container-actions {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-.action-item {
-    margin: 10px;
+.action-btns {
+  margin: 10px;
 }
 
-.mat-column-currentSeason, .mat-column-currentEpisode {
-    flex: none;
-    width: 60px;
+.mat-column-currentSeason,
+.mat-column-currentEpisode {
+  flex: none;
+  width: 60px;
 }
 
 @media (max-width: 425px) {
-    mat-header-cell {
-        font-size: 10px;
-      }
+  mat-header-cell {
+    font-size: 10px;
+  }
 
-    .description-cell {
-        font-size: 12px;
-    }
+  .description-cell {
+    font-size: 12px;
+  }
 
-    span {
-        font-size:smaller;
-        padding: 0;
-    }
-    .action-item{
-        padding: 0;
-        width: 20px;
-        height: 30px;
-        margin: 5px;
-    }
+  span {
+    font-size: smaller;
+    padding: 0;
+  }
+  
+  .action-btns {
+    padding: 0;
+    width: 20px;
+    height: 30px;
+    margin: 5px;
+  }
 }
-
