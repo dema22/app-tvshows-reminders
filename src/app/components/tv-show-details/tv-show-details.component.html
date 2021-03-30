@@ -1,63 +1,55 @@
-<mat-card>
-  <div *ngIf="!isLoading">
-    <mat-card-title>
-      {{ tvShowDetails.name }}
-    </mat-card-title>
-    <mat-card-content>
+<div *ngIf="!isLoading">
+  <mat-dialog-title>
+    {{ tvShowDetails.name }}
+  </mat-dialog-title>
+  <mat-dialog-content>
+    <div class="flex-container">
       <span>{{ tvShowDetails.tagline }}</span>
-      <div class="flex-container">
-        <ng-container *ngIf="tvShowDetails?.backdropPath">
-          <img src="{{ tvShowDetails.backdropPath }}" class="img-item" />
-        </ng-container>
-        <div class="flex-item-container">
-          <span class="flex-item"> {{ tvShowDetails.overview }}</span>
-          <div class="flex-item-container-two">
-            <span class="flex-item-genre">
-              Genre: {{ tvShowDetails.genres }}</span
-            >
-            <span class="flex-item-two"
-              >Status: {{ tvShowDetails.status }}</span
-            >
-            <span class="flex-item-two"
-              >Original Language: {{ tvShowDetails.originalLanguage }}</span
-            >
-            <span class="flex-item-two"
-              >Episode run time: {{ tvShowDetails.episodeRunTime }} m</span
-            >
-            <span class="flex-item-two">Type: {{ tvShowDetails.type }}</span>
-          </div>
-        </div>
-        <span class="flex-item-two"
-          >Number of seasons: {{ tvShowDetails.numberOfSeasons }}
-        </span>
-        <span class="flex-item-two"
-          >Number of episodes: {{ tvShowDetails.numberOfEpisodes }}
-        </span>
-        <ng-container *ngFor="let video of safeUrlVideos">
-          <iframe
-            [src]="video"
-            height="400px"
-            width="100%"
-            class="flex-item-two"
-          ></iframe>
-        </ng-container>
-
-        <div class="flex-row-btns">
-          <!-- "Save as reminder" button is display if the user is loggedIn and we get true from the data.saveReminder boolean. -->
-          <ng-containter *ngIf="isLoggedIn && data.saveReminder">
-            <button (click)="openRemindersDialog()" mat-dialog-close mat-raised-button color="primary">Save Tv Show as Reminder</button>
-          </ng-containter>
-           
-          <button
-            mat-raised-button
-            color="primary"
-            type="button"
-            (click)="closeDialogFromButton()"
-          >
-            Closed
-          </button>
-        </div>
+      <ng-container *ngIf="tvShowDetails?.backdropPath">
+        <img src="{{ tvShowDetails.backdropPath }}" class="img-item" />
+      </ng-container>
+      <span> {{ tvShowDetails.overview }}</span>
+      <div class="flex-container-information">
+        <span> Genre: {{ tvShowDetails.genres }}</span>
+        <span>Status: {{ tvShowDetails.status }}</span>
+        <span>Original Language: {{ tvShowDetails.originalLanguage }}</span>
+        <span>Episode run time: {{ tvShowDetails.episodeRunTime }} m</span>
+        <span>Type: {{ tvShowDetails.type }}</span>
+        <span>Number of seasons: {{ tvShowDetails.numberOfSeasons }} </span>
+        <span>Number of episodes: {{ tvShowDetails.numberOfEpisodes }} </span>
       </div>
-    </mat-card-content>
-  </div>
-</mat-card>
+      <ng-container *ngFor="let video of safeUrlVideos">
+        <iframe
+          [src]="video"
+          height="400px"
+          width="100%"
+          class="trailers"
+        ></iframe>
+      </ng-container>
+    </div>
+  </mat-dialog-content>
+  <mati-dialog-actions>
+    <div class="flex-btns-container">
+      <!-- "Save as reminder" button is display if the user is loggedIn and we get true from the data.saveReminder boolean. -->
+      <ng-containter *ngIf="isLoggedIn && data.saveReminder">
+        <button
+          (click)="openRemindersDialog()"
+          mat-dialog-close
+          mat-raised-button
+          color="primary"
+        >
+          Save Tv Show as Reminder
+        </button>
+      </ng-containter>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="button"
+        (click)="closeDialogFromButton()"
+      >
+        Closed
+      </button>
+    </div>
+  </mati-dialog-actions>
+</div>

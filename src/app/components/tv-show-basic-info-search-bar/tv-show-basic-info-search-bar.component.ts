@@ -57,8 +57,6 @@ export class TvShowBasicInfoSearchBarComponent implements OnInit {
     this.searchForm.get('searchBar').setValue('');
 
     let dialogRef = this.dialog.open(TvShowDetailsComponent,{
-      height: '800px',
-      width: '800px',
       data: {
         idTvShow: idTvShow,
         reminder: null,

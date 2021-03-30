@@ -132,8 +132,6 @@ export class TvShowRemindersComponent implements OnInit , AfterViewInit {
   // We open the details dialog
   openDetailsDialog(reminder: TvShowReminder) {
     this.dialog.open(TvShowDetailsComponent,{
-      height: '800px',
-      width: '800px',
       data: {
         idTvShow: null,
         reminder: reminder,
