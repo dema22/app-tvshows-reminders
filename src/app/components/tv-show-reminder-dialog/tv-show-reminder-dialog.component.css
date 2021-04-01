@@ -16,5 +16,5 @@
 .flex-row-btns {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 21px;
 }
