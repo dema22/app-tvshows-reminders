@@ -1,23 +1,30 @@
 <mat-toolbar color="primary">
-    <div fxShow fxHide.gt-sm> <!-- Always show it But hide the menu button from the side navbar when screen is greater than the small size-->
-        <button mat-icon-button (click)="onToggleSidenav()">
-            <mat-icon>menu</mat-icon>
-        </button>
+  <div fxShow fxHide.gt-sm>
+    <!-- Always show it But hide the menu button from the side navbar when screen is greater than the small size-->
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <span>Tv Show Reminder App</span>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide fxShow.gt-sm>
+    <!-- Always hide it and show it only when  the links on the toolbar are greater than the small size -->
+    <span class="spacer-nav"></span>
+    <a class="spacer-nav-actions" routerLink="/home">Home</a>
+    <div *ngIf="isLoggedIn; else elseBlock">
+      <div *ngIf="isUser; else isAdmin">
+        <a class="spacer-nav-actions" routerLink="/reminders">Reminders</a>
+        <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
+        <a class="spacer-nav-actions" routerLink="/profile">Profile</a>
+      </div>
+      <ng-template #isAdmin>
+        <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
+      </ng-template>
     </div>
-    <span>Tv Show Reminder App</span>
-    <div fxFlex fxLayout fxLayoutAlign="end" fxHide fxShow.gt-sm> <!-- Always hide it and show it only when  the links on the toolbar are greater than the small size -->
-        <span class="spacer-nav"></span>
-        <a class="spacer-nav-actions" routerLink="/home">Home</a>
-        <div *ngIf="isLoggedIn; else elseBlock"> 
-            <a class="spacer-nav-actions" routerLink="/reminders">Reminders</a>
-            <a class="spacer-nav-actions" routerLink="/logOut">Log Out</a>
-            <a class="spacer-nav-actions" routerLink="/profile">Profile</a>
-        </div>
-        <ng-template #elseBlock> 
-            <a class="spacer-nav-actions" routerLink="/logIn">Log In</a>
-            <a class="spacer-nav-actions" routerLink="/registration">Sign In</a>
-        </ng-template>
-    </div>
+    <ng-template #elseBlock>
+      <a class="spacer-nav-actions" routerLink="/logIn">Log In</a>
+      <a class="spacer-nav-actions" routerLink="/registration">Sign In</a>
+    </ng-template>
+  </div>
 </mat-toolbar>
 
 <!-- 

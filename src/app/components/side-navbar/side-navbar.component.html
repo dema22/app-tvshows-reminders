@@ -2,23 +2,32 @@
   <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
     <mat-icon>home</mat-icon> <span class="nav-caption">home</span>
   </a>
-  <div *ngIf="isLoggedIn; else elseBlock"> 
-    <a mat-list-item routerLink="/reminders" (click)="onSidenavClose()">
-      <mat-icon>movie</mat-icon> <span class="nav-caption">Reminders</span>
-    </a>
-    <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
-      <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
-    </a>
-    <a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
-      <mat-icon>account_circle</mat-icon> <span class="nav-caption">Profile</span>
-    </a> 
+  <div *ngIf="isLoggedIn; else elseBlock">
+    <div *ngIf="isUser; else isAdmin">
+      <a mat-list-item routerLink="/reminders" (click)="onSidenavClose()">
+        <mat-icon>movie</mat-icon> <span class="nav-caption">Reminders</span>
+      </a>
+      <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
+        <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
+      </a>
+      <a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
+        <mat-icon>account_circle</mat-icon>
+        <span class="nav-caption">Profile</span>
+      </a>
+    </div>
+    <ng-template #isAdmin>
+      <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
+        <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
+      </a>
+    </ng-template>
   </div>
-  <ng-template #elseBlock> 
+  <ng-template #elseBlock>
     <a mat-list-item routerLink="/logIn" (click)="onSidenavClose()">
       <mat-icon>login</mat-icon> <span class="nav-caption">Log In</span>
     </a>
     <a mat-list-item routerLink="/registration" (click)="onSidenavClose()">
-      <mat-icon>app_registration</mat-icon> <span class="nav-caption">Sign In</span>
+      <mat-icon>app_registration</mat-icon>
+      <span class="nav-caption">Sign In</span>
     </a>
-  </ng-template> 
+  </ng-template>
 </mat-nav-list>

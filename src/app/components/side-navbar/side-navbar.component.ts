@@ -8,6 +8,7 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
 })
 export class SideNavbarComponent implements OnInit {
   isLoggedIn : boolean;
+  isUser: boolean;
   @Output() sidenavClose = new EventEmitter();
 
   constructor(private authStore: AuthStoreService) { }
@@ -16,7 +17,19 @@ export class SideNavbarComponent implements OnInit {
     this.authStore.isLoggedIn$.subscribe((value) => { 
       //console.log("The state of loggedIn from the navBar component " + value);
       this.isLoggedIn = value; 
+      this.checkForRole();
     });
+  }
+
+  checkForRole(): void {
+    const userRole = this.authStore.getUserRoleromLocalStorage();
+    console.log(userRole);
+    
+    if(userRole === 1){
+      this.isUser = true;
+    }else{
+      this.isUser = false;
+    }
   }
 
   public onSidenavClose = () => {
