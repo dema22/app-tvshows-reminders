@@ -17,19 +17,8 @@ export class SideNavbarComponent implements OnInit {
     this.authStore.isLoggedIn$.subscribe((value) => { 
       //console.log("The state of loggedIn from the navBar component " + value);
       this.isLoggedIn = value; 
-      this.checkForRole();
+      this.isUser = this.authStore.checkForRole();
     });
-  }
-
-  checkForRole(): void {
-    const userRole = this.authStore.getUserRoleromLocalStorage();
-    console.log(userRole);
-    
-    if(userRole === 1){
-      this.isUser = true;
-    }else{
-      this.isUser = false;
-    }
   }
 
   public onSidenavClose = () => {
