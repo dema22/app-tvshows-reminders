@@ -118,4 +118,16 @@ export class AuthStoreService {
     const parseUserId : number = JSON.parse(userId);
     return parseUserId;
   }
+
+  // If userRole is 1, is a normal user. If its 2, its a admin.
+  checkForRole(): boolean {
+    const userRole = this.getUserRoleromLocalStorage();
+    console.log(userRole);
+    
+    if(userRole === 1){
+      return true;
+    }else if(userRole === 2){
+      return false;
+    }
+  }
 }

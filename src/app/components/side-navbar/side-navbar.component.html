@@ -3,16 +3,23 @@
     <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
   </a>
   <div *ngIf="isLoggedIn; else elseBlock">
-    <a mat-list-item routerLink="/reminders" (click)="onSidenavClose()">
-      <mat-icon>movie</mat-icon> <span class="nav-caption">Reminders</span>
-    </a>
-    <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
-      <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
-    </a>
-    <a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
-      <mat-icon>account_circle</mat-icon>
-      <span class="nav-caption">Profile</span>
-    </a>
+    <div *ngIf="isUser; else isAdmin">
+      <a mat-list-item routerLink="/reminders" (click)="onSidenavClose()">
+        <mat-icon>movie</mat-icon> <span class="nav-caption">Reminders</span>
+      </a>
+      <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
+        <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
+      </a>
+      <a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
+        <mat-icon>account_circle</mat-icon>
+        <span class="nav-caption">Profile</span>
+      </a>
+    </div>
+    <ng-template #isAdmin>
+      <a mat-list-item routerLink="/logOut" (click)="onSidenavClose()">
+        <mat-icon>logout</mat-icon> <span class="nav-caption">Log Out</span>
+      </a>
+    </ng-template>
   </div>
   <ng-template #elseBlock>
     <a mat-list-item routerLink="/logIn" (click)="onSidenavClose()">

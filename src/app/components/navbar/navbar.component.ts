@@ -9,6 +9,7 @@ import { AuthStoreService } from 'src/app/services/auth-store.service';
 // Done.
 export class NavbarComponent implements OnInit {
   isLoggedIn : boolean;
+  isUser: boolean;
   @Output() public sidenavToggle = new EventEmitter();
 
   constructor(private authStore: AuthStoreService) { }
@@ -17,8 +18,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     //console.log("Entra NGONINIT");
     this.authStore.isLoggedIn$.subscribe((value) => { 
-      //console.log("The state of loggedIn from the navBar component " + value);
+      console.log("The state of loggedIn from the navBar component " + value);
       this.isLoggedIn = value; 
+      this.isUser = this.authStore.checkForRole();
     });
   }
 
