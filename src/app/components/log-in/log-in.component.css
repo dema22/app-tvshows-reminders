@@ -1,14 +1,32 @@
+.card-container {
+  /*background-color: blue;*/
+  width: 50%;
+  height: 40%;
+}
+
 mat-card-title {
   text-align: center;
   height: 40px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .flex-input {
   width: 100%;
 }
 
-.flex-button {
-  margin-top: 20px;
-  width: 100px;
-  height: 50px;
+@media (max-height: 548px) {
+  
+}
+
+@media (max-width: 500px) {
+  .card-container {
+    width: 60%;
+    height: 50%;
+  }
 }

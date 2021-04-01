@@ -1,35 +1,12 @@
-<!--
-    
-    div class="site">
-  <mat-sidenav-container>
-    <mat-sidenav #sidenav>
-      <app-side-navbar (sidenavClose)="sidenav.close()"></app-side-navbar>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
-      <div class="site-content">
-        <router-outlet></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
-<app-footer></app-footer>
-
-
--->
-
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
     <app-side-navbar (sidenavClose)="sidenav.close()"></app-side-navbar>
   </mat-sidenav>
   <mat-sidenav-content class="site">
-    <app-navbar
-      class="site-navbar"
-      (sidenavToggle)="sidenav.toggle()"
-    ></app-navbar>
+    <app-navbar (sidenavToggle)="sidenav.toggle()"></app-navbar>
     <div class="site-content">
       <router-outlet></router-outlet>
     </div>
-    <app-footer class="site-footer"></app-footer>
+    <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

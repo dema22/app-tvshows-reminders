@@ -1,27 +1,21 @@
 .container {
+  /*border: 2px solid black;*/
+  text-align: center;
   margin-top: 100px;
-  display: flex;
-  justify-content: center;
 }
 
 mat-form-field {
-  width: 400px;
+  width: 500px;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 600px) {
   mat-form-field {
-    width: 300px !important;
+    width: 300px;
   }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 400px) {
   mat-form-field {
-    width: 250px !important;
-  }
-}
-
-@media (max-width: 270px) {
-  mat-form-field {
-    width: 100% !important;
+    width: 250px;
   }
 }
