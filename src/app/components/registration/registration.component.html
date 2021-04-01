@@ -1,22 +1,12 @@
-<<<<<<< HEAD
-<div class="card-container-wrapper">
-  <mat-card class="card-container">
-    <mat-card-title>Registration</mat-card-title>
-    <mat-card-content class="card-container-content">
-=======
 <div class="container-wrapper">
   <mat-card class="card-container">
     <mat-card-title>Registration</mat-card-title>
     <mat-card-content>
->>>>>>> development
       <form
         autocomplete="off"
         [formGroup]="userRegistrationForm"
         (ngSubmit)="onSubmit()"
-<<<<<<< HEAD
-=======
         class="form-container"
->>>>>>> development
       >
         <mat-form-field>
           <mat-label>Name</mat-label>
@@ -25,10 +15,7 @@
             matInput
             placeholder="Name"
             formControlName="name"
-<<<<<<< HEAD
-=======
             class="flex-input"
->>>>>>> development
           />
         </mat-form-field>
         <div *ngIf="name.invalid && (name.dirty || name.touched)">
@@ -103,10 +90,7 @@
           color="primary"
           type="submit"
           [disabled]="!userRegistrationForm.valid"
-<<<<<<< HEAD
-=======
           class="flex-btn"
->>>>>>> development
         >
           Submit
         </button>
